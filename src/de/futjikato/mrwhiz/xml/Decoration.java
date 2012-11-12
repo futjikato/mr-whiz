@@ -1,8 +1,8 @@
-package de.futjikato.mrwhiz.map;
+package de.futjikato.mrwhiz.xml;
 
 import org.xml.sax.Attributes;
 
-public class MapDecoration extends MapObject {
+public class Decoration extends XmlObject {
 
 	@Override
 	public void handleAttributes(Attributes attributes) {
@@ -14,6 +14,12 @@ public class MapDecoration extends MapObject {
 	public void handleValue(String currentValue) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void addChildObj(XmlObject mapObj) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

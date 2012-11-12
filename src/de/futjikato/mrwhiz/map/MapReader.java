@@ -11,11 +11,16 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import de.futjikato.mrwhiz.xml.ObjectNoChildSupport;
+import de.futjikato.mrwhiz.xml.XmlObject;
+import de.futjikato.mrwhiz.xml.World;
+import de.futjikato.mrwhiz.xml.XmlObjectTypes;
+
 public class MapReader implements ContentHandler {
 	
-	private boolean ready = false;
 	private String currentValue;
-	private Stack<MapObject> objStack;
+	private Stack<XmlObject> objStack = new Stack<XmlObject>();
+	private World world;
 	
 	public MapReader(String worldmap) {
 		try {
@@ -26,15 +31,13 @@ public class MapReader implements ContentHandler {
 			
 			xmlr.setContentHandler(this);
 			xmlr.parse(inputSource);
-			
-			this.ready = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public boolean mapReady() {
-		return this.ready;
+	public World getWorld() {
+		return this.world;
 	}
 
 	@Override
@@ -45,28 +48,38 @@ public class MapReader implements ContentHandler {
 
 	@Override
 	public void endDocument() throws SAXException {
-		// TODO Auto-generated method stub
+		if(this.objStack.size() != 1) {
+			return;
+		}
 		
+		XmlObject mapObj = this.objStack.pop();
+		
+		if(!(mapObj instanceof World)) {
+			return;
+		}
+		
+		this.world = (World)mapObj;
 	}
 	
 	@Override
 	public void startElement(String uri, String tagName, String qName, Attributes attributes) throws SAXException {
-		// handle every tag but not "world" which is used as root
-		if(!tagName.equals("world")) {
-			try {
-				MapObject mapObj = MapObjectFactory.getMapObject(tagName);
-				mapObj.handleAttributes(attributes);
-				this.objStack.push(mapObj);
-			} catch (MapObjectTypeNotDefiniedException e) {
-				e.printStackTrace();
-			}
+		XmlObjectTypes mapObjType = XmlObjectTypes.valueOf(tagName);
+		if(mapObjType != null) {
+			// get type
+			XmlObject mapObj = mapObjType.getType();
+			
+			// handle attributes
+			mapObj.handleAttributes(attributes);
+			
+			// push onto stack
+			this.objStack.push(mapObj);
 		}
 	}
 
 	@Override
 	public void endElement(String uri, String tagName, String qName) throws SAXException {
 		// get last element from stack
-		MapObject mapObj = this.objStack.pop();
+		XmlObject mapObj = this.objStack.pop();
 		
 		if(this.currentValue != null) {
 			mapObj.handleValue(this.currentValue);
@@ -74,12 +87,23 @@ public class MapReader implements ContentHandler {
 		}
 		
 		if(!this.objStack.empty()) {
-			// if parent exists on stack add complete child to parent
-			MapObject parentMapObj = this.objStack.pop();
-			parentMapObj.addChildObj(mapObj);
+			// if parent exists on stack try to add complete child to parent
+			XmlObject parentMapObj = this.objStack.pop();
+			
+			try {
+				parentMapObj.addChildObj(mapObj);
+			} catch (ObjectNoChildSupport e) {
+				// element does not support children
+				e.printStackTrace();
+			}
 			
 			// push parent back on the stack
 			this.objStack.push(parentMapObj);
+		}
+		
+		// put the world back on the stack
+		if(mapObj instanceof World) {
+			this.objStack.push(mapObj);
 		}
 	}
 

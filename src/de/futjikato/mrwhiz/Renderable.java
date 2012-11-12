@@ -1,4 +1,4 @@
-package de.futjikato.mrwhiz.game.objects;
+package de.futjikato.mrwhiz;
 
 public interface Renderable {
 	public void draw();

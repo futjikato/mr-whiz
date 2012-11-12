@@ -4,6 +4,7 @@ import org.lwjgl.LWJGLException;
 import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.Renderer;
+import de.futjikato.mrwhiz.xml.World;
 
 public class MapRenderer extends Renderer {
 
@@ -18,9 +19,14 @@ public class MapRenderer extends Renderer {
 	
 	@Override
 	protected void renderScene(long delta) {
-		if(!this.map.mapReady()) {
+		// get world object
+		World world = this.map.getWorld();
+		
+		if(world == null) {
 			return;
 		}
+		
+		//TODO render world
 	}
 
 	@Override

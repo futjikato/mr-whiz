@@ -8,6 +8,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import de.futjikato.mrwhiz.Renderable;
+
 public class Background implements Renderable {
 	
 	private Texture texture;

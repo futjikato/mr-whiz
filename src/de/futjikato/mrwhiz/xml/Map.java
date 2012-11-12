@@ -1,19 +1,25 @@
-package de.futjikato.mrwhiz.map;
+package de.futjikato.mrwhiz.xml;
 
 import org.xml.sax.Attributes;
 
-public class MapWorld extends MapObject {
+public class Map extends XmlObject {
 
 	@Override
 	public void handleAttributes(Attributes attributes) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void handleValue(String currentValue) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
+	@Override
+	public void addChildObj(XmlObject mapObj) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
