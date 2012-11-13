@@ -44,23 +44,24 @@ public class TextureArea extends XmlObject implements Renderable {
 			
 			GL11.glBegin(GL11.GL_QUADS);
 				
+				
 				if(this.texture != null) {
-					GL11.glTexCoord2f(0, 0);
+					GL11.glTexCoord2f(0, (float)dim.getH() / (float)this.texture.getHeight());
 				}
 				GL11.glVertex2i(0, 0);
 				
 				if(this.texture != null) {
-					GL11.glTexCoord2f((float)dim.getW() / (float)this.texture.getWidth(), 0);
+					GL11.glTexCoord2f((float)dim.getW() / (float)this.texture.getWidth(), (float)dim.getH() / (float)this.texture.getHeight());
 				}
 				GL11.glVertex2i(dim.getW(), 0);
 				
 				if(this.texture != null) {
-					GL11.glTexCoord2f((float)dim.getW() / (float)this.texture.getWidth(), (float)dim.getH() / (float)this.texture.getHeight());
+					GL11.glTexCoord2f((float)dim.getW() / (float)this.texture.getWidth(), 0);
 				}
 				GL11.glVertex2i(dim.getW(), dim.getH());
 				
 				if(this.texture != null) {
-					GL11.glTexCoord2f(0, (float)dim.getH() / (float)this.texture.getHeight());
+					GL11.glTexCoord2f(0, 0);
 				}
 				GL11.glVertex2i(0, dim.getH());
 				
