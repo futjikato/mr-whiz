@@ -63,17 +63,15 @@ public class MapReader implements ContentHandler {
 	
 	@Override
 	public void startElement(String uri, String tagName, String qName, Attributes attributes) throws SAXException {
+		// get type
 		XmlObjectTypes mapObjType = XmlObjectTypes.valueOf(tagName);
-		if(mapObjType != null) {
-			// get type
-			XmlObject mapObj = mapObjType.getType();
-			
-			// handle attributes
-			mapObj.handleAttributes(attributes);
-			
-			// push onto stack
-			this.objStack.push(mapObj);
-		}
+		XmlObject mapObj = mapObjType.getType();
+		
+		// handle attributes
+		mapObj.handleAttributes(attributes);
+		
+		// push onto stack
+		this.objStack.push(mapObj);
 	}
 
 	@Override

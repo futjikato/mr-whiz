@@ -1,8 +1,11 @@
 package de.futjikato.mrwhiz.xml;
 
+import java.io.IOException;
+
 import org.xml.sax.Attributes;
 
 import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 public class Texture extends XmlObject {
 
@@ -10,14 +13,18 @@ public class Texture extends XmlObject {
 	
 	@Override
 	public void handleAttributes(Attributes attributes) {
-		// TODO Auto-generated method stub
-
+		//TODO handle xywh attribute
+		
+		//TODO handle scale attribute
 	}
 
 	@Override
 	public void handleValue(String currentValue) {
-		// TODO Auto-generated method stub
-
+		try {
+			this.glTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(currentValue));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -26,7 +33,9 @@ public class Texture extends XmlObject {
 	}
 
 	public void bind() {
-		this.glTexture.bind();
+		if(this.glTexture != null) {
+			this.glTexture.bind();
+		}
 	}
 
 	public float getHorizotalScale() {
