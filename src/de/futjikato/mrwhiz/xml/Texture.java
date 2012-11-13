@@ -10,13 +10,6 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Texture extends XmlObject {
 
 	private  org.newdawn.slick.opengl.Texture glTexture;
-	
-	@Override
-	public void handleAttributes(Attributes attributes) {
-		//TODO handle xywh attribute
-		
-		//TODO handle scale attribute
-	}
 
 	@Override
 	public void handleValue(String currentValue) {
@@ -33,9 +26,7 @@ public class Texture extends XmlObject {
 	}
 
 	public void bind() {
-		if(this.glTexture != null) {
-			this.glTexture.bind();
-		}
+		this.glTexture.bind();
 	}
 
 	public float getHorizotalScale() {

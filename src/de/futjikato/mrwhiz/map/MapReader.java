@@ -12,6 +12,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import de.futjikato.mrwhiz.App;
+import de.futjikato.mrwhiz.xml.ObjectInvalidChild;
 import de.futjikato.mrwhiz.xml.ObjectNoChildSupport;
 import de.futjikato.mrwhiz.xml.ObjectNoValueSupport;
 import de.futjikato.mrwhiz.xml.XmlObject;
@@ -104,6 +105,9 @@ public class MapReader implements ContentHandler {
 				parentMapObj.addChildObj(mapObj);
 			} catch (ObjectNoChildSupport e) {
 				// element does not support children
+				e.printStackTrace();
+			} catch (ObjectInvalidChild e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

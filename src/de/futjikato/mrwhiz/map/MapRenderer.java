@@ -1,9 +1,13 @@
 package de.futjikato.mrwhiz.map;
 
+import java.util.Stack;
+
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.Renderer;
+import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.World;
 
 public class MapRenderer extends Renderer {
@@ -26,7 +30,16 @@ public class MapRenderer extends Renderer {
 			return;
 		}
 		
-		//TODO render world
+		// render all texture areas
+		//TODO render only texture areas in viewport
+		Stack<TextureArea> areas = world.getTextureAreas();
+		for(TextureArea area : areas) {
+			area.draw();
+		}
+		
+		//TODO load and render all decorations
+		
+		//TODo load and render all level entrys
 	}
 
 	@Override
@@ -37,8 +50,9 @@ public class MapRenderer extends Renderer {
 
 	@Override
 	protected void handleInput(long delta, Input input) {
-		// TODO Auto-generated method stub
-		
+		if(Display.isCloseRequested()) {
+			this.isStoped = true;
+		}
 	}
 
 }

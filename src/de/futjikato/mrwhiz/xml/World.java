@@ -1,24 +1,29 @@
 package de.futjikato.mrwhiz.xml;
 
-import org.xml.sax.Attributes;
+import java.util.Stack;
 
 public class World extends XmlObject {
-	
-	@Override
-	public void handleAttributes(Attributes attributes) {
-		// TODO Auto-generated method stub
-		
-	}
 
+	private TextureAreaCollector areaCollector;
+	
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
 		throw new ObjectNoValueSupport();
 	}
 
 	@Override
-	public void addChildObj(XmlObject mapObj) {
-		// TODO Auto-generated method stub
+	public void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport, ObjectInvalidChild {
 		
+		// add texture area collector
+		if(mapObj instanceof TextureAreaCollector) {
+			this.areaCollector = (TextureAreaCollector) mapObj;
+		}
+		
+		// throw new ObjectInvalidChild();
+	}
+	
+	public Stack<TextureArea> getTextureAreas() {
+		return this.areaCollector.getTextureAreas();
 	}
 	
 }

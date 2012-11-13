@@ -35,5 +35,9 @@ public class TextureAreaCollector extends XmlObject {
 			this.areas.push((TextureArea) mapObj);
 		}
 	}
+	
+	protected Stack<TextureArea> getTextureAreas() {
+		return this.areas;
+	}
 
 }

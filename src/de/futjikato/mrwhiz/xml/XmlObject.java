@@ -12,7 +12,7 @@ public abstract class XmlObject {
 	protected HashMap<String, XmlAttribute> attrs = new HashMap<String, XmlAttribute>();
 	
 	public abstract void handleValue(String currentValue) throws ObjectNoValueSupport;
-	public abstract void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport;
+	public abstract void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport, ObjectInvalidChild;
 	
 	public void handleAttributes(Attributes attributes) {
 		for(int i = 0 ; i < attributes.getLength() ; i++) {

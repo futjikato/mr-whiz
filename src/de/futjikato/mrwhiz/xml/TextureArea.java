@@ -37,25 +37,34 @@ public class TextureArea extends XmlObject implements Renderable {
 			//TODO calculate position on screen
 			GL11.glTranslatef(dim.getX(), dim.getY(), 0);
 			
-			//TODO implement fallback color as attribute
-			//GL11.glColor3f(this.bgR, this.bgG, this.bgB);
-			
+			// bind texture
 			if(this.texture != null) {
 				this.texture.bind();  
 			}
 			
+			//TODO implement fallback color as attribute
+			//GL11.glColor3f(this.bgR, this.bgG, this.bgB);
+			
 			GL11.glBegin(GL11.GL_QUADS);
 				
-				GL11.glTexCoord2f(0, 0);
+				if(this.texture != null) {
+					GL11.glTexCoord2f(0, 0);
+				}
 				GL11.glVertex2i(0, 0);
 				
-				GL11.glTexCoord2f(this.texture.getHorizotalScale(), 0);
+				if(this.texture != null) {
+					GL11.glTexCoord2f(this.texture.getHorizotalScale(), 0);
+				}
 				GL11.glVertex2i(dim.getW(), 0);
 				
-				GL11.glTexCoord2f(this.texture.getHorizotalScale(), this.texture.getVerticalScale());
+				if(this.texture != null) {
+					GL11.glTexCoord2f(this.texture.getHorizotalScale(), this.texture.getVerticalScale());
+				}
 				GL11.glVertex2i(dim.getW(), dim.getH());
 				
-				GL11.glTexCoord2f(0, this.texture.getVerticalScale());
+				if(this.texture != null) {
+					GL11.glTexCoord2f(0, this.texture.getVerticalScale());
+				}
 				GL11.glVertex2i(0, dim.getH());
 				
 			GL11.glEnd();
