@@ -4,10 +4,11 @@
 		<!-- List of decoration objects -->
 	</decorations>
 	<textureAreas>
-		<area xywh="10,220,100,190">
-		</area>
-		<area xywh="10,10,100,190">
+		<area xywh="10,10,128,190">
 			<texture><![CDATA[resources/images/backgrounds/dev.png]]></texture>
+		</area>
+		<area xywh="10,220,128,190">
+			<texture><![CDATA[resources/images/backgrounds/grass01.png]]></texture>
 		</area>
 	</textureAreas>
 	<levels>

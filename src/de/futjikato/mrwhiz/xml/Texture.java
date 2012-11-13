@@ -2,8 +2,6 @@ package de.futjikato.mrwhiz.xml;
 
 import java.io.IOException;
 
-import org.xml.sax.Attributes;
-
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -27,6 +25,14 @@ public class Texture extends XmlObject {
 
 	public void bind() {
 		this.glTexture.bind();
+	}
+	
+	public float getHeight() {
+		return this.glTexture.getTextureHeight();
+	}
+
+	public float getWidth() {
+		return this.glTexture.getTextureWidth();
 	}
 
 	public float getHorizotalScale() {

@@ -48,6 +48,12 @@ public abstract class Renderer {
 		    GL11.glLoadIdentity();
 		    GL11.glOrtho(0, Display.getDisplayMode().getWidth(), 0, Display.getDisplayMode().getHeight(), -1, 1);
 		    GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		    
+		    // enable textures
+		    GL11.glEnable(GL11.GL_TEXTURE_2D);
+		    // enable alpha blending
+        	GL11.glEnable(GL11.GL_BLEND);
+        	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			
 		    long delta = this.getDelta();
 		    

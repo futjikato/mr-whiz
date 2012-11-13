@@ -42,9 +42,6 @@ public class TextureArea extends XmlObject implements Renderable {
 				this.texture.bind();  
 			}
 			
-			//TODO implement fallback color as attribute
-			//GL11.glColor3f(this.bgR, this.bgG, this.bgB);
-			
 			GL11.glBegin(GL11.GL_QUADS);
 				
 				if(this.texture != null) {
@@ -53,24 +50,21 @@ public class TextureArea extends XmlObject implements Renderable {
 				GL11.glVertex2i(0, 0);
 				
 				if(this.texture != null) {
-					GL11.glTexCoord2f(this.texture.getHorizotalScale(), 0);
+					GL11.glTexCoord2f((float)dim.getW() / (float)this.texture.getWidth(), 0);
 				}
 				GL11.glVertex2i(dim.getW(), 0);
 				
 				if(this.texture != null) {
-					GL11.glTexCoord2f(this.texture.getHorizotalScale(), this.texture.getVerticalScale());
+					GL11.glTexCoord2f((float)dim.getW() / (float)this.texture.getWidth(), (float)dim.getH() / (float)this.texture.getHeight());
 				}
 				GL11.glVertex2i(dim.getW(), dim.getH());
 				
 				if(this.texture != null) {
-					GL11.glTexCoord2f(0, this.texture.getVerticalScale());
+					GL11.glTexCoord2f(0, (float)dim.getH() / (float)this.texture.getHeight());
 				}
 				GL11.glVertex2i(0, dim.getH());
 				
 			GL11.glEnd();
-		 
-			// free texture
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 			
 		GL11.glPopMatrix();
 	}
