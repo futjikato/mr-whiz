@@ -25,9 +25,8 @@ public class TextureAreaCollector extends XmlObject {
 	}
 
 	@Override
-	public void handleValue(String currentValue) {
-		// TODO Auto-generated method stub
-
+	public void handleValue(String currentValue) throws ObjectNoValueSupport {
+		throw new ObjectNoValueSupport();
 	}
 
 	@Override

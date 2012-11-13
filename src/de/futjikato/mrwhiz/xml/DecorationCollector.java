@@ -5,6 +5,9 @@ import java.util.Stack;
 
 import org.xml.sax.Attributes;
 
+import de.futjikato.mrwhiz.xml.attributes.Dimensions;
+import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
+
 public class DecorationCollector extends XmlObject {
 	
 	private static DecorationCollector instance;
@@ -24,8 +27,8 @@ public class DecorationCollector extends XmlObject {
 	}
 
 	@Override
-	public void handleValue(String currentValue) {
-		return;
+	public void handleValue(String currentValue) throws ObjectNoValueSupport {
+		throw new ObjectNoValueSupport();
 	}
 
 	@Override
@@ -36,8 +39,15 @@ public class DecorationCollector extends XmlObject {
 			return;
 		}
 		
+		// get dimension attributes
+		XmlAttribute dimAttr = mapObj.getAttribute("xywh");
+		if(!(dimAttr instanceof Dimensions)) {
+			return;
+		}
+		Dimensions dim = (Dimensions)dimAttr;
+		
 		// generate hashmap key
-		String key = String.format("%d,%d", mapObj.getConfigObject().getX(), mapObj.getConfigObject().getY());
+		String key = String.format("%d,%d", dim.getX(), dim.getY());
 		
 		// get stack from hashmap
 		Stack<Decoration> stack = this.decoMap.get(key);

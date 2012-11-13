@@ -1,6 +1,6 @@
 package de.futjikato.mrwhiz.xml.attributes;
 
-public class Scale extends XmlAttribute {
+public class Repeat extends XmlAttribute {
 
 	private int sh;
 	private int sv;
@@ -19,5 +19,13 @@ public class Scale extends XmlAttribute {
 			this.sh = Integer.parseInt(parts[0]);
 			this.sv = Integer.parseInt(parts[0]);
 		}
+	}
+	
+	public int getSh() {
+		return sh;
+	}
+
+	public int getSv() {
+		return sv;
 	}
 }

@@ -11,7 +11,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.xml.ObjectNoChildSupport;
+import de.futjikato.mrwhiz.xml.ObjectNoValueSupport;
 import de.futjikato.mrwhiz.xml.XmlObject;
 import de.futjikato.mrwhiz.xml.World;
 import de.futjikato.mrwhiz.xml.XmlObjectTypes;
@@ -80,7 +82,17 @@ public class MapReader implements ContentHandler {
 		XmlObject mapObj = this.objStack.pop();
 		
 		if(this.currentValue != null) {
-			mapObj.handleValue(this.currentValue);
+			// trim before processing
+			this.currentValue = this.currentValue.trim();
+			if(this.currentValue.length() > 0) {
+				try {
+					mapObj.handleValue(this.currentValue);
+				} catch (ObjectNoValueSupport e) {
+					if(App.getInstance().isDebug()) {
+						System.out.println(String.format("Error in processing value `%s´ for object `%s´", this.currentValue, tagName));
+					}
+				}
+			}
 			this.currentValue = null;
 		}
 		

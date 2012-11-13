@@ -29,7 +29,7 @@ public class Texture extends XmlObject {
 
 	@Override
 	public void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport {
-		throw new ObjectNoChildSupport("Texture node does not support any further children.");
+		throw new ObjectNoChildSupport();
 	}
 
 	public void bind() {

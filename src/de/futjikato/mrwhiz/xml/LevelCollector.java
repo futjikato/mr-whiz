@@ -25,9 +25,8 @@ public class LevelCollector extends XmlObject {
 	}
 
 	@Override
-	public void handleValue(String currentValue) {
-		// TODO Auto-generated method stub
-
+	public void handleValue(String currentValue) throws ObjectNoValueSupport {
+		throw new ObjectNoValueSupport();
 	}
 
 	@Override

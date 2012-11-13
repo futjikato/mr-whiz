@@ -19,7 +19,7 @@ public class App {
 		
 		// parse arguments
 		for(String arg : args) {
-			if(arg == "-debug") {
+			if(arg.equals("-debug")) {
 				app.enableDebug();
 			}
 		}

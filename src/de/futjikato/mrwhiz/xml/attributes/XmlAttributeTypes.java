@@ -9,10 +9,10 @@ public enum XmlAttributeTypes {
 		}
 	},
 	
-	scale {
+	repeat {
 		@Override
 		public XmlAttribute getAttribute() {
-			return new Dimensions();
+			return new Repeat();
 		}
 	};
 	
