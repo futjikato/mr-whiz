@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<world>
+<world spawn="20,20">
 	<decorations>
 		<!-- List of decoration objects -->
 	</decorations>
 	<textureAreas>
-		<area xywh="10,10,128,190">
+		<area xywh="10,10,128,190" walkable="true">
 			<texture><![CDATA[resources/images/backgrounds/grass02.png]]></texture>
 		</area>
-		<area xywh="10,220,128,190">
+		<area xywh="10,220,128,190" walkable="true">
 			<texture><![CDATA[resources/images/backgrounds/grass01.png]]></texture>
 		</area>
 	</textureAreas>

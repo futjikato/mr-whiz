@@ -14,6 +14,20 @@ public enum XmlAttributeTypes {
 		public XmlAttribute getAttribute() {
 			return new Repeat();
 		}
+	},
+	
+	walkable {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Walkable();
+		}
+	},
+	
+	spawn {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Spawn();
+		}
 	};
 	
 	public abstract XmlAttribute getAttribute();
