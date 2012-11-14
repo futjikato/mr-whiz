@@ -60,4 +60,6 @@ public class DecorationCollector extends XmlObject {
 		// add the given mapObj to the stack
 		stack.push((Decoration) mapObj);
 	}
+	
+	
 }

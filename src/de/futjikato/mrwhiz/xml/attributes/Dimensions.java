@@ -2,10 +2,10 @@ package de.futjikato.mrwhiz.xml.attributes;
 
 public class Dimensions extends XmlAttribute {
 
-	private int x;
-	private int y;
-	private int w;
-	private int h;
+	private int x = 0;
+	private int y = 0;
+	private int w = 100;
+	private int h = 100;
 	
 	@Override
 	public void handleValue(String value) {

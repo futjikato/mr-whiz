@@ -74,7 +74,8 @@ public class TextureArea extends XmlObject implements Renderable {
 	protected void initAttributeFallback() {
 		XmlAttribute dim = this.attrs.get("xywh");
 		if(dim == null) {
-			
+			dim = new Dimensions();
+			this.attrs.put("xywh", dim);
 		}
 	}
 }

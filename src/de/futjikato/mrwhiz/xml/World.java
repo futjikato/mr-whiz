@@ -25,5 +25,4 @@ public class World extends XmlObject {
 	public Stack<TextureArea> getTextureAreas() {
 		return this.areaCollector.getTextureAreas();
 	}
-	
 }

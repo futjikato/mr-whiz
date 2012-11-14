@@ -7,6 +7,7 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.Renderer;
+import de.futjikato.mrwhiz.xml.DecorationCollector;
 import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.World;
 
@@ -37,7 +38,7 @@ public class MapRenderer extends Renderer {
 			area.draw();
 		}
 		
-		//TODO load and render all decorations
+		DecorationCollector decoCol = DecorationCollector.getInstance();
 		
 		//TODo load and render all level entrys
 	}
