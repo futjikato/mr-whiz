@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.xml.sax.Attributes;
 
+import de.futjikato.mrwhiz.xml.attributes.AttributeInvalidInput;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttributeTypes;
 
@@ -24,8 +25,13 @@ public abstract class XmlObject {
 			XmlAttribute attr = type.getAttribute();
 			
 			// push value to attribute object and add attribute to list
-			attr.handleValue(attributes.getValue(i));
-			this.attrs.put(name, attr);
+			try {
+				attr.handleValue(attributes.getValue(i));
+				this.attrs.put(name, attr);
+			} catch (AttributeInvalidInput e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		// after all attributes are handled we call initAttributeFallback so any missing attribute can be replaced by fallback values

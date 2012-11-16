@@ -7,19 +7,21 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.Renderer;
-import de.futjikato.mrwhiz.xml.DecorationCollector;
 import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.World;
 
 public class MapRenderer extends Renderer {
 
 	private MapReader map;
+	private MapPlayer player;
 	
 	@Override
 	protected void init() throws LWJGLException {
 		super.init();
 		
 		this.map = new MapReader("resources/data/worldmap.xml");
+		
+		this.player = new MapPlayer(20, 20);
 	}
 	
 	@Override
@@ -38,9 +40,12 @@ public class MapRenderer extends Renderer {
 			area.draw();
 		}
 		
-		DecorationCollector decoCol = DecorationCollector.getInstance();
+		//TODO render decorations
 		
-		//TODo load and render all level entrys
+		//TODO load and render all level entrys
+		
+		// render player
+		this.player.draw();
 	}
 
 	@Override
@@ -54,6 +59,8 @@ public class MapRenderer extends Renderer {
 		if(Display.isCloseRequested()) {
 			this.isStoped = true;
 		}
+		
+		this.player.handleInput(delta, input);
 	}
 
 }
