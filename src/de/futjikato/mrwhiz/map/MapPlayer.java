@@ -1,12 +1,10 @@
 package de.futjikato.mrwhiz.map;
 
-import java.io.IOException;
-
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import de.futjikato.mrwhiz.Renderable;
 
@@ -15,15 +13,21 @@ public final class MapPlayer implements Renderable {
 	private float x;
 	private float y;
 	
-	/**
-	 * 0 = Looking up still
-	 * 1 = Looking down still
-	 * 6 = Looking left still
-	 * 7 = Looking right still
-	 */
-	private int orientation = 0; 
+	private final static int PLAYER_ORIENTATION_UP = 0;
+	private final static int PLAYER_ORIENTATION_DOWN = 1;
+	private final static int PLAYER_ORIENTATION_LEFT = 2;
+	private final static int PLAYER_ORIENTATION_RIGHT = 3;
 	
-	private Texture glTexture;
+	private int currentOrientation = MapPlayer.PLAYER_ORIENTATION_DOWN;
+	
+	/**
+	 * Index of animation frame
+	 */
+	private int animStep = 0;
+	
+	private boolean isStill = true;
+	
+	private SpriteSheet glSprite;
 	
 	public MapPlayer(float spawnX, float spawnY) {
 		this.setPosition(spawnX, spawnY);
@@ -34,70 +38,73 @@ public final class MapPlayer implements Renderable {
 		this.y = y;
 	}
 	
-	private Texture getTexture() {
-		if(this.glTexture == null) {
+	private SpriteSheet getSprite() {
+		if(this.glSprite == null) {
 			try {
-				this.glTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("resources/images/player_small.png"));
-			} catch (IOException e) {
+				this.glSprite = new SpriteSheet("resources/images/player_small.png", 20, 37, 0);
+			} catch (SlickException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		return this.glTexture;
+		return this.glSprite;
+	}
+	
+	private int getSpriteIndex() {
+		switch(this.currentOrientation) {
+		
+			case MapPlayer.PLAYER_ORIENTATION_DOWN:
+				return (this.isStill) ? 1 : ( 1 + this.animStep++);
+				
+			case MapPlayer.PLAYER_ORIENTATION_UP:
+				return (this.isStill) ? 0 : ( 0 + this.animStep++);
+				
+			case MapPlayer.PLAYER_ORIENTATION_LEFT:
+				return (this.isStill) ? 7 : ( 7 + this.animStep++);
+				
+			case MapPlayer.PLAYER_ORIENTATION_RIGHT:
+				return (this.isStill) ? 6 : ( 6 + this.animStep++);
+		}
+		
+		// return default as fallback
+		return 1;
 	}
 	
 	@Override
 	public void draw() {
 		GL11.glPushMatrix();
-	    
-		Texture playerTexture = this.getTexture();
-		playerTexture.bind();
 		
-		//TODO calculate position on screen
-		GL11.glTranslatef(this.x, this.y, 0);
+		int spriteIndex = this.getSpriteIndex();
 		
-		GL11.glBegin(GL11.GL_QUADS);
-			
-			GL11.glTexCoord2f(0, (0.07f * this.orientation + 0.07f));
-			GL11.glVertex2i(0, 0);
-			
-			GL11.glTexCoord2f(0.8f, (0.07f * this.orientation + 0.07f));
-			GL11.glVertex2i(20, 0);
-			
-			GL11.glTexCoord2f(0.8f, (0.07f * this.orientation));
-			GL11.glVertex2i(20, 37);
-			
-			GL11.glTexCoord2f(0, (0.07f * this.orientation));
-			GL11.glVertex2i(0, 37);
-			
-		GL11.glEnd();
+		SpriteSheet sprite = this.getSprite();
+		Image tile = sprite.getSprite(0, spriteIndex);
 		
-		GL11.glPopMatrix();
+		tile.draw(this.x, this.y);
 	}
 	
 	public void handleInput(long delta, Input input) {
 		// move upwards
 		if(input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
-			this.y += 0.1f * delta;
-			this.orientation = 0;
+			this.y -= 0.1f * delta;
+			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_UP;
 		}
 		
 		// move downwards
 		if(input.isKeyDown(Input.KEY_S) && !input.isKeyDown(Input.KEY_W)) {
-			this.y -= 0.1f * delta;
-			this.orientation = 1;
+			this.y += 0.1f * delta;
+			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_DOWN;
 		}
 		
 		// move left
 		if(input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)) {
 			this.x -= 0.1f * delta;
-			this.orientation = 6;
+			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_LEFT;
 		}
 		
 		// move right
 		if(input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
 			this.x += 0.1f * delta;
-			this.orientation = 7;
+			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_RIGHT;
 		}
 	}
 }

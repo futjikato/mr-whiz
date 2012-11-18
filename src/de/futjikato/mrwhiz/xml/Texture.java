@@ -1,19 +1,18 @@
 package de.futjikato.mrwhiz.xml;
 
-import java.io.IOException;
-
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class Texture extends XmlObject {
 
-	private  org.newdawn.slick.opengl.Texture glTexture;
+	private Image image;
 
 	@Override
 	public void handleValue(String currentValue) {
 		try {
-			this.glTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(currentValue));
-		} catch (IOException e) {
+			this.image = new Image(currentValue);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -22,17 +21,9 @@ public class Texture extends XmlObject {
 	public void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport {
 		throw new ObjectNoChildSupport();
 	}
-
-	public void bind() {
-		this.glTexture.bind();
-	}
 	
-	public float getHeight() {
-		return this.glTexture.getTextureHeight();
-	}
-
-	public float getWidth() {
-		return this.glTexture.getTextureWidth();
+	public Image getImage() {
+		return this.image;
 	}
 
 	public float getHorizotalScale() {

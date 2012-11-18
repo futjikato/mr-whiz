@@ -46,7 +46,7 @@ public abstract class Renderer {
 			// render
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
 		    GL11.glLoadIdentity();
-		    GL11.glOrtho(0, Display.getDisplayMode().getWidth(), 0, Display.getDisplayMode().getHeight(), -1, 1);
+		    GL11.glOrtho(0, Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight(), 0, -1, 1);
 		    GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		    
 		    // enable textures
