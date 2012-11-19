@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT world (decorations, textureAreas, levels)>
+	<!ELEMENT decorations (decoration)>
+	<!ELEMENT textureAreas (area*)>
+		<!ELEMENT area ()>
+		
+<!ATTLIST world spawn CDATA>
+<!ATTLIST area xywh CDATA>
