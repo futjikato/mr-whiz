@@ -5,13 +5,13 @@
 	</decorations>
 	<textureAreas>
 		<area xywh="1,1,2,1" walkable="true">
-			<texture><![CDATA[resources/images/backgrounds/grass01.png]]></texture>
+			<texture><![CDATA[resources/images/backgrounds/grass02.png]]></texture>
 		</area>
 		<area xywh="1,2,1,1" walkable="true">
 			<texture><![CDATA[resources/images/backgrounds/grass01.png]]></texture>
 		</area>
 		<area xywh="1,3,4,1" walkable="true">
-			<texture><![CDATA[resources/images/backgrounds/grass01.png]]></texture>
+			<texture><![CDATA[resources/images/backgrounds/grass02.png]]></texture>
 		</area>
 	</textureAreas>
 	<levels>
