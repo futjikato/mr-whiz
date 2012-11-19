@@ -10,6 +10,8 @@ import de.futjikato.mrwhiz.Renderer;
 import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.World;
+import de.futjikato.mrwhiz.xml.attributes.Spawn;
+import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 
 public class MapRenderer extends Renderer {
 
@@ -27,8 +29,24 @@ public class MapRenderer extends Renderer {
 		
 		this.map = new MapReader("resources/data/worldmap.xml");
 		
-		this.player = new MapPlayer(20, 20);
+		// read spawn point 
+		World world = this.map.getWorld();
+		XmlAttribute attr = world.getAttribute("spawn");
 		
+		int spawnX = 50;
+		int spawnY = 50;
+		
+		if(attr != null && attr instanceof Spawn) {
+			Spawn spawn = (Spawn) attr;
+			
+			spawnX = spawn.getX();
+			spawnY = spawn.getY();
+		}
+		
+		// spawn player
+		this.player = new MapPlayer(spawnX, spawnY);
+		
+		// calculate viewport block with & height
 		this.viewPortwb = Display.getWidth() / 50;
 		this.viewPorthb = Display.getHeight() / 50;
 	}
@@ -42,7 +60,7 @@ public class MapRenderer extends Renderer {
 			return;
 		}
 		
-		// render all texture areas
+		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
 		Stack<TextureArea> areas = areaCollector.getAreas(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
 		for(TextureArea area : areas) {

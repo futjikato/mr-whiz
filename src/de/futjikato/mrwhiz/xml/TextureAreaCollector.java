@@ -43,11 +43,10 @@ public class TextureAreaCollector extends XmlObject {
 			
 			if(attr instanceof Dimensions) {
 				Dimensions dim = (Dimensions) attr;
-				int i = 0, j = 0;
 				
 				// insert reference for every block
-				while(i < dim.getW()) {
-					while(j < dim.getH()) {
+				for(int i = 0 ; i < dim.getW() ; i++) {
+					for(int j = 0 ; j < dim.getH() ; j++) {
 						String key = String.format("%d,%d", dim.getX() + i, dim.getY() + j);
 						this.areamap.put(key, area);
 					}
@@ -62,12 +61,15 @@ public class TextureAreaCollector extends XmlObject {
 	
 	public Stack<TextureArea> getAreas(int bx, int by, int bw, int bh) {
 		Stack<TextureArea> areas = new Stack<TextureArea>();
-		int i = 0, j = 0;
 		
-		while(i < bw) {
-			while(j < bh) {
+		for(int i = 0 ; i < bw ; i++) {
+			for(int j = 0 ; j < bh ; j++) {
 				String key = String.format("%d,%d", bx + i, by + j);
-				areas.push(this.areamap.get(key));
+				TextureArea area = this.areamap.get(key);
+				
+				if(area != null) {
+					areas.push(area);
+				}
 			}
 		}
 		

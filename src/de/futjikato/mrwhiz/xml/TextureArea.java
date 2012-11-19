@@ -5,6 +5,7 @@ import org.newdawn.slick.Image;
 
 import de.futjikato.mrwhiz.Renderable;
 import de.futjikato.mrwhiz.xml.attributes.Dimensions;
+import de.futjikato.mrwhiz.xml.attributes.Walkable;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 
 public class TextureArea extends XmlObject implements Renderable {
@@ -37,6 +38,21 @@ public class TextureArea extends XmlObject implements Renderable {
 		
 		Graphics graph = new Graphics();
 		graph.fillRect(dim.getX() * 50, dim.getY() * 50, dim.getW() * 50, dim.getH() * 50, img, 0, 0);
+	}
+	
+	public boolean isWalkable() {
+		XmlAttribute attr = this.attrs.get("walkable");
+		if(attr == null) {
+			attr = new Walkable();
+			this.attrs.put("walkable", attr);
+		}
+		
+		if(!(attr instanceof Walkable)) {
+			return false;
+		}
+		
+		Walkable walkable = (Walkable) attr;
+		return walkable.getWalkable();
 	}
 
 	@Override

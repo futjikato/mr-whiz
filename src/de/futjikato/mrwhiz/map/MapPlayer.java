@@ -7,6 +7,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import de.futjikato.mrwhiz.Renderable;
+import de.futjikato.mrwhiz.xml.TextureArea;
+import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 
 public final class MapPlayer implements Renderable {
 	
@@ -36,6 +38,14 @@ public final class MapPlayer implements Renderable {
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public int getXBlock() {
+		return Math.round(this.x / 50);
+	}
+	
+	public int getYBlock() {
+		return Math.round(this.y / 50);
 	}
 	
 	private SpriteSheet getSprite() {
@@ -83,28 +93,44 @@ public final class MapPlayer implements Renderable {
 	}
 	
 	public void handleInput(long delta, Input input) {
+		float y = this.y;
+		float x = this.x;
+		
 		// move upwards
 		if(input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
-			this.y -= 0.1f * delta;
+			y -= 0.1f * delta;
 			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_UP;
 		}
 		
 		// move downwards
 		if(input.isKeyDown(Input.KEY_S) && !input.isKeyDown(Input.KEY_W)) {
-			this.y += 0.1f * delta;
+			y += 0.1f * delta;
 			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_DOWN;
 		}
 		
 		// move left
 		if(input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)) {
-			this.x -= 0.1f * delta;
+			x -= 0.1f * delta;
 			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_LEFT;
 		}
 		
 		// move right
 		if(input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
-			this.x += 0.1f * delta;
+			x += 0.1f * delta;
 			this.currentOrientation = MapPlayer.PLAYER_ORIENTATION_RIGHT;
+		}
+		
+		if(x != this.x || y != this.y) {
+			int xb = Math.round(x / 50);
+			int yb = Math.round(y / 50);
+			
+			TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
+			TextureArea currentArea = areaCollector.getArea(xb, yb);
+			
+			if(currentArea != null && currentArea.isWalkable()) {
+				this.x = x;
+				this.y = y;
+			}
 		}
 	}
 }
