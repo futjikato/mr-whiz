@@ -8,12 +8,18 @@ import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.Renderer;
 import de.futjikato.mrwhiz.xml.TextureArea;
+import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.World;
 
 public class MapRenderer extends Renderer {
 
 	private MapReader map;
 	private MapPlayer player;
+	
+	private int viewPortxb = 0;
+	private int viewPortyb = 0;
+	private int viewPortwb;
+	private int viewPorthb;
 	
 	@Override
 	protected void init() throws LWJGLException {
@@ -22,6 +28,9 @@ public class MapRenderer extends Renderer {
 		this.map = new MapReader("resources/data/worldmap.xml");
 		
 		this.player = new MapPlayer(20, 20);
+		
+		this.viewPortwb = Display.getWidth() / 50;
+		this.viewPorthb = Display.getHeight() / 50;
 	}
 	
 	@Override
@@ -34,8 +43,8 @@ public class MapRenderer extends Renderer {
 		}
 		
 		// render all texture areas
-		//TODO render only texture areas in viewport
-		Stack<TextureArea> areas = world.getTextureAreas();
+		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
+		Stack<TextureArea> areas = areaCollector.getAreas(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
 		for(TextureArea area : areas) {
 			area.draw();
 		}

@@ -36,7 +36,7 @@ public class TextureArea extends XmlObject implements Renderable {
 		Image img = this.texture.getImage();
 		
 		Graphics graph = new Graphics();
-		graph.fillRect(dim.getX(), dim.getY(), dim.getW(), dim.getH(), img, 0, 0);
+		graph.fillRect(dim.getX() * 50, dim.getY() * 50, dim.getW() * 50, dim.getH() * 50, img, 0, 0);
 	}
 
 	@Override
