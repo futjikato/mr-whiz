@@ -18,6 +18,8 @@ public class MapRenderer extends Renderer {
 	private MapReader map;
 	private MapPlayer player;
 	
+	public static final int BLOCKSIZE = 50;
+	
 	private int viewPortxb = 0;
 	private int viewPortyb = 0;
 	private int viewPortwb;
@@ -47,8 +49,8 @@ public class MapRenderer extends Renderer {
 		this.player = new MapPlayer(spawnX, spawnY);
 		
 		// calculate viewport block with & height
-		this.viewPortwb = Display.getWidth() / 50;
-		this.viewPorthb = Display.getHeight() / 50;
+		this.viewPortwb = Display.getWidth() / MapRenderer.BLOCKSIZE;
+		this.viewPorthb = Display.getHeight() / MapRenderer.BLOCKSIZE;
 	}
 	
 	@Override

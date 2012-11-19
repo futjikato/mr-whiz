@@ -47,11 +47,11 @@ public final class MapPlayer implements Renderable {
 	}
 	
 	public int getXBlock() {
-		return Math.round(this.x / 50);
+		return Math.round(this.x / MapRenderer.BLOCKSIZE);
 	}
 	
 	public int getYBlock() {
-		return Math.round(this.y / 50);
+		return Math.round(this.y / MapRenderer.BLOCKSIZE);
 	}
 	
 	private SpriteSheet getSprite() {
@@ -135,8 +135,8 @@ public final class MapPlayer implements Renderable {
 		}
 		
 		if(x != this.x || y != this.y) {
-			int xb = (int) x / 50;
-			int yb = (int) y / 50;
+			int xb = (int) x / MapRenderer.BLOCKSIZE;
+			int yb = (int) y / MapRenderer.BLOCKSIZE;
 			
 			TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
 			TextureArea currentArea = areaCollector.getArea(xb, yb);
