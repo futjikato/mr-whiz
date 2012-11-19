@@ -1,11 +1,14 @@
 package de.futjikato.mrwhiz.map;
 
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Renderable;
 import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
@@ -14,6 +17,9 @@ public final class MapPlayer implements Renderable {
 	
 	private float x;
 	private float y;
+	
+	private final static int PLAYER_HEIGHT = 32;
+	private final static int PLAYER_WIDTH = 20;
 	
 	private final static int PLAYER_ORIENTATION_UP = 0;
 	private final static int PLAYER_ORIENTATION_DOWN = 1;
@@ -89,7 +95,15 @@ public final class MapPlayer implements Renderable {
 		SpriteSheet sprite = this.getSprite();
 		Image tile = sprite.getSprite(0, spriteIndex);
 		
-		tile.draw(this.x, this.y);
+		//TODO this could eventually be improved a bit ;-)
+		tile.draw(this.x - (MapPlayer.PLAYER_WIDTH / 2), this.y - MapPlayer.PLAYER_HEIGHT);
+		
+		if(App.getInstance().isDebug()) {
+			// draw white bounding box around player if debug
+			Graphics graph = new Graphics();
+			Color.white.bind();
+			graph.fillRect(this.x - (MapPlayer.PLAYER_WIDTH / 2), this.y - MapPlayer.PLAYER_HEIGHT, MapPlayer.PLAYER_WIDTH, MapPlayer.PLAYER_HEIGHT);
+		}
 	}
 	
 	public void handleInput(long delta, Input input) {
@@ -121,8 +135,8 @@ public final class MapPlayer implements Renderable {
 		}
 		
 		if(x != this.x || y != this.y) {
-			int xb = Math.round(x / 50);
-			int yb = Math.round(y / 50);
+			int xb = (int) x / 50;
+			int yb = (int) y / 50;
 			
 			TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
 			TextureArea currentArea = areaCollector.getArea(xb, yb);
