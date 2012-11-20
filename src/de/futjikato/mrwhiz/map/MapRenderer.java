@@ -15,6 +15,8 @@ public class MapRenderer extends Renderer {
 	private MapReader map;
 	private MapPlayer player;
 	
+	private MapUi ui;
+	
 	public static final int BLOCKSIZE = 50;
 	
 	private int viewPortxb = 0;
@@ -48,6 +50,9 @@ public class MapRenderer extends Renderer {
 		// calculate viewport block with & height
 		this.viewPortwb = Display.getWidth() / MapRenderer.BLOCKSIZE;
 		this.viewPorthb = Display.getHeight() / MapRenderer.BLOCKSIZE;
+		
+		// init ui
+		this.ui = new MapUi();
 	}
 	
 	@Override
@@ -73,8 +78,7 @@ public class MapRenderer extends Renderer {
 
 	@Override
 	protected void renderUi(long delta) {
-		// TODO Auto-generated method stub
-		
+		this.ui.update();
 	}
 
 	@Override
@@ -86,4 +90,8 @@ public class MapRenderer extends Renderer {
 		this.player.handleInput(delta, input);
 	}
 
+	@Override
+	protected void printFps(long fps) {
+		this.ui.setFps(fps);
+	}
 }

@@ -113,11 +113,14 @@ public abstract class Renderer {
 	    return delta;
 	}
 	
+	protected abstract void printFps(long fps);
+	
 	/**
 	 * Calculate the FPS and set it in the title bar
 	 */
 	private void updateFPS() {
 	    if (getTime() - this.lastFPS > 1000) {
+	    	this.printFps(this.fps);
 	        this.fps = 0; //reset the FPS counter
 	        this.lastFPS += 1000; //add one second
 	    }

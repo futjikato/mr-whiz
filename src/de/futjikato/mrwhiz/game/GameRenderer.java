@@ -63,4 +63,10 @@ public class GameRenderer extends Renderer {
 	 
 	    GL11.glPopMatrix();
 	}
+
+	@Override
+	protected void printFps(long fps) {
+		// TODO Auto-generated method stub
+		
+	}
 }
