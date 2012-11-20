@@ -28,6 +28,13 @@ public enum XmlAttributeTypes {
 		public XmlAttribute getAttribute() {
 			return new Spawn();
 		}
+	},
+	
+	zIndex {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new ZIndex();
+		}
 	};
 	
 	public abstract XmlAttribute getAttribute();

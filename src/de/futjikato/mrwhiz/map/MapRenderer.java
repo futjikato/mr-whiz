@@ -1,13 +1,10 @@
 package de.futjikato.mrwhiz.map;
 
-import java.util.Stack;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.Renderer;
-import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.World;
 import de.futjikato.mrwhiz.xml.attributes.Spawn;
@@ -64,10 +61,7 @@ public class MapRenderer extends Renderer {
 		
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-		Stack<TextureArea> areas = areaCollector.getAreas(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
-		for(TextureArea area : areas) {
-			area.draw();
-		}
+		areaCollector.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
 		
 		//TODO render decorations
 		
