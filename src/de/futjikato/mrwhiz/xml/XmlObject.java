@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.xml.sax.Attributes;
 
 import de.futjikato.mrwhiz.xml.attributes.AttributeInvalidInput;
+import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttributeTypes;
 
@@ -45,5 +46,18 @@ public abstract class XmlObject {
 	
 	public XmlAttribute getAttribute(String name) {
 		return this.attrs.get(name);
+	}
+	
+	/**
+	 * Easy getter for often used attributes
+	 */
+	
+	public Dimensions getDimensions() {
+		XmlAttribute xmlAttr = this.getAttribute("xywh");
+		if(!(xmlAttr instanceof Dimensions)) {
+			return new Dimensions();
+		}
+		
+		return (Dimensions) xmlAttr;
 	}
 }

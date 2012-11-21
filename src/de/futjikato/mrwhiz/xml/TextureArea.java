@@ -19,29 +19,29 @@ public class TextureArea extends XmlObject implements Comparable<TextureArea> {
 
 	@Override
 	public void addChildObj(XmlObject mapObj) {
-		if(mapObj instanceof Texture) {
+		if (mapObj instanceof Texture) {
 			this.texture = (Texture) mapObj;
 		}
 	}
-	
+
 	public void drawBlock(int x, int y) {
 		Image img = this.texture.getImage();
 		Graphics graph = new Graphics();
-		
+
 		graph.fillRect(x * 50, y * 50, 50, 50, img, 0, 0);
 	}
-	
+
 	public boolean isWalkable() {
 		XmlAttribute attr = this.attrs.get("walkable");
-		if(attr == null) {
+		if (attr == null) {
 			attr = new Walkable();
 			this.attrs.put("walkable", attr);
 		}
-		
-		if(!(attr instanceof Walkable)) {
+
+		if (!(attr instanceof Walkable)) {
 			return false;
 		}
-		
+
 		Walkable walkable = (Walkable) attr;
 		return walkable.getWalkable();
 	}
@@ -49,13 +49,13 @@ public class TextureArea extends XmlObject implements Comparable<TextureArea> {
 	@Override
 	protected void initAttributeFallback() {
 		XmlAttribute dim = this.attrs.get("xywh");
-		if(dim == null) {
+		if (dim == null) {
 			dim = new Dimensions();
 			this.attrs.put("xywh", dim);
 		}
-		
+
 		XmlAttribute zIndex = this.attrs.get("zIndex");
-		if(zIndex == null) {
+		if (zIndex == null) {
 			zIndex = new ZIndex();
 			this.attrs.put("zIndex", zIndex);
 		}
@@ -65,14 +65,14 @@ public class TextureArea extends XmlObject implements Comparable<TextureArea> {
 	public int compareTo(TextureArea o) {
 		XmlAttribute oAttr = o.getAttribute("zIndex");
 		XmlAttribute mAttr = this.getAttribute("zIndex");
-		
-		if(!(oAttr instanceof ZIndex) || !(mAttr instanceof ZIndex)) {
+
+		if (!(oAttr instanceof ZIndex) || !(mAttr instanceof ZIndex)) {
 			return 0;
 		}
-		
+
 		ZIndex oIndex = (ZIndex) oAttr;
 		ZIndex mIndex = (ZIndex) mAttr;
-		
+
 		return mIndex.getZIndex().compareTo(oIndex.getZIndex());
 	}
 }

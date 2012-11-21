@@ -5,4 +5,8 @@ public class ObjectInvalidChild extends Exception {
 	public ObjectInvalidChild() {
 		super();
 	}
+	
+	public ObjectInvalidChild(String reason) {
+		super();
+	}
 }
