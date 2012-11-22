@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <world spawn="55,55">
+	<music><![CDATA[music/dummy/MenuMusic.ogg]]></music>
 	<decorations>
 		<!-- List of decoration objects -->
 	</decorations>
