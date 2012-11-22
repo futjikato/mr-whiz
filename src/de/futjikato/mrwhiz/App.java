@@ -60,7 +60,7 @@ public class App {
 	}
 
 	public void setNextStep(GameStates gs) {
-		this.state = gs;
+		this.nextState = gs;
 	}
 
 	private void loop() {

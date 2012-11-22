@@ -83,7 +83,7 @@ public class LevelCollector extends XmlObject {
 				Level lvl = this.areamap.get(key);
 
 				// check the found
-				if (lvl.inTriggerArea(bx, by)) {
+				if (lvl != null && lvl.inTriggerArea(bx, by)) {
 					level = lvl;
 				}
 			}
