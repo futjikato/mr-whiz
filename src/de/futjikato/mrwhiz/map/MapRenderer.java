@@ -57,7 +57,7 @@ public class MapRenderer extends Renderer {
 		this.viewPorthb = Display.getHeight() / MapRenderer.BLOCKSIZE;
 
 		// init ui
-		this.ui = new MapUi();
+		this.ui = new MapUi(this.player);
 	}
 
 	@Override
