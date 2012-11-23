@@ -87,7 +87,9 @@ public class MapUi extends Widget {
 		this.fps.setText(String.format("FPS: %d", this.fpsValue));
 
 		// update player position
-		this.playerCoords.setText(String.format("You´re at : ( %d/%d )", this.player.getXBlock(), this.player.getYBlock()));
+		if (App.getInstance().isDebug()) {
+			this.playerCoords.setText(String.format("You´re at : ( %d/%d )", this.player.getXBlock(), this.player.getYBlock()));
+		}
 
 		this.gui.update();
 	}
