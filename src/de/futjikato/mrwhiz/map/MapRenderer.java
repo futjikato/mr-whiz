@@ -113,4 +113,10 @@ public class MapRenderer extends Renderer {
 	protected void printFps(long fps) {
 		this.ui.setFps(fps);
 	}
+
+	@Override
+	protected void clean() {
+		LevelCollector.getInstance().clean();
+		TextureAreaCollector.getInstance().clean();
+	}
 }

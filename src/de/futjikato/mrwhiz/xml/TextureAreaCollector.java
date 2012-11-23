@@ -28,25 +28,26 @@ public class TextureAreaCollector extends XmlObject {
 	public void addChildObj(XmlObject mapObj) {
 		if (mapObj instanceof TextureArea) {
 			TextureArea area = (TextureArea) mapObj;
-			
+
 			XmlAttribute attr = area.getAttribute("xywh");
-			
-			if(attr instanceof Dimensions) {
+
+			if (attr instanceof Dimensions) {
 				Dimensions dim = (Dimensions) attr;
-				
+
 				// insert reference for every block
-				for(int i = 0 ; i < dim.getW() ; i++) {
-					for(int j = 0 ; j < dim.getH() ; j++) {
+				for ( int i = 0 ; i < dim.getW() ; i++ ) {
+					for ( int j = 0 ; j < dim.getH() ; j++ ) {
 						String key = String.format("%d,%d", dim.getX() + i, dim.getY() + j);
-						
+
 						TextureArea oArea = this.areamap.get(key);
-						
-						if(oArea == null) {
+
+						if (oArea == null) {
 							// insert if no other area is on that grid
 							this.areamap.put(key, area);
 						} else {
-							// insert if current area if above or on the same level ( order in xml counts )
-							if(area.compareTo(oArea) >= 0) {
+							// insert if current area if above or on the same
+							// level ( order in xml counts )
+							if (area.compareTo(oArea) >= 0) {
 								this.areamap.put(key, area);
 							}
 						}
@@ -55,7 +56,7 @@ public class TextureAreaCollector extends XmlObject {
 			}
 		}
 	}
-	
+
 	public TextureArea getArea(int x, int y) {
 		String key = String.format("%d,%d", x, y);
 		return this.areamap.get(key);
@@ -63,16 +64,20 @@ public class TextureAreaCollector extends XmlObject {
 
 	public void drawBlocks(int bx, int by, int bw, int bh) {
 		// run thought all requested blocks
-		for(int i = 0 ; i < bw ; i++) {
-			for(int j = 0 ; j < bh ; j++) {
+		for ( int i = 0 ; i < bw ; i++ ) {
+			for ( int j = 0 ; j < bh ; j++ ) {
 				String key = String.format("%d,%d", bx + i, by + j);
 				TextureArea area = this.areamap.get(key);
-				
+
 				// draw area if there is one
-				if(area != null) {
+				if (area != null) {
 					area.drawBlock(bx + i, by + j);
 				}
 			}
 		}
+	}
+
+	public void clean() {
+		this.areamap.clear();
 	}
 }

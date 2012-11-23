@@ -69,7 +69,11 @@ public abstract class Renderer {
 
 		// close window after stopping
 		Display.destroy();
+
+		this.clean();
 	}
+
+	protected abstract void clean();
 
 	protected abstract void renderScene(long delta);
 

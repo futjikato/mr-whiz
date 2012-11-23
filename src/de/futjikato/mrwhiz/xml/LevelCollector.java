@@ -91,4 +91,8 @@ public class LevelCollector extends XmlObject {
 
 		return level;
 	}
+
+	public void clean() {
+		this.areamap.clear();
+	}
 }
