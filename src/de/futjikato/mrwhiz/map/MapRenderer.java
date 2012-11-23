@@ -10,6 +10,7 @@ import de.futjikato.mrwhiz.Renderer;
 import de.futjikato.mrwhiz.xml.Level;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.Map;
+import de.futjikato.mrwhiz.xml.XmlReader;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.World;
 import de.futjikato.mrwhiz.xml.attributes.Spawn;
@@ -17,7 +18,7 @@ import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 
 public class MapRenderer extends Renderer {
 
-	private MapReader map;
+	private XmlReader map;
 	private MapPlayer player;
 
 	private MapUi ui;
@@ -33,7 +34,7 @@ public class MapRenderer extends Renderer {
 	protected void init() throws LWJGLException {
 		super.init();
 
-		this.map = new MapReader("resources/data/worldmap.xml");
+		this.map = new XmlReader("resources/data/worldmap.xml");
 
 		// read spawn point
 		World world = this.map.getWorld();

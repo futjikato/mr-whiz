@@ -28,6 +28,8 @@ public class Level extends XmlObject {
 	}
 
 	public void draw() {
+		// TODO stop using MapRenderer in generell implementation of XML tag
+		// object
 		Image img = this.texture.getImage();
 		Graphics graph = new Graphics();
 

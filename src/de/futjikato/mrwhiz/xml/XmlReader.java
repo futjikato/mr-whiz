@@ -1,4 +1,4 @@
-package de.futjikato.mrwhiz.map;
+package de.futjikato.mrwhiz.xml;
 
 import java.io.FileReader;
 import java.util.Stack;
@@ -12,21 +12,15 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import de.futjikato.mrwhiz.App;
-import de.futjikato.mrwhiz.xml.ObjectInvalidChild;
-import de.futjikato.mrwhiz.xml.ObjectNoChildSupport;
-import de.futjikato.mrwhiz.xml.ObjectNoValueSupport;
-import de.futjikato.mrwhiz.xml.World;
-import de.futjikato.mrwhiz.xml.XmlObject;
-import de.futjikato.mrwhiz.xml.XmlObjectTypes;
 
 //TODO move the reader to the xml package
-public class MapReader implements ContentHandler {
+public class XmlReader implements ContentHandler {
 
 	private String currentValue;
 	private Stack<XmlObject> objStack = new Stack<XmlObject>();
 	private World world;
 
-	public MapReader(String worldmap) {
+	public XmlReader(String worldmap) {
 		try {
 			XMLReader xmlr = XMLReaderFactory.createXMLReader();
 

@@ -1,25 +1,20 @@
 package de.futjikato.mrwhiz.xml;
 
-import org.xml.sax.Attributes;
-
 public class Map extends XmlObject {
 
-	@Override
-	public void handleAttributes(Attributes attributes) {
-		// TODO Auto-generated method stub
+	private String xmlFilePath;
 
+	@Override
+	public void handleValue(String currentValue) throws ObjectNoValueSupport {
+		this.xmlFilePath = currentValue;
 	}
 
 	@Override
-	public void handleValue(String currentValue) {
-		// TODO Auto-generated method stub
-
+	public void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport, ObjectInvalidChild {
+		throw new ObjectNoChildSupport();
 	}
 
-	@Override
-	public void addChildObj(XmlObject mapObj) {
-		// TODO Auto-generated method stub
-
+	public XmlReader getReader() {
+		return new XmlReader(this.xmlFilePath);
 	}
-
 }

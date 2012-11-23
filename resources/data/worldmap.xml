@@ -18,7 +18,7 @@
 	<levels>
 		<level xywh="5,3,2,2">
 			<texture><![CDATA[images/level/dev.png]]></texture>
-			<map><![CDATA[data/level/l01.xml]]></map>
+			<map><![CDATA[resources/data/level/l01.xml]]></map>
 		</level>
 	</levels>
 </world>
