@@ -3,7 +3,6 @@ package de.futjikato.mrwhiz.xml;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-import de.futjikato.mrwhiz.map.MapRenderer;
 import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 
 public class Level extends XmlObject {
@@ -27,16 +26,16 @@ public class Level extends XmlObject {
 		}
 	}
 
-	public void draw() {
+	public void draw(int blocksize) {
 		// TODO stop using MapRenderer in generell implementation of XML tag
 		// object
 		Image img = this.texture.getImage();
 		Graphics graph = new Graphics();
 
-		int x = this.getDimensions().getX() * MapRenderer.BLOCKSIZE;
-		int y = this.getDimensions().getY() * MapRenderer.BLOCKSIZE;
-		int w = this.getDimensions().getW() * MapRenderer.BLOCKSIZE;
-		int h = this.getDimensions().getH() * MapRenderer.BLOCKSIZE;
+		int x = this.getDimensions().getX() * blocksize;
+		int y = this.getDimensions().getY() * blocksize;
+		int w = this.getDimensions().getW() * blocksize;
+		int h = this.getDimensions().getH() * blocksize;
 
 		graph.drawImage(img, x, y, x + w, y + h, 0, 0, img.getWidth(), img.getHeight());
 	}

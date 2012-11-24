@@ -6,6 +6,7 @@ import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Renderer;
+import de.futjikato.mrwhiz.xml.Gamemap;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.XmlReader;
@@ -15,7 +16,7 @@ public class GameRenderer extends Renderer {
 	protected int width = 500;
 	protected int height = 500;
 
-	private XmlReader map;
+	private Gamemap map;
 
 	public static final int BLOCKSIZE = 80;
 
@@ -29,11 +30,12 @@ public class GameRenderer extends Renderer {
 		super.init();
 
 		// get xml mapreader from gamemap
-		this.map = App.getInstance().getNextGameMap().getReader();
+		XmlReader reader = App.getInstance().getNextGameMap().getReader();
+		this.map = reader.getGame();
 
 		// calculate viewport block with & height
-		this.viewPortwb = Display.getWidth() / GameRenderer.BLOCKSIZE;
-		this.viewPorthb = Display.getHeight() / GameRenderer.BLOCKSIZE;
+		this.viewPortwb = (int) Math.ceil(Display.getWidth() / (double) this.map.getBlocksize().getBlocksize());
+		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getBlocksize());
 	}
 
 	@Override
@@ -41,7 +43,7 @@ public class GameRenderer extends Renderer {
 
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-		areaCollector.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
+		areaCollector.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
 	}
 
 	@Override

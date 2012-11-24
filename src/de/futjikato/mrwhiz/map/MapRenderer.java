@@ -11,7 +11,7 @@ import de.futjikato.mrwhiz.xml.Level;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.Map;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
-import de.futjikato.mrwhiz.xml.World;
+import de.futjikato.mrwhiz.xml.Worldmap;
 import de.futjikato.mrwhiz.xml.XmlReader;
 import de.futjikato.mrwhiz.xml.attributes.Spawn;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
@@ -22,8 +22,6 @@ public class MapRenderer extends Renderer {
 	private MapPlayer player;
 
 	private MapUi ui;
-
-	public static final int BLOCKSIZE = 50;
 
 	private int viewPortxb = 0;
 	private int viewPortyb = 0;
@@ -37,7 +35,7 @@ public class MapRenderer extends Renderer {
 		this.map = new XmlReader("resources/data/worldmap.xml");
 
 		// read spawn point
-		World world = this.map.getWorld();
+		Worldmap world = this.map.getWorld();
 		XmlAttribute attr = world.getAttribute("spawn");
 
 		int spawnX = 50;
@@ -51,11 +49,11 @@ public class MapRenderer extends Renderer {
 		}
 
 		// spawn player
-		this.player = new MapPlayer(spawnX, spawnY);
+		this.player = new MapPlayer(spawnX, spawnY, world);
 
 		// calculate viewport block with & height
-		this.viewPortwb = Display.getWidth() / MapRenderer.BLOCKSIZE;
-		this.viewPorthb = Display.getHeight() / MapRenderer.BLOCKSIZE;
+		this.viewPortwb = Display.getWidth() / world.getBlocksize().getBlocksize();
+		this.viewPorthb = Display.getHeight() / world.getBlocksize().getBlocksize();
 
 		// init ui
 		this.ui = new MapUi(this.player);
@@ -64,20 +62,13 @@ public class MapRenderer extends Renderer {
 	@Override
 	protected void renderScene(long delta) {
 		// get world object
-		World world = this.map.getWorld();
+		Worldmap world = this.map.getWorld();
 
 		if (world == null) {
 			return;
 		}
 
-		// render all texture areas in viewport
-		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-		areaCollector.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
-
-		// TODO render decorations
-
-		LevelCollector lvlCollect = LevelCollector.getInstance();
-		lvlCollect.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
+		world.renderWorld(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
 
 		// render player
 		this.player.draw();

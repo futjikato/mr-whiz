@@ -2,6 +2,13 @@ package de.futjikato.mrwhiz.xml.attributes;
 
 public enum XmlAttributeTypes {
 
+	blocksize {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Blocksize();
+		}
+	},
+
 	xywh {
 		@Override
 		public XmlAttribute getAttribute() {

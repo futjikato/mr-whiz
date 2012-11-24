@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<world spawn="55,55">
+<worldmap spawn="55,55" blocksize="50">
 	<music volume="0.1"><![CDATA[music/dummy/MenuMusic.ogg]]></music>
 	<decorations>
 		<!-- List of decoration objects -->
@@ -21,4 +21,4 @@
 			<map><![CDATA[resources/data/level/l01.xml]]></map>
 		</level>
 	</levels>
-</world>
+</worldmap>

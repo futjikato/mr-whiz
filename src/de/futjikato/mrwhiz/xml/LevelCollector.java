@@ -58,7 +58,7 @@ public class LevelCollector extends XmlObject {
 		}
 	}
 
-	public void drawBlocks(int bx, int by, int bw, int bh) {
+	public void drawBlocks(int bx, int by, int bw, int bh, int blocksize) {
 		// run thought all requested blocks
 		for ( int i = 0 ; i < bw ; i++ ) {
 			for ( int j = 0 ; j < bh ; j++ ) {
@@ -67,7 +67,7 @@ public class LevelCollector extends XmlObject {
 
 				// draw level if there is one
 				if (lvl != null) {
-					lvl.draw();
+					lvl.draw(blocksize);
 				}
 			}
 		}

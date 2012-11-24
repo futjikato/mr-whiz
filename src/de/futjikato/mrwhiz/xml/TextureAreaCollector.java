@@ -67,7 +67,7 @@ public class TextureAreaCollector extends XmlObject {
 		return this.areamap.get(key);
 	}
 
-	public void drawBlocks(int bx, int by, int bw, int bh) {
+	public void drawBlocks(int bx, int by, int bw, int bh, int blocksize) {
 		// run thought all requested blocks
 		for ( int i = 0 ; i < bw ; i++ ) {
 			for ( int j = 0 ; j < bh ; j++ ) {
@@ -76,7 +76,7 @@ public class TextureAreaCollector extends XmlObject {
 
 				// draw area if there is one
 				if (area != null) {
-					area.drawBlock(bx + i, by + j);
+					area.drawBlock(bx + i, by + j, blocksize);
 				}
 			}
 		}

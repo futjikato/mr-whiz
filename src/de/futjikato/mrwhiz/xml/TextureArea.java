@@ -24,12 +24,11 @@ public class TextureArea extends XmlObject implements Comparable<TextureArea> {
 		}
 	}
 
-	public void drawBlock(int x, int y) {
+	public void drawBlock(int x, int y, int blocksize) {
 		Image img = this.texture.getImage();
 		Graphics graph = new Graphics();
 
-		// TODO use constants instead of magic values here
-		graph.fillRect(x * 50, y * 50, 50, 50, img, 0, 0);
+		graph.fillRect(x * blocksize, y * blocksize, blocksize, blocksize, img, 0, 0);
 	}
 
 	public boolean isWalkable() {

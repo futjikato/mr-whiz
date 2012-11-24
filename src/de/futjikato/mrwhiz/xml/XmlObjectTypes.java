@@ -2,9 +2,15 @@ package de.futjikato.mrwhiz.xml;
 
 public enum XmlObjectTypes {
 
-	world {
+	worldmap {
 		public XmlObject getType() {
-			return new World();
+			return new Worldmap();
+		}
+	},
+
+	gamemap {
+		public XmlObject getType() {
+			return new Gamemap();
 		}
 	},
 

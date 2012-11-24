@@ -8,6 +8,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
+import de.futjikato.mrwhiz.xml.Worldmap;
 
 public final class MapPlayer {
 
@@ -33,8 +34,11 @@ public final class MapPlayer {
 
 	private SpriteSheet glSprite;
 
-	public MapPlayer(float spawnX, float spawnY) {
+	private Worldmap world;
+
+	public MapPlayer(float spawnX, float spawnY, Worldmap world) {
 		this.setPosition(spawnX, spawnY);
+		this.world = world;
 	}
 
 	public void setPosition(float x, float y) {
@@ -43,11 +47,11 @@ public final class MapPlayer {
 	}
 
 	public int getXBlock() {
-		return Math.round(this.x / MapRenderer.BLOCKSIZE);
+		return Math.round(this.x / this.world.getBlocksize().getBlocksize());
 	}
 
 	public int getYBlock() {
-		return Math.round(this.y / MapRenderer.BLOCKSIZE);
+		return Math.round(this.y / this.world.getBlocksize().getBlocksize());
 	}
 
 	private SpriteSheet getSprite() {
@@ -123,8 +127,8 @@ public final class MapPlayer {
 		}
 
 		if (x != this.x || y != this.y) {
-			int xb = (int) x / MapRenderer.BLOCKSIZE;
-			int yb = (int) y / MapRenderer.BLOCKSIZE;
+			int xb = (int) x / this.world.getBlocksize().getBlocksize();
+			int yb = (int) y / this.world.getBlocksize().getBlocksize();
 
 			TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
 			TextureArea currentArea = areaCollector.getArea(xb, yb);

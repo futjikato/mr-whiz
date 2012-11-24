@@ -18,7 +18,8 @@ public class XmlReader implements ContentHandler {
 
 	private String currentValue;
 	private Stack<XmlObject> objStack = new Stack<XmlObject>();
-	private World world;
+	private Worldmap world;
+	private Gamemap game;
 
 	public XmlReader(String worldmap) {
 		try {
@@ -34,8 +35,12 @@ public class XmlReader implements ContentHandler {
 		}
 	}
 
-	public World getWorld() {
+	public Worldmap getWorld() {
 		return this.world;
+	}
+
+	public Gamemap getGame() {
+		return this.game;
 	}
 
 	@Override
@@ -52,11 +57,11 @@ public class XmlReader implements ContentHandler {
 
 		XmlObject mapObj = this.objStack.pop();
 
-		if (!(mapObj instanceof World)) {
-			return;
+		if (mapObj instanceof Worldmap) {
+			this.world = (Worldmap) mapObj;
+		} else if (mapObj instanceof Gamemap) {
+			this.game = (Gamemap) mapObj;
 		}
-
-		this.world = (World) mapObj;
 	}
 
 	@Override
@@ -111,7 +116,7 @@ public class XmlReader implements ContentHandler {
 		}
 
 		// put the world back on the stack
-		if (mapObj instanceof World) {
+		if ((mapObj instanceof Worldmap) || (mapObj instanceof Gamemap)) {
 			this.objStack.push(mapObj);
 		}
 	}
