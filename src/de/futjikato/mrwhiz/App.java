@@ -1,5 +1,10 @@
 package de.futjikato.mrwhiz;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.Input;
+
 import de.futjikato.mrwhiz.xml.Map;
 
 public class App {
@@ -11,17 +16,18 @@ public class App {
 	private GameStates nextState;
 
 	private Map nextGameMap;
+	private Input input;
 
 	/**
 	 * Main
 	 * 
 	 * @param args
+	 * @throws LWJGLException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws LWJGLException {
 
 		// create new app instance
 		App app = new App();
-		App.instance = app;
 
 		// parse arguments
 		for ( String arg : args ) {
@@ -51,8 +57,17 @@ public class App {
 		return this.debug;
 	}
 
-	private App() {
+	private App() throws LWJGLException {
+		App.instance = this;
+		this.createWindow();
+	}
 
+	protected void createWindow() throws LWJGLException {
+		Display.setDisplayMode(new DisplayMode(500, 500));
+		Display.setTitle("Mr-Whiz - dev version");
+		Display.create();
+
+		this.input = new Input(Display.getHeight());
 	}
 
 	private void enableDebug() {
@@ -81,5 +96,9 @@ public class App {
 
 	public Map getNextGameMap() {
 		return this.nextGameMap;
+	}
+
+	public Input getInput() {
+		return this.input;
 	}
 }

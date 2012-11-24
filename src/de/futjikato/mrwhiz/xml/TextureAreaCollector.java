@@ -27,6 +27,7 @@ public class TextureAreaCollector extends XmlObject {
 	@Override
 	public void addChildObj(XmlObject mapObj) {
 		if (mapObj instanceof TextureArea) {
+			int count = 0;
 			TextureArea area = (TextureArea) mapObj;
 
 			XmlAttribute attr = area.getAttribute("xywh");
@@ -44,16 +45,20 @@ public class TextureAreaCollector extends XmlObject {
 						if (oArea == null) {
 							// insert if no other area is on that grid
 							this.areamap.put(key, area);
+							count++;
 						} else {
 							// insert if current area if above or on the same
 							// level ( order in xml counts )
 							if (area.compareTo(oArea) >= 0) {
 								this.areamap.put(key, area);
+								count++;
 							}
 						}
 					}
 				}
 			}
+
+			System.out.println("Added " + count + " texture blocks.");
 		}
 	}
 

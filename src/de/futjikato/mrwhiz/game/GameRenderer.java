@@ -8,7 +8,6 @@ import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Renderer;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
-import de.futjikato.mrwhiz.xml.World;
 import de.futjikato.mrwhiz.xml.XmlReader;
 
 public class GameRenderer extends Renderer {
@@ -31,17 +30,14 @@ public class GameRenderer extends Renderer {
 
 		// get xml mapreader from gamemap
 		this.map = App.getInstance().getNextGameMap().getReader();
+
+		// calculate viewport block with & height
+		this.viewPortwb = Display.getWidth() / GameRenderer.BLOCKSIZE;
+		this.viewPorthb = Display.getHeight() / GameRenderer.BLOCKSIZE;
 	}
 
 	@Override
 	protected void renderScene(long delta) {
-
-		// get world object
-		World world = this.map.getWorld();
-
-		if (world == null) {
-			return;
-		}
 
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();

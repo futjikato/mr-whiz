@@ -10,9 +10,9 @@ import de.futjikato.mrwhiz.Renderer;
 import de.futjikato.mrwhiz.xml.Level;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.Map;
-import de.futjikato.mrwhiz.xml.XmlReader;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.World;
+import de.futjikato.mrwhiz.xml.XmlReader;
 import de.futjikato.mrwhiz.xml.attributes.Spawn;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 

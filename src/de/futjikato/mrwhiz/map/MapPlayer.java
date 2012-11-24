@@ -6,11 +6,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import de.futjikato.mrwhiz.Renderable;
 import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 
-public final class MapPlayer implements Renderable {
+public final class MapPlayer {
 
 	private float x;
 	private float y;
@@ -83,7 +82,6 @@ public final class MapPlayer implements Renderable {
 		return 1;
 	}
 
-	@Override
 	public void draw() {
 		GL11.glPushMatrix();
 

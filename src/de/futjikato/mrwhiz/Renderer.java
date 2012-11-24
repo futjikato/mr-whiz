@@ -3,18 +3,12 @@ package de.futjikato.mrwhiz;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Input;
 
 public abstract class Renderer {
 
-	protected int width = 600;
-	protected int height = 600;
-	protected String title = "<Missing title>";
 	protected boolean isStoped;
-
-	protected Input input;
 
 	public void start() {
 
@@ -57,7 +51,7 @@ public abstract class Renderer {
 
 			long delta = this.getDelta();
 
-			this.handleInput(delta, this.input);
+			this.handleInput(delta, App.getInstance().getInput());
 			this.renderScene(delta);
 			this.renderUi(delta);
 
@@ -66,9 +60,6 @@ public abstract class Renderer {
 
 			this.updateFPS();
 		}
-
-		// close window after stopping
-		Display.destroy();
 
 		this.clean();
 	}
@@ -80,14 +71,6 @@ public abstract class Renderer {
 	protected abstract void renderUi(long delta);
 
 	protected abstract void handleInput(long delta, Input input);
-
-	protected void init() throws LWJGLException {
-		Display.setDisplayMode(new DisplayMode(this.width, this.height));
-		Display.setTitle(this.title);
-		Display.create();
-
-		this.input = new Input(Display.getHeight());
-	}
 
 	/**
 	 * ++++++++++++++++++++++++++++++++++++++++++++ FPS calculation and stuff
@@ -139,5 +122,8 @@ public abstract class Renderer {
 		this.lastFrame = this.getTime();
 		this.lastFPS = this.getTime();
 		this.fps = 0;
+	}
+
+	protected void init() throws LWJGLException {
 	}
 }
