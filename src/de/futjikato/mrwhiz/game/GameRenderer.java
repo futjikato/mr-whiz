@@ -17,6 +17,7 @@ public class GameRenderer extends Renderer {
 	protected int height = 500;
 
 	private Gamemap map;
+	private GamePlayer player;
 
 	public static final int BLOCKSIZE = 80;
 
@@ -36,6 +37,9 @@ public class GameRenderer extends Renderer {
 		// calculate viewport block with & height
 		this.viewPortwb = (int) Math.ceil(Display.getWidth() / (double) this.map.getBlocksize().getBlocksize());
 		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getBlocksize());
+
+		// init player
+		this.player = new GamePlayer(100, 300);
 	}
 
 	@Override
@@ -44,6 +48,8 @@ public class GameRenderer extends Renderer {
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
 		areaCollector.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+
+		this.player.render();
 	}
 
 	@Override

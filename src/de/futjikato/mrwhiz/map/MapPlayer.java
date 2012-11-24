@@ -1,6 +1,5 @@
 package de.futjikato.mrwhiz.map;
 
-import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -87,8 +86,6 @@ public final class MapPlayer {
 	}
 
 	public void draw() {
-		GL11.glPushMatrix();
-
 		int spriteIndex = this.getSpriteIndex();
 
 		SpriteSheet sprite = this.getSprite();
