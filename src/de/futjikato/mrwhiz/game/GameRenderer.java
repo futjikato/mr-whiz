@@ -11,7 +11,7 @@ import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.XmlReader;
 
-public class GameRenderer extends Renderer {
+public final class GameRenderer extends Renderer {
 
 	protected int width = 500;
 	protected int height = 500;
@@ -63,6 +63,12 @@ public class GameRenderer extends Renderer {
 		if (Display.isCloseRequested()) {
 			this.isStoped = true;
 		}
+
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+			this.player.jump();
+		}
+
+		this.player.handleInput(delta, input);
 	}
 
 	@Override
