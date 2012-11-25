@@ -12,6 +12,7 @@ public class GamePlayer extends GamePhysicalObject {
 	private float y;
 	private float x;
 	private SpriteSheet glSprite;
+	private int sprintIndex = 0;
 
 	public GamePlayer(float spawnx, float spawny) {
 		this.x = spawnx;
@@ -32,7 +33,7 @@ public class GamePlayer extends GamePhysicalObject {
 
 	public void render() {
 		SpriteSheet sprite = this.getSprite();
-		Image tile = sprite.getSprite(0, 0);
+		Image tile = sprite.getSprite(0, this.sprintIndex);
 
 		// TODO this could eventually be improved a bit ;-)
 		tile.draw(this.x - (GamePlayer.PLAYER_WIDTH / 2), this.y - GamePlayer.PLAYER_HEIGHT);
@@ -44,10 +45,12 @@ public class GamePlayer extends GamePhysicalObject {
 
 		if (input.isKeyDown(Input.KEY_D)) {
 			this.x += 0.1f * delta;
+			this.sprintIndex = 1;
 		}
 
 		if (input.isKeyDown(Input.KEY_A)) {
 			this.x -= 0.1f * delta;
+			this.sprintIndex = 2;
 		}
 	}
 
