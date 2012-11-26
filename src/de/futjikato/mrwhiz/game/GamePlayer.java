@@ -14,6 +14,9 @@ public class GamePlayer extends GamePhysicalObject {
 	private SpriteSheet glSprite;
 	private int sprintIndex = 0;
 
+	private boolean longJump = false;
+	private boolean longJumpPossible = true;
+
 	public GamePlayer(float spawnx, float spawny) {
 		this.x = spawnx;
 		this.y = spawny;
@@ -55,6 +58,17 @@ public class GamePlayer extends GamePhysicalObject {
 	}
 
 	public void jump() {
-		this.setYVel(-1.5f);
+		if (this.isStill()) {
+			this.setYVel(-2.5f);
+			this.longJumpPossible = true;
+			this.longJump = false;
+		} else if (this.getYVel() > -1 && this.longJumpPossible && !this.longJump) {
+			this.setYVel(-2.2f);
+			this.longJump = true;
+		}
+	}
+
+	public void stopJump() {
+		this.longJumpPossible = false;
 	}
 }
