@@ -68,12 +68,6 @@ public final class GameRenderer extends Renderer {
 			this.isStoped = true;
 		}
 
-		if (input.isKeyDown(Input.KEY_SPACE)) {
-			this.player.jump();
-		} else {
-			this.player.stopJump();
-		}
-
 		this.player.handleInput(delta, input);
 	}
 

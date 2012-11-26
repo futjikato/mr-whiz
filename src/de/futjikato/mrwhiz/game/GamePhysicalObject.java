@@ -5,12 +5,6 @@ import de.futjikato.mrwhiz.xml.BlockCollector;
 
 public abstract class GamePhysicalObject extends Physical {
 
-	private boolean still = true;
-
-	protected boolean isStill() {
-		return this.still;
-	}
-
 	@Override
 	protected boolean yCol(float x, float y, int blocksize) {
 		// get block coords
@@ -22,14 +16,11 @@ public abstract class GamePhysicalObject extends Physical {
 
 		boolean free = true;
 		for ( int j = 0 ; j < bh ; j++ ) {
-			if (!BlockCollector.getInstance().isFree(bx, by + j)) {
+			if (!BlockCollector.getInstance().isFree(bx, by - j)) {
 				free = false;
 				break;
 			}
 		}
-
-		// save still state
-		this.still = !free;
 
 		return free;
 	}
@@ -49,9 +40,6 @@ public abstract class GamePhysicalObject extends Physical {
 				break;
 			}
 		}
-
-		// save still state
-		this.still = !free;
 
 		return free;
 	}

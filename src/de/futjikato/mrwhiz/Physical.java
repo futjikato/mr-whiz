@@ -2,6 +2,9 @@ package de.futjikato.mrwhiz;
 
 public abstract class Physical {
 
+	private float x;
+	private float y;
+
 	private float yvel = 0;
 	private float xvel = 0;
 
@@ -40,18 +43,41 @@ public abstract class Physical {
 		this.grip = grip;
 	}
 
-	protected float[] calcNewPos(float x, float y, int blocksize, long delta) {
+	public float getX() {
+		return x;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	protected void calcNewPos(float x, float y, int blocksize, long delta) {
 		// calc new velocitys
 		float yv = this.getYVel();
 		float xv = this.getXvel();
 
-		yv += (yv < 0) ? (delta * 0.015f) : (delta * 0.0015f);
+		// calculate new falling speed
+		if (yv < 0) {
+			yv += delta * 0.005f;
+		} else {
+			yv += delta * 0.002f;
+		}
+
+		// calculate new x-axis speed
 		if (xv > 0) {
 			xv -= delta * 0.1f;
 			if (xv < 0)
 				xv = 0;
 		} else if (xv < 0) {
-			xv = delta * 0.1f;
+			xv += delta * 0.1f;
 			if (xv > 0)
 				xv = 0;
 		}
@@ -70,14 +96,15 @@ public abstract class Physical {
 		float nx = delta * xv;
 
 		if (this.yCol(x, y + ny, blocksize)) {
-			y += ny;
+			this.setY(this.getY() + ny);
+		} else {
+			// reset y velocity on landing somewhere
+			this.setYVel(0);
 		}
 
 		if (this.xCol(x + nx, y, blocksize)) {
-			x += nx;
+			this.setX(this.getX() + nx);
 		}
-
-		return new float[] { x, y };
 	}
 
 	protected abstract boolean yCol(float x, float y, int blocksize);

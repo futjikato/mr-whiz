@@ -9,21 +9,20 @@ public class GamePlayer extends GamePhysicalObject {
 	private static final int PLAYER_WIDTH = 80;
 	private static final int PLAYER_HEIGHT = 149;
 
-	private float y;
-	private float x;
 	private int blocksize;
 	private SpriteSheet glSprite;
 	private int sprintIndex = 0;
 
 	private boolean longJump = false;
-	private boolean longJumpPossible = true;
+	private boolean jumpKeyPressed = true;
 
 	public GamePlayer(float spawnx, float spawny, int blocksize) {
-		this.x = spawnx;
-		this.y = spawny;
+		this.setX(spawnx);
+		this.setY(spawny);
 		this.blocksize = blocksize;
 
 		this.setGrip(1.2f);
+		this.setMaxYVal(1.5f);
 	}
 
 	private SpriteSheet getSprite() {
@@ -43,39 +42,39 @@ public class GamePlayer extends GamePhysicalObject {
 		Image tile = sprite.getSprite(0, this.sprintIndex);
 
 		// TODO this could eventually be improved a bit ;-)
-		tile.draw(this.x - (GamePlayer.PLAYER_WIDTH / 2), this.y - GamePlayer.PLAYER_HEIGHT);
+		tile.draw(this.getX() - (GamePlayer.PLAYER_WIDTH / 2), this.getY() - GamePlayer.PLAYER_HEIGHT);
 	}
 
 	public void handleInput(long delta, Input input) {
 		// get new y position
-		float[] newPositions = this.calcNewPos(this.x, this.y, this.blocksize, delta);
-		this.x = newPositions[0];
-		this.y = newPositions[1];
+		this.calcNewPos(this.getX(), this.getY(), this.blocksize, delta);
 
 		if (input.isKeyDown(Input.KEY_D)) {
-			this.setXvel(1);
+			this.setXvel(0.5f);
 			this.sprintIndex = 1;
 		}
 
 		if (input.isKeyDown(Input.KEY_A)) {
-			this.setXvel(-1);
+			this.setXvel(-0.5f);
 			this.sprintIndex = 2;
+		}
+
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+			this.jump();
+		} else {
+			this.jumpKeyPressed = false;
 		}
 	}
 
 	public void jump() {
-		if (this.isStill()) {
-			this.setYVel(-2.5f);
-			this.longJumpPossible = true;
+		if (this.getYVel() == 0) {
+			this.setYVel(-1.2f);
 			this.longJump = false;
-		} else if (this.getYVel() > -1 && this.longJumpPossible && !this.longJump) {
-			this.setYVel(-2.2f);
+			this.jumpKeyPressed = true;
+		} else if (this.getYVel() > -0.7 && this.getYVel() < -0.5 && this.jumpKeyPressed && !this.longJump) {
+			this.setYVel(-0.9f);
 			this.longJump = true;
 		}
-	}
-
-	public void stopJump() {
-		this.longJumpPossible = false;
 	}
 
 	@Override
