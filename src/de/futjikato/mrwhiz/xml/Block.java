@@ -25,7 +25,9 @@ public class Block extends XmlObject {
 
 		int abX = this.getDimensions().getX() * blocksize;
 		int abY = this.getDimensions().getY() * blocksize;
+		int abW = this.getDimensions().getW() * blocksize;
+		int abH = this.getDimensions().getH() * blocksize;
 
-		gra.drawImage(img, abX, abY);
+		gra.drawImage(img, abX, abY, abX + abW, abY + abH, 0, 0, img.getWidth(), img.getHeight());
 	}
 }

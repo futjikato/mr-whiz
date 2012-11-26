@@ -12,17 +12,51 @@ public abstract class GamePhysicalObject extends Physical {
 	}
 
 	@Override
-	protected boolean checkCollide(float x, float y, int blocksize) {
-
+	protected boolean yCol(float x, float y, int blocksize) {
 		// get block coords
-		int bx = (int) Math.floor(x / blocksize);
 		int by = (int) Math.floor(y / blocksize);
+		int bx = (int) Math.floor(x / blocksize);
 
-		boolean retVal = BlockCollector.getInstance().isFree(bx, by);
+		// calc block height
+		int bh = this.getHeight() / blocksize;
+
+		boolean free = true;
+		for ( int j = 0 ; j < bh ; j++ ) {
+			if (!BlockCollector.getInstance().isFree(bx, by + j)) {
+				free = false;
+				break;
+			}
+		}
 
 		// save still state
-		this.still = !retVal;
+		this.still = !free;
 
-		return retVal;
+		return free;
 	}
+
+	protected boolean xCol(float x, float y, int blocksize) {
+		// get block coords
+		int by = (int) Math.floor(y / blocksize);
+		int bx = (int) Math.floor(x / blocksize);
+
+		// calc block height
+		int bw = this.getWidth() / blocksize;
+
+		boolean free = true;
+		for ( int j = 0 ; j < bw ; j++ ) {
+			if (!BlockCollector.getInstance().isFree(bx + j, by)) {
+				free = false;
+				break;
+			}
+		}
+
+		// save still state
+		this.still = !free;
+
+		return free;
+	}
+
+	protected abstract int getHeight();
+
+	protected abstract int getWidth();
 }

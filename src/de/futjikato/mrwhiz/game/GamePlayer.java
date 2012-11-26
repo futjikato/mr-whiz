@@ -22,6 +22,8 @@ public class GamePlayer extends GamePhysicalObject {
 		this.x = spawnx;
 		this.y = spawny;
 		this.blocksize = blocksize;
+
+		this.setGrip(1.2f);
 	}
 
 	private SpriteSheet getSprite() {
@@ -46,15 +48,17 @@ public class GamePlayer extends GamePhysicalObject {
 
 	public void handleInput(long delta, Input input) {
 		// get new y position
-		this.y = this.calcY(this.x, this.y, this.blocksize, delta);
+		float[] newPositions = this.calcNewPos(this.x, this.y, this.blocksize, delta);
+		this.x = newPositions[0];
+		this.y = newPositions[1];
 
 		if (input.isKeyDown(Input.KEY_D)) {
-			this.x += 0.1f * delta;
+			this.setXvel(1);
 			this.sprintIndex = 1;
 		}
 
 		if (input.isKeyDown(Input.KEY_A)) {
-			this.x -= 0.1f * delta;
+			this.setXvel(-1);
 			this.sprintIndex = 2;
 		}
 	}
@@ -72,5 +76,15 @@ public class GamePlayer extends GamePhysicalObject {
 
 	public void stopJump() {
 		this.longJumpPossible = false;
+	}
+
+	@Override
+	protected int getHeight() {
+		return PLAYER_HEIGHT;
+	}
+
+	@Override
+	protected int getWidth() {
+		return PLAYER_WIDTH;
 	}
 }

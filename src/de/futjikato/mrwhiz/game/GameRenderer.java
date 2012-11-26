@@ -40,7 +40,7 @@ public final class GameRenderer extends Renderer {
 		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getBlocksize());
 
 		// init player
-		this.player = new GamePlayer(100, 300, this.map.getBlocksize().getBlocksize());
+		this.player = new GamePlayer(100, 200, this.map.getBlocksize().getBlocksize());
 	}
 
 	@Override

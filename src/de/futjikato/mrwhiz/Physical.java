@@ -2,40 +2,85 @@ package de.futjikato.mrwhiz;
 
 public abstract class Physical {
 
-	private float yvel;
+	private float yvel = 0;
+	private float xvel = 0;
 
-	public static final float MAX_Y_SPPED = 1.8f;
+	private float maxYVal;
+	private float grip;
 
-	protected float getYVel() {
+	public float getYVel() {
 		return this.yvel;
 	}
 
-	protected void setYVel(float vel) {
+	public void setYVel(float vel) {
 		this.yvel = vel;
 	}
 
-	protected float calcY(float x, float y, int blocksize, long delta) {
-		// calc new falling speed
-		float yv = this.getYVel();
-		yv += (yv < 0) ? (delta * 0.015f) : (delta * 0.0015f);
+	public float getXvel() {
+		return xvel;
+	}
 
-		// limit fall speed
-		if (yv > MAX_Y_SPPED) {
-			yv = MAX_Y_SPPED;
+	public void setXvel(float xvel) {
+		this.xvel = xvel;
+	}
+
+	public float getMaxYVal() {
+		return maxYVal;
+	}
+
+	public void setMaxYVal(float maxYVal) {
+		this.maxYVal = maxYVal;
+	}
+
+	public float getGrip() {
+		return grip;
+	}
+
+	public void setGrip(float grip) {
+		this.grip = grip;
+	}
+
+	protected float[] calcNewPos(float x, float y, int blocksize, long delta) {
+		// calc new velocitys
+		float yv = this.getYVel();
+		float xv = this.getXvel();
+
+		yv += (yv < 0) ? (delta * 0.015f) : (delta * 0.0015f);
+		if (xv > 0) {
+			xv -= delta * 0.1f;
+			if (xv < 0)
+				xv = 0;
+		} else if (xv < 0) {
+			xv = delta * 0.1f;
+			if (xv > 0)
+				xv = 0;
 		}
 
-		// set new falling speed
+		// limit fall speed
+		if (yv > this.getMaxYVal()) {
+			yv = this.getMaxYVal();
+		}
+
+		// set new velocitys
 		this.setYVel(yv);
+		this.setXvel(xv);
 
 		// set new y position
 		float ny = delta * yv;
+		float nx = delta * xv;
 
-		if (this.checkCollide(x, y + ny, blocksize)) {
+		if (this.yCol(x, y + ny, blocksize)) {
 			y += ny;
 		}
 
-		return y;
+		if (this.xCol(x + nx, y, blocksize)) {
+			x += nx;
+		}
+
+		return new float[] { x, y };
 	}
 
-	protected abstract boolean checkCollide(float x, float y, int blocksize);
+	protected abstract boolean yCol(float x, float y, int blocksize);
+
+	protected abstract boolean xCol(float x, float y, int blocksize);
 }
