@@ -6,15 +6,15 @@ import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 
 public final class BlockCollector extends XmlObject {
 
-	private HashMap<String, Block> areamap;
+	private HashMap<String, Block> areamap = new HashMap<String, Block>();
 
-	private BlockCollector instance;
+	private static BlockCollector instance;
 
 	private BlockCollector() {
 
 	}
 
-	public BlockCollector getInstance() {
+	public static BlockCollector getInstance() {
 		if (instance == null) {
 			instance = new BlockCollector();
 		}
@@ -46,9 +46,16 @@ public final class BlockCollector extends XmlObject {
 
 				// draw area if there is one
 				if (block != null) {
-					block.draw();
+					block.draw(blocksize);
 				}
 			}
 		}
+	}
+
+	public boolean isFree(int bx, int by) {
+		String key = String.format("%d,%d", bx, by);
+		Block block = this.areamap.get(key);
+
+		return block == null;
 	}
 }

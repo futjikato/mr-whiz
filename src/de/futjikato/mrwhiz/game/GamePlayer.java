@@ -11,15 +11,17 @@ public class GamePlayer extends GamePhysicalObject {
 
 	private float y;
 	private float x;
+	private int blocksize;
 	private SpriteSheet glSprite;
 	private int sprintIndex = 0;
 
 	private boolean longJump = false;
 	private boolean longJumpPossible = true;
 
-	public GamePlayer(float spawnx, float spawny) {
+	public GamePlayer(float spawnx, float spawny, int blocksize) {
 		this.x = spawnx;
 		this.y = spawny;
+		this.blocksize = blocksize;
 	}
 
 	private SpriteSheet getSprite() {
@@ -44,7 +46,7 @@ public class GamePlayer extends GamePhysicalObject {
 
 	public void handleInput(long delta, Input input) {
 		// get new y position
-		this.y = this.calcY(this.y, delta);
+		this.y = this.calcY(this.x, this.y, this.blocksize, delta);
 
 		if (input.isKeyDown(Input.KEY_D)) {
 			this.x += 0.1f * delta;

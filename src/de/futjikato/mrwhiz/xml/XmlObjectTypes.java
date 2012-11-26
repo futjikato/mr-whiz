@@ -60,6 +60,18 @@ public enum XmlObjectTypes {
 		public XmlObject getType() {
 			return new Music();
 		}
+	},
+
+	blocks {
+		public XmlObject getType() {
+			return BlockCollector.getInstance();
+		}
+	},
+
+	block {
+		public XmlObject getType() {
+			return new Block();
+		}
 	};
 
 	public abstract XmlObject getType();

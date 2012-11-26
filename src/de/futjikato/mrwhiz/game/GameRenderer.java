@@ -6,6 +6,7 @@ import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Renderer;
+import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Gamemap;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
@@ -39,7 +40,7 @@ public final class GameRenderer extends Renderer {
 		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getBlocksize());
 
 		// init player
-		this.player = new GamePlayer(100, 300);
+		this.player = new GamePlayer(100, 300, this.map.getBlocksize().getBlocksize());
 	}
 
 	@Override
@@ -48,6 +49,9 @@ public final class GameRenderer extends Renderer {
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
 		areaCollector.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+
+		// render blocks
+		BlockCollector.getInstance().drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
 
 		this.player.render();
 	}

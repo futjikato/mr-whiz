@@ -14,7 +14,7 @@ public abstract class Physical {
 		this.yvel = vel;
 	}
 
-	protected float calcY(float y, long delta) {
+	protected float calcY(float x, float y, int blocksize, long delta) {
 		// calc new falling speed
 		float yv = this.getYVel();
 		yv += (yv < 0) ? (delta * 0.015f) : (delta * 0.0015f);
@@ -30,12 +30,12 @@ public abstract class Physical {
 		// set new y position
 		float ny = delta * yv;
 
-		if (this.checkCollide(y + ny)) {
+		if (this.checkCollide(x, y + ny, blocksize)) {
 			y += ny;
 		}
 
 		return y;
 	}
 
-	protected abstract boolean checkCollide(float y);
+	protected abstract boolean checkCollide(float x, float y, int blocksize);
 }

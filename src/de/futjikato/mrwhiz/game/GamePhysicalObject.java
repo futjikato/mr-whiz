@@ -1,8 +1,7 @@
 package de.futjikato.mrwhiz.game;
 
-import org.lwjgl.opengl.Display;
-
 import de.futjikato.mrwhiz.Physical;
+import de.futjikato.mrwhiz.xml.BlockCollector;
 
 public abstract class GamePhysicalObject extends Physical {
 
@@ -13,9 +12,13 @@ public abstract class GamePhysicalObject extends Physical {
 	}
 
 	@Override
-	protected boolean checkCollide(float y) {
-		// TODO instead of floor check where blocks are
-		boolean retVal = y < Display.getHeight();
+	protected boolean checkCollide(float x, float y, int blocksize) {
+
+		// get block coords
+		int bx = (int) Math.floor(x / blocksize);
+		int by = (int) Math.floor(y / blocksize);
+
+		boolean retVal = BlockCollector.getInstance().isFree(bx, by);
 
 		// save still state
 		this.still = !retVal;
