@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <worldmap spawn="55,55" blocksize="50">
-	<music volume="0.1"><![CDATA[music/dummy/MenuMusic.ogg]]></music>
+	<!-- <music volume="0.1"><![CDATA[music/dummy/MenuMusic.ogg]]></music> -->
 	<decorations>
 		<!-- List of decoration objects -->
 	</decorations>
