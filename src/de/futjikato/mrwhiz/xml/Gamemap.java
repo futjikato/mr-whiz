@@ -29,12 +29,4 @@ public class Gamemap extends XmlObject {
 
 		return this.blocksize;
 	}
-
-	public void renderWorld(int bx, int by, int bw, int bh) {
-		Blocksize blocksize = this.getBlocksize();
-
-		// render all texture areas in viewport
-		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-		areaCollector.drawBlocks(bx, by, bw, bh, blocksize.getBlocksize());
-	}
 }

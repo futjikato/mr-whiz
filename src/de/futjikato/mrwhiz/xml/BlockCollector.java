@@ -1,6 +1,8 @@
 package de.futjikato.mrwhiz.xml;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 
@@ -66,5 +68,25 @@ public final class BlockCollector extends XmlObject {
 		}
 
 		return true;
+	}
+
+	public List<Block> getBlocksByBlockCoords(int bx, int by, int bw, int bh, int blocksize) {
+
+		List<Block> list = new ArrayList<Block>();
+
+		// run thought all requested blocks
+		for ( int i = -20 ; i < bw ; i++ ) {
+			for ( int j = -20 ; j < bh ; j++ ) {
+				String key = String.format("%d,%d", bx + i, by + j);
+				Block block = this.areamap.get(key);
+
+				// draw area if there is one
+				if (block != null) {
+					list.add(block);
+				}
+			}
+		}
+
+		return list;
 	}
 }

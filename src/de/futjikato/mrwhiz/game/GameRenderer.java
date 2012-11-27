@@ -1,11 +1,14 @@
 package de.futjikato.mrwhiz.game;
 
+import java.util.List;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Renderer;
+import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Gamemap;
 import de.futjikato.mrwhiz.xml.LevelCollector;
@@ -22,6 +25,8 @@ public final class GameRenderer extends Renderer {
 
 	public static final int BLOCKSIZE = 80;
 
+	private float viewPortX = 0.0f;
+	private float viewPortY = 0.0f;
 	private int viewPortxb = 0;
 	private int viewPortyb = 0;
 	private int viewPortwb;
@@ -36,8 +41,8 @@ public final class GameRenderer extends Renderer {
 		this.map = reader.getGame();
 
 		// calculate viewport block with & height
-		this.viewPortwb = (int) Math.ceil(Display.getWidth() / (double) this.map.getBlocksize().getBlocksize());
-		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getBlocksize());
+		this.viewPortwb = (int) Math.ceil(Display.getWidth() / (double) this.map.getBlocksize().getBlocksize()) + 1;
+		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getBlocksize()) + 1;
 
 		// init player
 		this.player = new GamePlayer(100, 200, this.map.getBlocksize().getBlocksize());
@@ -45,15 +50,20 @@ public final class GameRenderer extends Renderer {
 
 	@Override
 	protected void renderScene(long delta) {
+		// calc new screen position
+		this.calcNewScreenViewportPosition();
 
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-		areaCollector.drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+		areaCollector.drawBlocks(this.viewPortX, this.viewPortY, this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
 
 		// render blocks
-		BlockCollector.getInstance().drawBlocks(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+		List<Block> blocks = BlockCollector.getInstance().getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+		for ( Block block : blocks ) {
+			block.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getBlocksize());
+		}
 
-		this.player.render();
+		this.player.render(this.viewPortX, this.viewPortY);
 	}
 
 	@Override
@@ -81,5 +91,18 @@ public final class GameRenderer extends Renderer {
 	protected void clean() {
 		LevelCollector.getInstance().clean();
 		TextureAreaCollector.getInstance().clean();
+	}
+
+	private void calcNewScreenViewportPosition() {
+		float playerX = this.player.getX();
+		float playerY = this.player.getY();
+
+		this.viewPortX = playerX - (Display.getWidth() / 2) - (this.player.getWidth() / 2);
+		this.viewPortY = playerY - (Display.getHeight() / 2) - (this.player.getHeight() / 2);
+
+		// TODO check if we can center camera or if we need to add/sub an offset
+
+		this.viewPortxb = (int) Math.floor(this.viewPortX / this.map.getBlocksize().getBlocksize());
+		this.viewPortyb = (int) Math.floor(this.viewPortY / this.map.getBlocksize().getBlocksize());
 	}
 }

@@ -37,12 +37,12 @@ public class GamePlayer extends GamePhysicalObject {
 		return this.glSprite;
 	}
 
-	public void render() {
+	public void render(float vpx, float vpy) {
 		SpriteSheet sprite = this.getSprite();
 		Image tile = sprite.getSprite(0, this.sprintIndex);
 
 		// TODO this could eventually be improved a bit ;-)
-		tile.draw(this.getX() - (GamePlayer.PLAYER_WIDTH / 2), this.getY() - GamePlayer.PLAYER_HEIGHT);
+		tile.draw(this.getX() - vpx - (GamePlayer.PLAYER_WIDTH / 2), this.getY() - vpy - GamePlayer.PLAYER_HEIGHT);
 	}
 
 	public void handleInput(long delta, Input input) {
