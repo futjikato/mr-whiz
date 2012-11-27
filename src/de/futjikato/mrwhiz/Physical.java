@@ -73,11 +73,11 @@ public abstract class Physical {
 
 		// calculate new x-axis speed
 		if (xv > 0) {
-			xv -= delta * 0.1f;
+			xv -= delta * 0.01f;
 			if (xv < 0)
 				xv = 0;
 		} else if (xv < 0) {
-			xv += delta * 0.1f;
+			xv += delta * 0.01f;
 			if (xv > 0)
 				xv = 0;
 		}
