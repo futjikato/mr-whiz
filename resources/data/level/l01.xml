@@ -10,10 +10,16 @@
 		<block xywh="3,3,1,1">
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
-		<block xywh="1,4,1,1">
+		<block xywh="1,4,2,1">
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
-		<block xywh="2,4,1,1">
+		<block xywh="4,4,1,1">
+			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
+		</block>
+		<block xywh="5,3,1,1">
+			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
+		</block>
+		<block xywh="5,2,1,1">
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
 	</blocks>
