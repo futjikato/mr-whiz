@@ -21,6 +21,7 @@ public final class GameRenderer extends Renderer {
 	protected int height = 500;
 
 	private Gamemap map;
+	private GameUi ui;
 	private GamePlayer player;
 
 	public static final int BLOCKSIZE = 80;
@@ -46,6 +47,9 @@ public final class GameRenderer extends Renderer {
 
 		// init player
 		this.player = new GamePlayer(100, 200, this.map.getBlocksize().getBlocksize());
+
+		// init ui
+		this.ui = new GameUi(this.player);
 	}
 
 	@Override
@@ -68,8 +72,7 @@ public final class GameRenderer extends Renderer {
 
 	@Override
 	protected void renderUi(long delta) {
-		// TODO Auto-generated method stub
-
+		this.ui.update();
 	}
 
 	@Override
@@ -83,8 +86,7 @@ public final class GameRenderer extends Renderer {
 
 	@Override
 	protected void printFps(long fps) {
-		// TODO Auto-generated method stub
-
+		this.ui.setFps(fps);
 	}
 
 	@Override

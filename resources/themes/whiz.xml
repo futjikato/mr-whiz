@@ -35,6 +35,10 @@
 		<theme name="label" ref="-defaults"></theme>
 	</theme>
 	
+	<theme name="gameui" ref="-defaults" allowWildcard="true">
+		<theme name="label" ref="-defaults"></theme>
+	</theme>
+	
 	<theme name="tooltipwindow" ref="-defaults" allowWildcard="true">
     	<param name="fadeInTime"><int>100</int></param>
     </theme>

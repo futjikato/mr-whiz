@@ -2,7 +2,7 @@
 <gamemap spawn="55,55" blocksize="80">
 	<!-- Level background -->
 	<textureAreas>
-		<area xywh="0,0,8,8" zIndex="0.0">
+		<area xywh="-10,-5,30,15" zIndex="0.0">
 			<texture><![CDATA[images/backgrounds/concrete_wall.png]]></texture>
 		</area>
 	</textureAreas>
