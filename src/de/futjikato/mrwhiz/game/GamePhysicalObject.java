@@ -1,6 +1,7 @@
 package de.futjikato.mrwhiz.game;
 
 import de.futjikato.mrwhiz.Physical;
+import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
 
 public abstract class GamePhysicalObject extends Physical {
@@ -16,8 +17,10 @@ public abstract class GamePhysicalObject extends Physical {
 
 		boolean free = true;
 		for ( int j = 0 ; j < bh ; j++ ) {
-			if (!BlockCollector.getInstance().isFree(bx, by - j)) {
+			Block block = BlockCollector.getInstance().getBlock(bx, by + j);
+			if (block != null) {
 				free = false;
+				this.hitBlock(block);
 				break;
 			}
 		}
@@ -35,8 +38,10 @@ public abstract class GamePhysicalObject extends Physical {
 
 		boolean free = true;
 		for ( int j = 0 ; j < bw ; j++ ) {
-			if (!BlockCollector.getInstance().isFree(bx + j, by)) {
+			Block block = BlockCollector.getInstance().getBlock(bx + j, by);
+			if (block != null) {
 				free = false;
+				this.hitBlock(block);
 				break;
 			}
 		}
@@ -47,4 +52,6 @@ public abstract class GamePhysicalObject extends Physical {
 	protected abstract int getHeight();
 
 	protected abstract int getWidth();
+
+	protected abstract void hitBlock(Block block);
 }

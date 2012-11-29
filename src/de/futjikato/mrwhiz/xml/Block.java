@@ -3,6 +3,10 @@ package de.futjikato.mrwhiz.xml;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import de.futjikato.mrwhiz.xml.attributes.Damage;
+import de.futjikato.mrwhiz.xml.attributes.Speed;
+import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
+
 public class Block extends XmlObject {
 
 	private Texture texture;
@@ -34,5 +38,23 @@ public class Block extends XmlObject {
 		int abH = this.getDimensions().getH() * blocksize;
 
 		gra.drawImage(img, abX, abY, abX + abW, abY + abH, 0, 0, img.getWidth(), img.getHeight());
+	}
+
+	public int getDamage() {
+		XmlAttribute xmlAttr = this.getAttribute("damage");
+		if (xmlAttr instanceof Damage) {
+			Damage dmg = (Damage) xmlAttr;
+			return dmg.getDemaga();
+		}
+		return 0;
+	}
+
+	public float getSpeed() {
+		XmlAttribute xmlAttr = this.getAttribute("speed");
+		if (xmlAttr instanceof Speed) {
+			Speed dmg = (Speed) xmlAttr;
+			return dmg.getSpeed();
+		}
+		return 0.0f;
 	}
 }

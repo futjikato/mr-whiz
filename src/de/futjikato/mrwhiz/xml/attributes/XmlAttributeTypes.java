@@ -56,6 +56,13 @@ public enum XmlAttributeTypes {
 		public XmlAttribute getAttribute() {
 			return new Volume();
 		}
+	},
+
+	damage {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Damage();
+		}
 	};
 
 	public abstract XmlAttribute getAttribute();

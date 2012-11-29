@@ -55,19 +55,7 @@ public final class BlockCollector extends XmlObject {
 	}
 
 	public boolean isFree(int bx, int by) {
-		for ( int ox = 0 ; ox > -20 ; ox-- ) {
-			for ( int oy = 0 ; oy > -20 ; oy-- ) {
-				String key = String.format("%d,%d", bx + ox, by + oy);
-				Block block = this.areamap.get(key);
-
-				// check if there is a block
-				if (block != null && (block.getDimensions().getW() >= (-ox + 1)) && (block.getDimensions().getH() >= (-oy + 1))) {
-					return false;
-				}
-			}
-		}
-
-		return true;
+		return (this.getBlock(bx, by) == null);
 	}
 
 	public List<Block> getBlocksByBlockCoords(int bx, int by, int bw, int bh, int blocksize) {
@@ -88,5 +76,21 @@ public final class BlockCollector extends XmlObject {
 		}
 
 		return list;
+	}
+
+	public Block getBlock(int bx, int by) {
+		for ( int ox = 0 ; ox > -20 ; ox-- ) {
+			for ( int oy = 0 ; oy > -20 ; oy-- ) {
+				String key = String.format("%d,%d", bx + ox, by + oy);
+				Block block = this.areamap.get(key);
+
+				// check if there is a block
+				if (block != null && (block.getDimensions().getW() >= (-ox + 1)) && (block.getDimensions().getH() >= (-oy + 1))) {
+					return block;
+				}
+			}
+		}
+
+		return null;
 	}
 }

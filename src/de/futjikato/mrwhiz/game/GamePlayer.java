@@ -5,9 +5,14 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import de.futjikato.mrwhiz.xml.Block;
+
 public class GamePlayer extends GamePhysicalObject {
 	private static final int PLAYER_WIDTH = 80;
 	private static final int PLAYER_HEIGHT = 149;
+
+	private float spawnX;
+	private float spawnY;
 
 	private int blocksize;
 	private SpriteSheet glSprite;
@@ -16,13 +21,24 @@ public class GamePlayer extends GamePhysicalObject {
 	private boolean longJump = false;
 	private boolean jumpKeyPressed = true;
 
+	private static final float BASE_SPEED = 0.5f;
+	private float speed;
+
+	private static final int START_HEALTH = 100;
+	private int health;
+
 	public GamePlayer(float spawnx, float spawny, int blocksize) {
+		this.spawnX = spawnx;
+		this.spawnY = spawny;
 		this.setX(spawnx);
 		this.setY(spawny);
 		this.blocksize = blocksize;
 
 		this.setGrip(1.2f);
 		this.setMaxYVal(1.5f);
+
+		this.speed = BASE_SPEED;
+		this.health = START_HEALTH;
 	}
 
 	private SpriteSheet getSprite() {
@@ -35,6 +51,28 @@ public class GamePlayer extends GamePhysicalObject {
 		}
 
 		return this.glSprite;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setBlockSpeed(float speed) {
+		this.speed = BASE_SPEED + speed;
+	}
+
+	public void damage(int dmg) {
+		this.health -= dmg;
+
+		if (this.health <= 0) {
+			this.die();
+		}
+	}
+
+	private void die() {
+		System.out.println("You´re dead to me son.");
+		this.setX(this.spawnX);
+		this.setY(this.spawnY);
 	}
 
 	public void render(float vpx, float vpy) {
@@ -50,12 +88,12 @@ public class GamePlayer extends GamePhysicalObject {
 		this.calcNewPos(this.getX(), this.getY(), this.blocksize, delta);
 
 		if (input.isKeyDown(Input.KEY_D)) {
-			this.setXvel(0.5f);
+			this.setXvel(this.speed);
 			this.sprintIndex = 1;
 		}
 
 		if (input.isKeyDown(Input.KEY_A)) {
-			this.setXvel(-0.5f);
+			this.setXvel(-this.speed);
 			this.sprintIndex = 2;
 		}
 
@@ -85,5 +123,18 @@ public class GamePlayer extends GamePhysicalObject {
 	@Override
 	protected int getWidth() {
 		return PLAYER_WIDTH;
+	}
+
+	@Override
+	protected void hitBlock(Block block) {
+		int dmg = block.getDamage();
+		if (dmg > 0) {
+			this.damage(dmg);
+		}
+
+		float speed = block.getSpeed();
+		if (speed > 0) {
+			this.setBlockSpeed(speed);
+		}
 	}
 }

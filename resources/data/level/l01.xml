@@ -22,5 +22,8 @@
 		<block xywh="5,2,1,1">
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
+		<block xywh="6,2,1,1" damage="110">
+			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
+		</block>
 	</blocks>
 </gamemap>
