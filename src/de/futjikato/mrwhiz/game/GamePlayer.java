@@ -5,6 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import de.futjikato.mrwhiz.game.events.EventRespawn;
 import de.futjikato.mrwhiz.xml.Block;
 
 public class GamePlayer extends GamePhysicalObject {
@@ -26,6 +27,7 @@ public class GamePlayer extends GamePhysicalObject {
 
 	private static final int START_HEALTH = 100;
 	private int health;
+	private boolean alive = true;
 
 	public GamePlayer(float spawnx, float spawny, int blocksize) {
 		this.spawnX = spawnx;
@@ -70,9 +72,18 @@ public class GamePlayer extends GamePhysicalObject {
 	}
 
 	private void die() {
-		System.out.println("You´re dead to me son.");
+		if (this.alive) {
+			this.alive = false;
+			System.out.println("You´re dead to me son.");
+			EventRespawn respawn = new EventRespawn(this);
+			GameTimeTrigger.getInstance().addEvent(respawn);
+		}
+	}
+
+	public void respawn() {
 		this.setX(this.spawnX);
 		this.setY(this.spawnY);
+		this.alive = true;
 	}
 
 	public void render(float vpx, float vpy) {
@@ -86,6 +97,9 @@ public class GamePlayer extends GamePhysicalObject {
 	public void handleInput(long delta, Input input) {
 		// get new y position
 		this.calcNewPos(this.getX(), this.getY(), this.blocksize, delta);
+
+		if (!this.alive)
+			return;
 
 		if (input.isKeyDown(Input.KEY_D)) {
 			this.setXvel(this.speed);
@@ -127,6 +141,10 @@ public class GamePlayer extends GamePhysicalObject {
 
 	@Override
 	protected void hitBlock(Block block) {
+
+		if (!this.alive)
+			return;
+
 		int dmg = block.getDamage();
 		if (dmg > 0) {
 			this.damage(dmg);
