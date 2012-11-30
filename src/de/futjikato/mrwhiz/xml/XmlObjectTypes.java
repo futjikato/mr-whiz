@@ -72,6 +72,18 @@ public enum XmlObjectTypes {
 		public XmlObject getType() {
 			return new Block();
 		}
+	},
+
+	items {
+		public XmlObject getType() {
+			return ItemCollector.getInstance();
+		}
+	},
+
+	item {
+		public XmlObject getType() {
+			return new Item();
+		}
 	};
 
 	public abstract XmlObject getType();

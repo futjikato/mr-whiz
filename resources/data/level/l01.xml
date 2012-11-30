@@ -7,7 +7,13 @@
 		</area>
 	</textureAreas>
 	<blocks>
+		<block xywh="3,1,1,1">
+			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
+		</block>
 		<block xywh="3,3,1,1">
+			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
+		</block>
+		<block xywh="-2,4,3,1">
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
 		<block speed="0.5" xywh="1,4,2,1">
@@ -26,4 +32,9 @@
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
 	</blocks>
+	<items>
+		<item score="50" xywh="2,2,1,1">
+			<texture><![CDATA[images/items/dev_money.png]]></texture>
+		</item>
+	</items>
 </gamemap>

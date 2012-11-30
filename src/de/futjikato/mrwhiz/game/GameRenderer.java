@@ -11,6 +11,8 @@ import de.futjikato.mrwhiz.Renderer;
 import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Gamemap;
+import de.futjikato.mrwhiz.xml.Item;
+import de.futjikato.mrwhiz.xml.ItemCollector;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.XmlReader;
@@ -65,6 +67,12 @@ public final class GameRenderer extends Renderer {
 		List<Block> blocks = BlockCollector.getInstance().getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
 		for ( Block block : blocks ) {
 			block.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getBlocksize());
+		}
+
+		// render items
+		List<Item> items = ItemCollector.getInstance().getItemsByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+		for ( Item item : items ) {
+			item.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getBlocksize());
 		}
 
 		this.player.render(this.viewPortX, this.viewPortY);

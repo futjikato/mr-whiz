@@ -63,6 +63,13 @@ public enum XmlAttributeTypes {
 		public XmlAttribute getAttribute() {
 			return new Damage();
 		}
+	},
+
+	score {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Score();
+		}
 	};
 
 	public abstract XmlAttribute getAttribute();

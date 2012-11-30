@@ -39,6 +39,7 @@ public final class BlockCollector extends XmlObject {
 		}
 	}
 
+	@Deprecated
 	public void drawBlocks(int bx, int by, int bw, int bh, int blocksize) {
 		// run thought all requested blocks
 		for ( int i = -20 ; i < bw ; i++ ) {

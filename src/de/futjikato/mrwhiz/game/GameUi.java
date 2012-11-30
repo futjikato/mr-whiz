@@ -18,8 +18,11 @@ public final class GameUi extends Widget {
 	private GamePlayer player;
 	private GUI gui;
 	private ThemeManager theme;
+
 	private Label fps;
 	private long fpsValue;
+
+	private Label score;
 
 	public GameUi(GamePlayer player) throws LWJGLException {
 		this.player = player;
@@ -46,11 +49,19 @@ public final class GameUi extends Widget {
 		this.fps = new Label();
 		this.fps.setText(String.format("FPS: %d", this.fpsValue));
 		this.add(this.fps);
+
+		// init score label
+		this.score = new Label();
+		this.score.setText(String.format("Score: %d", this.player.getScore()));
+		this.add(this.score);
 	}
 
 	public void update() {
 		// update fps label
 		this.fps.setText(String.format("FPS: %d", this.fpsValue));
+
+		// update score
+		this.score.setText(String.format("Score: %d", this.player.getScore()));
 
 		this.gui.update();
 	}
@@ -60,6 +71,10 @@ public final class GameUi extends Widget {
 		// fps label
 		this.fps.setPosition(20, Display.getHeight() - 60);
 		this.fps.adjustSize();
+
+		// score label
+		this.score.setPosition(20, Display.getHeight() - 90);
+		this.score.adjustSize();
 	}
 
 	public void setFps(long fps) {

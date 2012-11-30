@@ -28,6 +28,7 @@ public abstract class GamePhysicalObject extends Physical {
 		return free;
 	}
 
+	@Override
 	protected boolean xCol(float x, float y, int blocksize) {
 		// get block coords
 		int by = (int) Math.floor(y / blocksize);

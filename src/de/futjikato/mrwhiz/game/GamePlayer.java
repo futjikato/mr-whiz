@@ -8,6 +8,9 @@ import org.newdawn.slick.SpriteSheet;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.Block;
+import de.futjikato.mrwhiz.xml.BlockCollector;
+import de.futjikato.mrwhiz.xml.Item;
+import de.futjikato.mrwhiz.xml.ItemCollector;
 
 public class GamePlayer extends GamePhysicalObject {
 	private static final int PLAYER_WIDTH = 80;
@@ -30,6 +33,8 @@ public class GamePlayer extends GamePhysicalObject {
 	private static final int START_HEALTH = 100;
 	private int health;
 	private boolean alive = true;
+
+	private int score;
 
 	public GamePlayer(float spawnx, float spawny, int blocksize) {
 		this.spawnX = spawnx;
@@ -152,6 +157,68 @@ public class GamePlayer extends GamePhysicalObject {
 	}
 
 	@Override
+	protected boolean yCol(float x, float y, int blocksize) {
+		ItemCollector itemCol = ItemCollector.getInstance();
+
+		// get block coords
+		int by = (int) Math.floor(y / blocksize);
+		int bx = (int) Math.floor(x / blocksize);
+
+		// calc block height
+		int bh = this.getHeight() / blocksize;
+
+		boolean free = true;
+		for ( int j = 0 ; j < bh ; j++ ) {
+			if (free) {
+				Block block = BlockCollector.getInstance().getBlock(bx, by + j);
+				if (block != null) {
+					free = false;
+					this.hitBlock(block);
+				}
+			}
+
+			Item item = itemCol.getItem(bx, by + j);
+			if (item != null) {
+				this.hitItem(item);
+				itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
+			}
+		}
+
+		return free;
+	}
+
+	@Override
+	protected boolean xCol(float x, float y, int blocksize) {
+		ItemCollector itemCol = ItemCollector.getInstance();
+
+		// get block coords
+		int by = (int) Math.floor(y / blocksize);
+		int bx = (int) Math.floor(x / blocksize);
+
+		// calc block height
+		int bw = this.getWidth() / blocksize;
+
+		boolean free = true;
+		for ( int j = 0 ; j < bw ; j++ ) {
+			if (free) {
+				Block block = BlockCollector.getInstance().getBlock(bx + j, by);
+				if (block != null) {
+					free = false;
+					this.hitBlock(block);
+				}
+			}
+
+			Item item = itemCol.getItem(bx + j, by);
+			if (item != null) {
+				this.hitItem(item);
+				itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
+			}
+		}
+
+		return free;
+	}
+
+	@Override
 	protected void hitBlock(Block block) {
 
 		if (!this.alive)
@@ -164,5 +231,23 @@ public class GamePlayer extends GamePhysicalObject {
 
 		float speed = block.getSpeed();
 		this.setBlockSpeed(speed);
+	}
+
+	protected void hitItem(Item item) {
+		if (!this.alive)
+			return;
+
+		int score = item.getScore();
+		if (score > 0) {
+			this.addScore(score);
+		}
+	}
+
+	public void addScore(int score) {
+		this.score += score;
+	}
+
+	public int getScore() {
+		return this.score;
 	}
 }
