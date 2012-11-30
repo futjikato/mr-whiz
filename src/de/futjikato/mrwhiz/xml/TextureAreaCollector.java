@@ -1,13 +1,12 @@
 package de.futjikato.mrwhiz.xml;
 
-import java.util.HashMap;
-
-import de.futjikato.mrwhiz.xml.attributes.Dimensions;
-import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TextureAreaCollector extends XmlObject {
 
-	private HashMap<String, TextureArea> areamap = new HashMap<String, TextureArea>();
+	private List<TextureArea> list = new ArrayList<TextureArea>();
 
 	private static TextureAreaCollector instance;
 
@@ -27,62 +26,19 @@ public class TextureAreaCollector extends XmlObject {
 	@Override
 	public void addChildObj(XmlObject mapObj) {
 		if (mapObj instanceof TextureArea) {
-			int count = 0;
 			TextureArea area = (TextureArea) mapObj;
-
-			XmlAttribute attr = area.getAttribute("xywh");
-
-			if (attr instanceof Dimensions) {
-				Dimensions dim = (Dimensions) attr;
-
-				// insert reference for every block
-				for ( int i = 0 ; i < dim.getW() ; i++ ) {
-					for ( int j = 0 ; j < dim.getH() ; j++ ) {
-						String key = String.format("%d,%d", dim.getX() + i, dim.getY() + j);
-
-						TextureArea oArea = this.areamap.get(key);
-
-						if (oArea == null) {
-							// insert if no other area is on that grid
-							this.areamap.put(key, area);
-							count++;
-						} else {
-							// insert if current area if above or on the same
-							// level ( order in xml counts )
-							if (area.compareTo(oArea) >= 0) {
-								this.areamap.put(key, area);
-								count++;
-							}
-						}
-					}
-				}
-			}
-
-			System.out.println("Added " + count + " texture blocks.");
+			this.list.add(area);
+			Collections.sort(this.list);
 		}
 	}
 
-	public TextureArea getArea(int x, int y) {
-		String key = String.format("%d,%d", x, y);
-		return this.areamap.get(key);
-	}
-
-	public void drawBlocks(float vpx, float vpy, int bx, int by, int bw, int bh, int blocksize) {
-		// run thought all requested blocks
-		for ( int i = 0 ; i < bw ; i++ ) {
-			for ( int j = 0 ; j < bh ; j++ ) {
-				String key = String.format("%d,%d", bx + i, by + j);
-				TextureArea area = this.areamap.get(key);
-
-				// draw area if there is one
-				if (area != null) {
-					area.drawBlock(vpx, vpy, bx + i, by + j, blocksize);
-				}
-			}
+	public void draw(float vpx, float vpy, int blocksize) {
+		for ( TextureArea area : this.list ) {
+			area.draw(vpx, vpy, blocksize);
 		}
 	}
 
 	public void clean() {
-		this.areamap.clear();
+		this.list.clear();
 	}
 }

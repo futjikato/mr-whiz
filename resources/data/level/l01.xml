@@ -1,40 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gamemap spawn="55,55" blocksize="80">
-	<!-- Level background -->
+<gamemap spawn="55,55" blocksize="50">
+	<!-- Sky background -->
 	<textureAreas>
-		<area xywh="-10,-5,30,15" zIndex="0.0">
-			<texture><![CDATA[images/backgrounds/concrete_wall.png]]></texture>
+		<area xywh="-5,-5,20,10" zIndex="0.0">
+			<texture><![CDATA[images/backgrounds/sky_babyblue.png]]></texture>
 		</area>
 	</textureAreas>
 	<blocks>
-		<block xywh="3,1,1,1">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
-		<block xywh="3,3,1,1">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
-		<block xywh="-2,4,3,1">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
-		<block speed="0.5" xywh="1,4,2,1">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
-		<block xywh="4,4,1,1">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
-		<block xywh="5,3,1,1">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
-		<block xywh="5,2,1,1">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
-		<block xywh="6,2,1,1" damage="110">
-			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
-		</block>
+		<!-- Frontyard -->
+			<!-- Ground -->
+			<block xywh="0,5,10,1" repeat="x">
+				<texture><![CDATA[images/backgrounds/game_grass_ground.png]]></texture>
+			</block>
+			<block xywh="0,6,10,6" repeat="xy">
+				<texture><![CDATA[images/backgrounds/game_dirt.png]]></texture>
+			</block>
+			<!--  -->
 	</blocks>
 	<items>
-		<item score="50" xywh="2,2,1,1">
-			<texture><![CDATA[images/items/dev_money.png]]></texture>
-		</item>
 	</items>
 </gamemap>

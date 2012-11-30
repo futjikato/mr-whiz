@@ -24,13 +24,6 @@ public class TextureArea extends XmlObject implements Comparable<TextureArea> {
 		}
 	}
 
-	public void drawBlock(float vpx, float vpy, int x, int y, int blocksize) {
-		Image img = this.texture.getImage();
-		Graphics graph = new Graphics();
-
-		graph.fillRect((x * blocksize) - vpx, (y * blocksize) - vpy, blocksize, blocksize, img, 0, 0);
-	}
-
 	public boolean isWalkable() {
 		XmlAttribute attr = this.attrs.get("walkable");
 		if (attr == null) {
@@ -74,5 +67,22 @@ public class TextureArea extends XmlObject implements Comparable<TextureArea> {
 		ZIndex mIndex = (ZIndex) mAttr;
 
 		return mIndex.getZIndex().compareTo(oIndex.getZIndex());
+	}
+
+	public void draw(float vpx, float vpy, int blocksize) {
+		Dimensions dim = this.getDimensions();
+
+		if (dim != null && this.texture != null) {
+
+			int abX = (dim.getX() * blocksize) - (int) vpx;
+			int abY = (dim.getY() * blocksize) - (int) vpy;
+			int abW = dim.getW() * blocksize;
+			int abH = dim.getH() * blocksize;
+
+			Image img = this.texture.getImage();
+			Graphics gra = new Graphics();
+
+			gra.fillRect(abX, abY, abW, abH, img, 0, 0);
+		}
 	}
 }

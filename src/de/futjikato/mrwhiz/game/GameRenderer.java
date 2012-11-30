@@ -61,7 +61,7 @@ public final class GameRenderer extends Renderer {
 
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-		areaCollector.drawBlocks(this.viewPortX, this.viewPortY, this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+		areaCollector.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getBlocksize());
 
 		// render blocks
 		List<Block> blocks = BlockCollector.getInstance().getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());

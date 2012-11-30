@@ -5,6 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import de.futjikato.mrwhiz.Physical;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.Block;
@@ -12,7 +13,7 @@ import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Item;
 import de.futjikato.mrwhiz.xml.ItemCollector;
 
-public class GamePlayer extends GamePhysicalObject {
+public class GamePlayer extends Physical {
 	private static final int PLAYER_WIDTH = 80;
 	private static final int PLAYER_HEIGHT = 149;
 
@@ -146,12 +147,10 @@ public class GamePlayer extends GamePhysicalObject {
 		}
 	}
 
-	@Override
 	protected int getHeight() {
 		return PLAYER_HEIGHT;
 	}
 
-	@Override
 	protected int getWidth() {
 		return PLAYER_WIDTH;
 	}
@@ -164,27 +163,18 @@ public class GamePlayer extends GamePhysicalObject {
 		int by = (int) Math.floor(y / blocksize);
 		int bx = (int) Math.floor(x / blocksize);
 
-		// calc block height
-		int bh = this.getHeight() / blocksize;
-
-		boolean free = true;
-		for ( int j = 0 ; j < bh ; j++ ) {
-			if (free) {
-				Block block = BlockCollector.getInstance().getBlock(bx, by + j);
-				if (block != null) {
-					free = false;
-					this.hitBlock(block);
-				}
-			}
-
-			Item item = itemCol.getItem(bx, by + j);
-			if (item != null) {
-				this.hitItem(item);
-				itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
-			}
+		Item item = itemCol.getItem(bx, by);
+		if (item != null) {
+			this.hitItem(item);
+			itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
 		}
 
-		return free;
+		Block block = BlockCollector.getInstance().getBlock(bx, by);
+		if (block != null) {
+			this.hitBlock(block);
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -195,30 +185,20 @@ public class GamePlayer extends GamePhysicalObject {
 		int by = (int) Math.floor(y / blocksize);
 		int bx = (int) Math.floor(x / blocksize);
 
-		// calc block height
-		int bw = this.getWidth() / blocksize;
-
-		boolean free = true;
-		for ( int j = 0 ; j < bw ; j++ ) {
-			if (free) {
-				Block block = BlockCollector.getInstance().getBlock(bx + j, by);
-				if (block != null) {
-					free = false;
-					this.hitBlock(block);
-				}
-			}
-
-			Item item = itemCol.getItem(bx + j, by);
-			if (item != null) {
-				this.hitItem(item);
-				itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
-			}
+		Item item = itemCol.getItem(bx, by);
+		if (item != null) {
+			this.hitItem(item);
+			itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
 		}
 
-		return free;
+		Block block = BlockCollector.getInstance().getBlock(bx, by);
+		if (block != null) {
+			this.hitBlock(block);
+			return false;
+		}
+		return true;
 	}
 
-	@Override
 	protected void hitBlock(Block block) {
 
 		if (!this.alive)

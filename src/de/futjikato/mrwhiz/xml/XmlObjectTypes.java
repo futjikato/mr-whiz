@@ -1,5 +1,6 @@
 package de.futjikato.mrwhiz.xml;
 
+
 public enum XmlObjectTypes {
 
 	worldmap {

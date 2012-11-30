@@ -5,7 +5,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import de.futjikato.mrwhiz.xml.TextureArea;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.Worldmap;
 
@@ -128,9 +127,10 @@ public final class MapPlayer {
 			int yb = (int) y / this.world.getBlocksize().getBlocksize();
 
 			TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-			TextureArea currentArea = areaCollector.getArea(xb, yb);
+			// TODO reimplement getArea
+			// TextureArea currentArea = areaCollector.getArea(xb, yb);
 
-			if (currentArea != null && currentArea.isWalkable()) {
+			if (true /* currentArea != null && currentArea.isWalkable() */) {
 				this.x = x;
 				this.y = y;
 			}

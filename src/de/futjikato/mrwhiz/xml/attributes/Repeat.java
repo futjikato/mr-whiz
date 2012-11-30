@@ -2,30 +2,38 @@ package de.futjikato.mrwhiz.xml.attributes;
 
 public class Repeat extends XmlAttribute {
 
-	private int sh;
-	private int sv;
-	
+	private boolean repeatX = false;
+	private boolean repeatY = false;
+	private int repeatXBy = 0;
+	private int repeatYBy = 0;
+
 	@Override
 	public void handleValue(String value) {
-		// value can be "10,10"
-		String[] parts = value.split(",");
-		
-		if(parts.length == 2) {
-			this.sh = Integer.parseInt(parts[0]);
-			this.sv = Integer.parseInt(parts[1]);
+		if (value.equals("x")) {
+			this.repeatX = true;
+		} else if (value.equals("y")) {
+			this.repeatY = true;
+		} else if (value.equals("xy") || value.equals("yx")) {
+			this.repeatY = true;
+			this.repeatX = true;
+		} else {
+			// TODO implement reapeat with specific values
 		}
-		
-		if(parts.length == 1) {
-			this.sh = Integer.parseInt(parts[0]);
-			this.sv = Integer.parseInt(parts[0]);
-		}
-	}
-	
-	public int getSh() {
-		return sh;
 	}
 
-	public int getSv() {
-		return sv;
+	public boolean isRepeatX() {
+		return repeatX;
+	}
+
+	public boolean isRepeatY() {
+		return repeatY;
+	}
+
+	public int getRepeatXBy() {
+		return repeatXBy;
+	}
+
+	public int getRepeatYBy() {
+		return repeatYBy;
 	}
 }

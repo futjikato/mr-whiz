@@ -46,8 +46,8 @@ public class Worldmap extends XmlObject {
 
 		// render all texture areas in viewport
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
-		// TODO fix oofset after camera movemt on map is implemented
-		areaCollector.drawBlocks(0, 0, bx, by, bw, bh, blocksize.getBlocksize());
+		// TODO fix vpx and vpy after camera movement on map is implemented
+		areaCollector.draw(0, 0, blocksize.getBlocksize());
 
 		// TODO render decorations
 
