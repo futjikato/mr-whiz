@@ -84,8 +84,11 @@ public abstract class Renderer {
 	/**
 	 * Get the accurate system time
 	 * 
+	 * @deprecated use Util.getTime instead
+	 * 
 	 * @return The system time in milliseconds
 	 */
+	@Deprecated
 	public long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}

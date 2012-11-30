@@ -5,6 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.Block;
 
@@ -18,6 +19,7 @@ public class GamePlayer extends GamePhysicalObject {
 	private int blocksize;
 	private SpriteSheet glSprite;
 	private int sprintIndex = 0;
+	private long lastStep;
 
 	private boolean longJump = false;
 	private boolean jumpKeyPressed = true;
@@ -115,7 +117,10 @@ public class GamePlayer extends GamePhysicalObject {
 
 		if (input.isKeyDown(Input.KEY_A)) {
 			this.setXvel(-this.speed);
-			this.sprintIndex = 2;
+			if (Util.getTime() > this.lastStep + 500) {
+				this.lastStep = Util.getTime();
+				this.sprintIndex = (this.sprintIndex == 2) ? 3 : 2;
+			}
 		}
 
 		if (input.isKeyDown(Input.KEY_SPACE)) {
