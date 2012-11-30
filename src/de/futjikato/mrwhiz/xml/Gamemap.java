@@ -1,6 +1,7 @@
 package de.futjikato.mrwhiz.xml;
 
 import de.futjikato.mrwhiz.xml.attributes.Blocksize;
+import de.futjikato.mrwhiz.xml.attributes.Spawn;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 
 public class Gamemap extends XmlObject {
@@ -28,5 +29,13 @@ public class Gamemap extends XmlObject {
 		}
 
 		return this.blocksize;
+	}
+
+	public Spawn getSpawn() {
+		XmlAttribute xmlAttr = this.getAttribute("spawn");
+		if (xmlAttr instanceof Spawn) {
+			return (Spawn) xmlAttr;
+		}
+		return null;
 	}
 }

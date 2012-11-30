@@ -1,21 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gamemap spawn="55,55" blocksize="50">
+<gamemap spawn="20,200" blocksize="50">
 	<!-- Sky background -->
 	<textureAreas>
-		<area xywh="-5,-5,20,10" zIndex="0.0">
+		<area xywh="-20,-10,55,15" zIndex="0.0">
 			<texture><![CDATA[images/backgrounds/sky_babyblue.png]]></texture>
+		</area>
+		<area xywh="-20,6,55,7" zIndex="0.0">
+			<texture><![CDATA[images/backgrounds/game_dirt.png]]></texture>
 		</area>
 	</textureAreas>
 	<blocks>
+		<!-- Brickwall & street ( mapend left ) -->
+			<block xywh="-10,5,5,1" repeat="xy">
+				<texture><![CDATA[images/backgrounds/game_street_ground.png]]></texture>
+			</block>
+			<block xywh="-5,0,1,6" repeat="xy">
+				<texture><![CDATA[images/backgrounds/game_brick.png]]></texture>
+			</block>
 		<!-- Frontyard -->
 			<!-- Ground -->
-			<block xywh="0,5,10,1" repeat="x">
+			<block xywh="-4,5,19,1" repeat="x">
 				<texture><![CDATA[images/backgrounds/game_grass_ground.png]]></texture>
 			</block>
-			<block xywh="0,6,10,6" repeat="xy">
-				<texture><![CDATA[images/backgrounds/game_dirt.png]]></texture>
+			<block xywh="15,5,20,1" repeat="x">
+				<texture><![CDATA[images/backgrounds/game_grass_ground.png]]></texture>
 			</block>
-			<!--  -->
+			<!-- Area #1 -->
+				<block xywh="5,2,2,3" repeat="xy">
+					<texture><![CDATA[images/backgrounds/game_bush.png]]></texture>
+				</block>
+				<block xywh="10,2,1,1">
+					<texture><![CDATA[images/backgrounds/game_bush.png]]></texture>
+				</block>
+				<block xywh="7,4,6,1" repeat="x" damage="100">
+					<texture><![CDATA[images/backgrounds/game_thorn.png]]></texture>
+				</block>
+				<block xywh="13,2,2,3" repeat="xy">
+					<texture><![CDATA[images/backgrounds/game_bush.png]]></texture>
+				</block>
+			<!-- Area #2 -->
+			<!-- TODO -->
+		<!-- House -->
+		<!-- TODO -->
 	</blocks>
 	<items>
 	</items>

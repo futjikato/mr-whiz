@@ -16,6 +16,7 @@ import de.futjikato.mrwhiz.xml.ItemCollector;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.XmlReader;
+import de.futjikato.mrwhiz.xml.attributes.Spawn;
 
 public final class GameRenderer extends Renderer {
 
@@ -48,7 +49,8 @@ public final class GameRenderer extends Renderer {
 		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getBlocksize()) + 1;
 
 		// init player
-		this.player = new GamePlayer(100, 200, this.map.getBlocksize().getBlocksize());
+		Spawn spawn = this.map.getSpawn();
+		this.player = new GamePlayer(spawn.getX(), spawn.getY(), this.map.getBlocksize().getBlocksize());
 
 		// init ui
 		this.ui = new GameUi(this.player);
