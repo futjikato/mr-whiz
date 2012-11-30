@@ -10,7 +10,7 @@
 		<block xywh="3,3,1,1">
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
-		<block xywh="1,4,2,1">
+		<block speed="0.5" xywh="1,4,2,1">
 			<texture><![CDATA[images/backgrounds/dev.png]]></texture>
 		</block>
 		<block xywh="4,4,1,1">

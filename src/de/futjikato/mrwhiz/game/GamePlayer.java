@@ -151,8 +151,6 @@ public class GamePlayer extends GamePhysicalObject {
 		}
 
 		float speed = block.getSpeed();
-		if (speed > 0) {
-			this.setBlockSpeed(speed);
-		}
+		this.setBlockSpeed(speed);
 	}
 }
