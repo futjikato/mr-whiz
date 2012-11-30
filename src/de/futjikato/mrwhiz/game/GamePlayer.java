@@ -5,7 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import de.futjikato.mrwhiz.game.events.EventRespawn;
+import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.Block;
 
 public class GamePlayer extends GamePhysicalObject {
@@ -75,7 +75,14 @@ public class GamePlayer extends GamePhysicalObject {
 		if (this.alive) {
 			this.alive = false;
 			System.out.println("You´re dead to me son.");
-			EventRespawn respawn = new EventRespawn(this);
+
+			// add callback event to trigger respawn after 5 seconds
+			CallbackEvent respawn = new CallbackEvent(new Runnable() {
+				@Override
+				public void run() {
+					GamePlayer.this.respawn();
+				}
+			}, 5);
 			GameTimeTrigger.getInstance().addEvent(respawn);
 		}
 	}
