@@ -22,9 +22,16 @@ public class App {
 	 * Main
 	 * 
 	 * @param args
-	 * @throws LWJGLException
+	 * @throws Exception
 	 */
-	public static void main(String[] args) throws LWJGLException {
+	public static void main(String[] args) throws Exception {
+
+		String os = System.getProperty("os.name");
+		if (os.toLowerCase().contains("windows")) {
+			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "\\libs\\lwjgl-2.8.4\\native\\windows");
+		} else {
+			throw new Exception("For this os we haven´t jet assigned the native libs : \"" + os + "\"");
+		}
 
 		// create new app instance
 		App app = new App();
