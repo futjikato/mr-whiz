@@ -41,6 +41,9 @@ public final class GameUi extends Widget {
 			this.gui.applyTheme(this.theme);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Due to an error the UI cannot be displayed.");
+			e.printStackTrace();
 		}
 	}
 

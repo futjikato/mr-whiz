@@ -13,7 +13,6 @@ import de.matthiasmann.twl.renderer.lwjgl.LWJGLRenderer;
 import de.matthiasmann.twl.theme.ThemeManager;
 
 public class MapUi extends Widget {
-
 	private MapPlayer player;
 
 	private GUI gui;
@@ -37,10 +36,14 @@ public class MapUi extends Widget {
 
 		try {
 			// load theme
-			URL res = App.class.getClassLoader().getResource("themes/whiz.xml");
+			String themePath = "themes/whiz.xml";
+			URL res = App.class.getClassLoader().getResource(themePath);
 			this.theme = ThemeManager.createThemeManager(res, renderer);
 			this.gui.applyTheme(this.theme);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Due to an error the UI cannot be displayed.");
 			e.printStackTrace();
 		}
 	}
