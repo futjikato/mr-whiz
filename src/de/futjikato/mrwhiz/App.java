@@ -29,6 +29,8 @@ public class App {
 		String os = System.getProperty("os.name");
 		if (os.toLowerCase().contains("windows")) {
 			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "\\libs\\lwjgl-2.8.4\\native\\windows");
+		} else if (os.toLowerCase().contains("mac")) {
+			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "/libs/lwjgl-2.8.4/native/macosx");
 		} else {
 			throw new Exception("For this os we haven´t jet assigned the native libs : \"" + os + "\"");
 		}
