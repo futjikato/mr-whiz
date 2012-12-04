@@ -1,12 +1,13 @@
 package de.futjikato.mrwhiz.game;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import de.futjikato.mrwhiz.Physical;
-import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
@@ -19,11 +20,9 @@ public class GamePlayer extends Physical {
 
 	private float spawnX;
 	private float spawnY;
-
 	private int blocksize;
-	private SpriteSheet glSprite;
-	private int sprintIndex = 0;
-	private long lastStep;
+
+	private static SpriteSheet PLAYER_SPRITE;
 
 	private boolean longJump = false;
 	private boolean jumpKeyPressed = true;
@@ -35,7 +34,27 @@ public class GamePlayer extends Physical {
 	private int health;
 	private boolean alive = true;
 
+	private static Animation ANIMATION_WALK_LEFT;
+	private static Animation ANIMATION_WALK_RIGHT;
+
+	private Renderable activeRenderable;
+
 	private int score;
+
+	static {
+		try {
+			PLAYER_SPRITE = new SpriteSheet("resources/images/player_game.png", 80, 149, 1);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			ANIMATION_WALK_LEFT = new Animation(new Image[] { PLAYER_SPRITE.getSprite(0, 2), PLAYER_SPRITE.getSprite(0, 3), PLAYER_SPRITE.getSprite(0, 4), PLAYER_SPRITE.getSprite(0, 5), PLAYER_SPRITE.getSprite(0, 6) }, 180, true);
+			ANIMATION_WALK_RIGHT = new Animation(new Image[] { PLAYER_SPRITE.getSprite(0, 1) }, 150, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public GamePlayer(float spawnx, float spawny, int blocksize) {
 		this.spawnX = spawnx;
@@ -49,18 +68,8 @@ public class GamePlayer extends Physical {
 
 		this.speed = BASE_SPEED;
 		this.health = START_HEALTH;
-	}
 
-	private SpriteSheet getSprite() {
-		if (this.glSprite == null) {
-			try {
-				this.glSprite = new SpriteSheet("resources/images/player_game.png", 80, 149, 1);
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return this.glSprite;
+		this.activeRenderable = PLAYER_SPRITE.getSprite(0, 0);
 	}
 
 	public float getSpeed() {
@@ -102,31 +111,28 @@ public class GamePlayer extends Physical {
 	}
 
 	public void render(float vpx, float vpy) {
-		SpriteSheet sprite = this.getSprite();
-		Image tile = sprite.getSprite(0, this.sprintIndex);
-
-		// TODO this could eventually be improved a bit ;-)
-		tile.draw(this.getX() - vpx - (GamePlayer.PLAYER_WIDTH / 2), this.getY() - vpy - GamePlayer.PLAYER_HEIGHT);
+		activeRenderable.draw(this.getX() - vpx - (GamePlayer.PLAYER_WIDTH / 2), this.getY() - vpy - GamePlayer.PLAYER_HEIGHT);
 	}
 
 	public void handleInput(long delta, Input input) {
-		// get new y position
-		this.calcNewPos(this.getX(), this.getY(), this.blocksize, delta);
-
 		if (!this.alive)
 			return;
 
+		// get new y position
+		this.calcNewPos(this.getX(), this.getY(), this.blocksize, delta);
+
 		if (input.isKeyDown(Input.KEY_D)) {
 			this.setXvel(this.speed);
-			this.sprintIndex = 1;
+			activeRenderable = ANIMATION_WALK_RIGHT;
+		} else {
+			ANIMATION_WALK_RIGHT.setCurrentFrame(0);
 		}
 
 		if (input.isKeyDown(Input.KEY_A)) {
 			this.setXvel(-this.speed);
-			if (Util.getTime() > this.lastStep + 500) {
-				this.lastStep = Util.getTime();
-				this.sprintIndex = (this.sprintIndex == 2) ? 3 : 2;
-			}
+			activeRenderable = ANIMATION_WALK_LEFT;
+		} else {
+			ANIMATION_WALK_LEFT.setCurrentFrame(0);
 		}
 
 		if (input.isKeyDown(Input.KEY_SPACE)) {
