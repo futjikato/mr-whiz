@@ -15,6 +15,9 @@ import de.futjikato.mrwhiz.xml.Item;
 import de.futjikato.mrwhiz.xml.ItemCollector;
 
 public class GamePlayer extends Physical {
+
+	private GameUi gui;
+
 	private static final int PLAYER_WIDTH = 80;
 	private static final int PLAYER_HEIGHT = 149;
 
@@ -33,6 +36,7 @@ public class GamePlayer extends Physical {
 	private static final int START_HEALTH = 100;
 	private int health;
 	private boolean alive = true;
+	private int lives;
 
 	private static Animation ANIMATION_WALK_LEFT;
 	private static Animation ANIMATION_WALK_RIGHT;
@@ -68,6 +72,7 @@ public class GamePlayer extends Physical {
 
 		this.speed = BASE_SPEED;
 		this.health = START_HEALTH;
+		this.lives = 5;
 
 		this.activeRenderable = PLAYER_SPRITE.getSprite(0, 0);
 	}
@@ -91,16 +96,20 @@ public class GamePlayer extends Physical {
 	private void die() {
 		if (this.alive) {
 			this.alive = false;
-			System.out.println("You´re dead to me son.");
 
-			// add callback event to trigger respawn after 5 seconds
-			CallbackEvent respawn = new CallbackEvent(new Runnable() {
-				@Override
-				public void run() {
-					GamePlayer.this.respawn();
-				}
-			}, 5);
-			GameTimeTrigger.getInstance().addEvent(respawn);
+			// decrement lives and check for game over
+			if (--this.lives <= 0) {
+				this.gui.handleGameOver();
+			} else {
+				// add callback event to trigger respawn after 5 seconds
+				CallbackEvent respawn = new CallbackEvent(new Runnable() {
+					@Override
+					public void run() {
+						GamePlayer.this.respawn();
+					}
+				}, 5);
+				GameTimeTrigger.getInstance().addEvent(respawn);
+			}
 		}
 	}
 
@@ -108,6 +117,7 @@ public class GamePlayer extends Physical {
 		this.setX(this.spawnX);
 		this.setY(this.spawnY);
 		this.alive = true;
+		this.health = START_HEALTH;
 	}
 
 	public void render(float vpx, float vpy) {
@@ -235,5 +245,17 @@ public class GamePlayer extends Physical {
 
 	public int getScore() {
 		return this.score;
+	}
+
+	public int getLives() {
+		return this.lives;
+	}
+
+	public int getHealth() {
+		return this.health;
+	}
+
+	public void setGui(GameUi gui) {
+		this.gui = gui;
 	}
 }

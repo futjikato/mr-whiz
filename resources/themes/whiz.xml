@@ -19,6 +19,11 @@
         <action name="paste">cmd V</action>
     </inputMapDef>
     
+    <images file="../images/player_health.png">
+        <area name="health.background" xywh="0,0,100,87"/>
+        <area name="health.progress" xywh="0,88,100,87"/>
+    </images>
+    
     <theme name="-defaults">
         <param name="background"><image>none</image></param>
         <param name="overlay"><image>none</image></param>
@@ -37,6 +42,15 @@
 	
 	<theme name="gameui" ref="-defaults" allowWildcard="true">
 		<theme name="label" ref="-defaults"></theme>
+		
+		<theme name="verticalprogressbar" ref="-defaults">
+			<param name="background"><image>health.background</image></param>
+			<param name="progressImage"><image>health.progress</image></param>
+			<param name="minWidth"><int>1</int></param>
+			<param name="maxWidth"><int>100</int></param>
+			<param name="minHeight"><int>1</int></param>
+			<param name="maxHeight"><int>87</int></param>
+		</theme>
 	</theme>
 	
 	<theme name="tooltipwindow" ref="-defaults" allowWildcard="true">

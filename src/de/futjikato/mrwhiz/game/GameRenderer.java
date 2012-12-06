@@ -20,8 +20,8 @@ import de.futjikato.mrwhiz.xml.attributes.Spawn;
 
 public final class GameRenderer extends Renderer {
 
-	protected int width = 500;
-	protected int height = 500;
+	protected int width = 800;
+	protected int height = 800;
 
 	private Gamemap map;
 	private GameUi ui;
