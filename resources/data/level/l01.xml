@@ -32,7 +32,7 @@
 				<block xywh="10,2,1,1">
 					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
 				</block>
-				<block xywh="7,4,6,1" repeat="x" damage="100">
+				<block xywh="7,4,6,1" repeat="x" damage="10">
 					<texture><![CDATA[resources/images/backgrounds/game_thorn.png]]></texture>
 				</block>
 				<block xywh="13,2,2,3" repeat="xy">
