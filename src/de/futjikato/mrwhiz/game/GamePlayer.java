@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import de.futjikato.mrwhiz.Physical;
+import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
@@ -32,6 +33,7 @@ public class GamePlayer extends Physical {
 
 	private static final float BASE_SPEED = 0.5f;
 	private float speed;
+	private long lastMovment;
 
 	private static final int START_HEALTH = 100;
 	private int health;
@@ -150,20 +152,32 @@ public class GamePlayer extends Physical {
 			this.setXvel(this.speed);
 			activeRenderable = ANIMATION_WALK_RIGHT;
 		} else {
-			ANIMATION_WALK_RIGHT.setCurrentFrame(0);
+			if (!input.isKeyDown(Input.KEY_A)) {
+				this.activeRenderable = PLAYER_SPRITE.getSprite(0, 1);
+			}
 		}
 
 		if (input.isKeyDown(Input.KEY_A)) {
 			this.setXvel(-this.speed);
 			activeRenderable = ANIMATION_WALK_LEFT;
 		} else {
-			ANIMATION_WALK_LEFT.setCurrentFrame(0);
+			if (!input.isKeyDown(Input.KEY_D)) {
+				this.activeRenderable = PLAYER_SPRITE.getSprite(0, 2);
+			}
 		}
 
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			this.jump();
 		} else {
 			this.jumpKeyPressed = false;
+		}
+
+		if (this.getXvel() == 0 && this.getYVel() == 0) {
+			if (this.lastMovment < (Util.getTime() - 2000)) {
+				this.activeRenderable = PLAYER_SPRITE.getSprite(0, 0);
+			}
+		} else {
+			this.lastMovment = Util.getTime();
 		}
 	}
 
