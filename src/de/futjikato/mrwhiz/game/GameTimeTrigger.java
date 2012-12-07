@@ -76,7 +76,7 @@ public class GameTimeTrigger implements Runnable {
 	 * Check all events if they are ready<br>
 	 * trigger ready events and remove them from the internal list
 	 */
-	private void triggerReadyEvents() {
+	private synchronized void triggerReadyEvents() {
 		Iterator<Event> iter = this.eventList.iterator();
 		while (iter.hasNext()) {
 			Event event = iter.next();
@@ -93,13 +93,13 @@ public class GameTimeTrigger implements Runnable {
 	 * @param Seconds
 	 *            Amount of seconds
 	 */
-	private void decreaseEventDelay(long decreaseSice) {
+	private synchronized void decreaseEventDelay(long decreaseSice) {
 		for ( Event event : this.eventList ) {
 			event.decreaseDelay(decreaseSice);
 		}
 	}
 
-	public void addEvent(Event event) {
+	public synchronized void addEvent(Event event) {
 		this.eventList.add(event);
 	}
 }
