@@ -45,7 +45,7 @@
 		
 		<theme name="verticalprogressbar" ref="-defaults">
 			<param name="background"><image>health.background</image></param>
-			<param name="progressImage"><image>health.progress</image></param>
+			<param name="progressImage"><image>none</image></param>
 			<param name="minWidth"><int>1</int></param>
 			<param name="maxWidth"><int>100</int></param>
 			<param name="minHeight"><int>1</int></param>

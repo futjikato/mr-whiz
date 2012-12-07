@@ -5,12 +5,12 @@ import java.net.URL;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.SlickException;
 
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.ui.VerticalProgressBar;
 import de.matthiasmann.twl.GUI;
 import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.ProgressBar;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.renderer.lwjgl.LWJGLRenderer;
 import de.matthiasmann.twl.theme.ThemeManager;
@@ -26,7 +26,7 @@ public final class GameUi extends Widget {
 
 	private Label score;
 
-	private ProgressBar healthBar;
+	private VerticalProgressBar healthBar;
 
 	public GameUi(GamePlayer player) throws LWJGLException {
 		this.player = player;
@@ -63,9 +63,16 @@ public final class GameUi extends Widget {
 		this.add(this.score);
 
 		// init health bar
-		this.healthBar = new VerticalProgressBar();
-		this.healthBar.setValue(0.2f);
-		this.add(this.healthBar);
+		try {
+			this.healthBar = new VerticalProgressBar();
+			org.newdawn.slick.Image image = new org.newdawn.slick.Image("images/player_health.png");
+			this.healthBar.setSlickProgressImage(image.getSubImage(0, 88, 100, 87));
+			this.healthBar.setValue(1.0f);
+			this.add(this.healthBar);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void update() {
@@ -76,7 +83,7 @@ public final class GameUi extends Widget {
 		this.score.setText(String.format("Score: %d", this.player.getScore()));
 
 		// update health
-		this.healthBar.setValue(this.player.getHealth() / 100f);
+		this.healthBar.setValue(0.4f);
 
 		this.gui.update();
 	}
