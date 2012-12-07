@@ -37,6 +37,7 @@ public class GamePlayer extends Physical {
 	private int health;
 	private boolean alive = true;
 	private int lives;
+	private boolean invincible = false;
 
 	private static Animation ANIMATION_WALK_LEFT;
 	private static Animation ANIMATION_WALK_RIGHT;
@@ -86,6 +87,20 @@ public class GamePlayer extends Physical {
 	}
 
 	public void damage(int dmg) {
+
+		if (this.invincible) {
+			return;
+		}
+
+		this.invincible = true;
+		CallbackEvent reinvincible = new CallbackEvent(new Runnable() {
+			@Override
+			public void run() {
+				GamePlayer.this.invincible = false;
+			}
+		}, 1);
+		GameTimeTrigger.getInstance().addEvent(reinvincible);
+
 		this.health -= dmg;
 
 		if (this.health <= 0) {

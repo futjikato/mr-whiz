@@ -20,8 +20,8 @@
     </inputMapDef>
     
     <images file="../images/player_health.png">
-        <area name="health.background" xywh="0,0,100,87"/>
-        <area name="health.progress" xywh="0,88,100,87"/>
+        <area tiled="true" name="health.background" xywh="0,0,100,87"/>
+        <area tiled="true" name="health.progress" xywh="0,88,100,87"/>
     </images>
     
     <theme name="-defaults">
@@ -44,8 +44,8 @@
 		<theme name="label" ref="-defaults"></theme>
 		
 		<theme name="verticalprogressbar" ref="-defaults">
-			<param name="background"><image>health.background</image></param>
-			<param name="progressImage"><image>none</image></param>
+			<param name="background"><image>health.progress</image></param>
+			<param name="progressImage"><image>health.background</image></param>
 			<param name="minWidth"><int>1</int></param>
 			<param name="maxWidth"><int>100</int></param>
 			<param name="minHeight"><int>1</int></param>
