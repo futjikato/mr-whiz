@@ -10,6 +10,7 @@ import de.futjikato.mrwhiz.xml.Map;
 public class App {
 
 	private boolean debug = false;
+	private boolean isUnitTest = false;
 	private static App instance;
 
 	private GameStates state = GameStates.WORLDMAP;
@@ -25,18 +26,10 @@ public class App {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-
-		String os = System.getProperty("os.name");
-		if (os.toLowerCase().contains("windows")) {
-			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "\\libs\\lwjgl-2.8.4\\native\\windows");
-		} else if (os.toLowerCase().contains("mac")) {
-			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "/libs/lwjgl-2.8.4/native/macosx");
-		} else {
-			throw new Exception("For this os we haven´t jet assigned the native libs : \"" + os + "\"");
-		}
-
 		// create new app instance
-		App app = new App();
+		App app = getInstance();
+
+		app.defineLwjglLibraryPath();
 
 		// parse arguments
 		for ( String arg : args ) {
@@ -45,7 +38,19 @@ public class App {
 			}
 		}
 
+		app.createWindow();
 		app.loop();
+	}
+
+	public void defineLwjglLibraryPath() throws Exception {
+		String os = System.getProperty("os.name");
+		if (os.toLowerCase().contains("windows")) {
+			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "\\libs\\lwjgl-2.8.4\\native\\windows");
+		} else if (os.toLowerCase().contains("mac")) {
+			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "/libs/lwjgl-2.8.4/native/macosx");
+		} else {
+			throw new Exception("For this os we haven´t jet assigned the native libs : \"" + os + "\"");
+		}
 	}
 
 	/**
@@ -54,6 +59,9 @@ public class App {
 	 * @return App instance
 	 */
 	public static App getInstance() {
+		if (App.instance == null) {
+			App.instance = new App();
+		}
 		return App.instance;
 	}
 
@@ -66,9 +74,13 @@ public class App {
 		return this.debug;
 	}
 
-	private App() throws LWJGLException {
-		App.instance = this;
-		this.createWindow();
+	public boolean isUnittest() {
+		return this.isUnitTest;
+	}
+
+	public void enableUnittestMode() throws Exception {
+		this.defineLwjglLibraryPath();
+		this.isUnitTest = true;
 	}
 
 	protected void createWindow() throws LWJGLException {

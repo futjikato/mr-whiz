@@ -7,6 +7,7 @@ import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Physical;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
@@ -49,17 +50,20 @@ public class GamePlayer extends Physical {
 	private int score;
 
 	static {
-		try {
-			PLAYER_SPRITE = new SpriteSheet("resources/images/player_game.png", 80, 149, 1);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		// deactivate image loading in unit test
+		if (!App.getInstance().isUnittest()) {
+			try {
+				PLAYER_SPRITE = new SpriteSheet("resources/images/player_game.png", 80, 149, 1);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
 
-		try {
-			ANIMATION_WALK_LEFT = new Animation(new Image[] { PLAYER_SPRITE.getSprite(0, 2), PLAYER_SPRITE.getSprite(0, 3), PLAYER_SPRITE.getSprite(0, 4), PLAYER_SPRITE.getSprite(0, 5), PLAYER_SPRITE.getSprite(0, 6) }, 180, true);
-			ANIMATION_WALK_RIGHT = new Animation(new Image[] { PLAYER_SPRITE.getSprite(0, 1) }, 150, true);
-		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				ANIMATION_WALK_LEFT = new Animation(new Image[] { PLAYER_SPRITE.getSprite(0, 2), PLAYER_SPRITE.getSprite(0, 3), PLAYER_SPRITE.getSprite(0, 4), PLAYER_SPRITE.getSprite(0, 5), PLAYER_SPRITE.getSprite(0, 6) }, 180, true);
+				ANIMATION_WALK_RIGHT = new Animation(new Image[] { PLAYER_SPRITE.getSprite(0, 1) }, 150, true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -77,7 +81,10 @@ public class GamePlayer extends Physical {
 		this.health = START_HEALTH;
 		this.lives = 5;
 
-		this.activeRenderable = PLAYER_SPRITE.getSprite(0, 0);
+		// deactivate image loading in unit test
+		if (!App.getInstance().isUnittest()) {
+			this.activeRenderable = PLAYER_SPRITE.getSprite(0, 0);
+		}
 	}
 
 	public float getSpeed() {
@@ -118,14 +125,7 @@ public class GamePlayer extends Physical {
 			if (--this.lives <= 0) {
 				this.gui.handleGameOver();
 			} else {
-				// add callback event to trigger respawn after 5 seconds
-				CallbackEvent respawn = new CallbackEvent(new Runnable() {
-					@Override
-					public void run() {
-						GamePlayer.this.respawn();
-					}
-				}, 5);
-				GameTimeTrigger.getInstance().addEvent(respawn);
+
 			}
 		}
 	}
