@@ -16,6 +16,9 @@
 			<include name="TWL.jar" />
 			<include name="xpp3-1.1.4c.jar" />
 		</fileset>
+		<fileset dir="libs/junit">
+			<include name="junit-4.11.jar" />
+		</fileset>
 		
 		<fileset dir="resources">
 			<include name="*" />
@@ -54,5 +57,14 @@
 
 	<target name="run" depends="jar">
 		<java jar="build/jar/Whiz.jar" fork="true" />
+	</target>
+	
+	<target name="test" depends="compile">
+		<junit printsummary="yes" fork="no" dir="build">
+			<formatter type="plain"/>
+			<classpath refid="build-classpath"/>
+			
+		  	<test name="de.futjikato.mrwhiz.test.TestPlayer"/>
+		</junit>
 	</target>
 </project>
