@@ -7,8 +7,6 @@ This project is currently at its development start.
 
 You can build and run the application with [Ant](http://ant.apache.org/).<br>
 Use the build.xml from the root folder.<br>
-Note that at this point the UI does not work. I have to figure out how get the paths right so after the build
-the theme files are found.
 
 ## License ( [MIT](http://www.opensource.org/licenses/MIT) )
 
