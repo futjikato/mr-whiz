@@ -4,36 +4,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.lwjgl.Sys;
-
+import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.Event;
 
-public class GameTimeTrigger implements Runnable {
+public class GameTimeTrigger {
 
 	private static GameTimeTrigger instance;
-	private Thread thread;
 	private long lastRun;
 
 	private List<Event> eventList;
 
 	private GameTimeTrigger() {
 		this.eventList = new ArrayList<Event>();
-		this.startThread();
 	}
 
-	private void startThread() {
-
-		if (this.thread != null) {
-			if (!Thread.interrupted()) {
-				this.thread.interrupt();
-			}
-		}
-
-		this.thread = new Thread(this, "GameTimeTrigger");
-		this.thread.start();
-		this.lastRun = this.getTime();
-	}
-
+	/**
+	 * Singleton
+	 * 
+	 * @return singleton instance
+	 */
 	public static GameTimeTrigger getInstance() {
 		if (instance == null) {
 			instance = new GameTimeTrigger();
@@ -42,33 +31,14 @@ public class GameTimeTrigger implements Runnable {
 		return instance;
 	}
 
-	/**
-	 * Get the accurate system time
-	 * 
-	 * @return The system time in milliseconds
-	 */
-	public long getTime() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
-	}
+	public void update() {
+		long now = Util.getTime();
+		if (now > this.lastRun + 1000) {
+			long decreaseSice = ((now - this.lastRun) / 1000);
+			this.lastRun = now;
 
-	@Override
-	public void run() {
-		while (!Thread.interrupted()) {
-			long now = this.getTime();
-			if (now > this.lastRun + 1000) {
-				long decreaseSice = ((now - this.lastRun) / 1000);
-				this.lastRun = now;
-
-				this.decreaseEventDelay(decreaseSice);
-				this.triggerReadyEvents();
-
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					System.out.println("GameTimeTrigger thread has interrupted. Set up new one.");
-					this.startThread();
-				}
-			}
+			this.decreaseEventDelay(decreaseSice);
+			this.triggerReadyEvents();
 		}
 	}
 
@@ -99,6 +69,11 @@ public class GameTimeTrigger implements Runnable {
 		}
 	}
 
+	/**
+	 * Add an event to the list
+	 * 
+	 * @param event
+	 */
 	public synchronized void addEvent(Event event) {
 		this.eventList.add(event);
 	}

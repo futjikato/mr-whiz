@@ -58,6 +58,9 @@ public final class GameRenderer extends Renderer {
 
 	@Override
 	protected void renderScene(long delta) {
+		// invoke event trigger class
+		GameTimeTrigger.getInstance().update();
+
 		// calc new screen position
 		this.calcNewScreenViewportPosition();
 

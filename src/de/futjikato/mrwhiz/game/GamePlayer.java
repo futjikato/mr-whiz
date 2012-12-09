@@ -125,7 +125,14 @@ public class GamePlayer extends Physical {
 			if (--this.lives <= 0) {
 				this.gui.handleGameOver();
 			} else {
-
+				// add callback event to trigger respawn after 5 seconds
+				CallbackEvent respawn = new CallbackEvent(new Runnable() {
+					@Override
+					public void run() {
+						GamePlayer.this.respawn();
+					}
+				}, 5);
+				GameTimeTrigger.getInstance().addEvent(respawn);
 			}
 		}
 	}
