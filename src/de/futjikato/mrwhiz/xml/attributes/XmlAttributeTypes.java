@@ -70,6 +70,20 @@ public enum XmlAttributeTypes {
 		public XmlAttribute getAttribute() {
 			return new Score();
 		}
+	},
+
+	id {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Id();
+		}
+	},
+
+	target {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Target();
+		}
 	};
 
 	public abstract XmlAttribute getAttribute();

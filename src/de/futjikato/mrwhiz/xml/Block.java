@@ -1,5 +1,8 @@
 package de.futjikato.mrwhiz.xml;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -11,6 +14,8 @@ import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 public class Block extends XmlObject {
 
 	private Texture texture;
+
+	private List<Trigger> touchListener = new ArrayList<Trigger>();
 
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
@@ -77,5 +82,15 @@ public class Block extends XmlObject {
 			return dmg.getSpeed();
 		}
 		return 0.0f;
+	}
+
+	public void addTouchListener(Trigger caller) {
+		this.touchListener.add(caller);
+	}
+
+	public void triggerTouch() {
+		for ( Trigger trigger : this.touchListener ) {
+			trigger.trigger();
+		}
 	}
 }

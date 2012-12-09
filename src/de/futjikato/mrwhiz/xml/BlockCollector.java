@@ -94,4 +94,12 @@ public final class BlockCollector extends XmlObject {
 
 		return null;
 	}
+
+	public void removeBlock(Block block) {
+		Dimensions dim = block.getDimensions();
+		if (dim != null) {
+			String key = String.format("%d,%d", dim.getX(), dim.getY());
+			this.areamap.remove(key);
+		}
+	}
 }

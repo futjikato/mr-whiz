@@ -29,7 +29,7 @@
 				<block xywh="5,2,2,3" repeat="xy">
 					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
 				</block>
-				<block xywh="10,2,1,1">
+				<block id="area1TriggerBlock1" xywh="10,2,1,1">
 					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
 				</block>
 				<block xywh="7,4,6,1" repeat="x" damage="10">
@@ -45,4 +45,11 @@
 	</blocks>
 	<items>
 	</items>
+	<events>
+		<!-- If the player touches the block it gets destroyed -->
+		<event>
+			<trigger target="area1TriggerBlock1">touch</trigger>
+			<action target="area1TriggerBlock1">destroyBlock</action>
+		</event>
+	</events>
 </gamemap>

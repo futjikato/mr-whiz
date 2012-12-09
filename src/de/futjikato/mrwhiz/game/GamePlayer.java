@@ -256,6 +256,8 @@ public class GamePlayer extends Physical {
 		if (!this.alive)
 			return;
 
+		block.triggerTouch();
+
 		int dmg = block.getDamage();
 		if (dmg > 0) {
 			this.damage(dmg);
