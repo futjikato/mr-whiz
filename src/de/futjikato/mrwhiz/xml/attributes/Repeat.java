@@ -1,5 +1,7 @@
 package de.futjikato.mrwhiz.xml.attributes;
 
+import de.futjikato.mrwhiz.xml.XmlObject;
+
 public class Repeat extends XmlAttribute {
 
 	private boolean repeatX = false;
@@ -8,7 +10,7 @@ public class Repeat extends XmlAttribute {
 	private int repeatYBy = 0;
 
 	@Override
-	public void handleValue(String value) {
+	public void handleValue(String value, XmlObject xmlObject) {
 		if (value.equals("x")) {
 			this.repeatX = true;
 		} else if (value.equals("y")) {
