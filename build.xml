@@ -2,6 +2,8 @@
 <project name="Mr.Whiz" basedir=".">
 
 	<path id="build-classpath">
+		<pathelement location="build/classes" />
+		
 		<fileset dir="libs/lwjgl-2.8.4/jar">
 			<include name="lwjgl.jar" />
 			<include name="lwjgl_util.jar" />
@@ -31,7 +33,7 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="build/classes" />
-		<javac srcdir="src" destdir="build/classes">
+		<javac source="1.6" target="1.6" srcdir="src" destdir="build/classes">
 			<classpath refid="build-classpath" />
 		</javac>
 	</target>
@@ -60,7 +62,7 @@
 	</target>
 	
 	<target name="test" depends="compile">
-		<junit printsummary="yes" fork="no" dir="build">
+		<junit printsummary="yes" fork="yes" dir="build">
 			<formatter type="plain"/>
 			<classpath refid="build-classpath"/>
 			
