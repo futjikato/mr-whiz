@@ -3,6 +3,11 @@ package de.futjikato.mrwhiz.xml;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.futjikato.mrwhiz.game.GameTimeTrigger;
+import de.futjikato.mrwhiz.game.events.CallbackEvent;
+import de.futjikato.mrwhiz.xml.attributes.Delay;
+import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
+
 public class Event extends XmlObject {
 
 	private List<Trigger> triggers = new ArrayList<Trigger>();
@@ -28,8 +33,32 @@ public class Event extends XmlObject {
 	}
 
 	public void trigger() {
-		for ( Action act : this.actions ) {
-			act.exec();
+		int delay = this.getDelay();
+
+		if (delay > 0) {
+			GameTimeTrigger.getInstance().addEvent(new CallbackEvent(new Runnable() {
+				@Override
+				public void run() {
+					for ( Action act : Event.this.actions ) {
+						act.exec();
+					}
+				}
+			}, delay));
+		} else {
+			// no delay
+			for ( Action act : this.actions ) {
+				act.exec();
+			}
 		}
+	}
+
+	private int getDelay() {
+		XmlAttribute xmlAttr = this.getAttribute("delay");
+		if (!(xmlAttr instanceof Delay)) {
+			return 0;
+		}
+
+		Delay delayAttr = (Delay) xmlAttr;
+		return delayAttr.getValue();
 	}
 }

@@ -1,5 +1,8 @@
 package de.futjikato.mrwhiz.xml;
 
+import de.futjikato.mrwhiz.game.GameTimeTrigger;
+import de.futjikato.mrwhiz.game.events.CallbackEvent;
+import de.futjikato.mrwhiz.xml.attributes.Delay;
 import de.futjikato.mrwhiz.xml.attributes.Id;
 import de.futjikato.mrwhiz.xml.attributes.Target;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
@@ -46,9 +49,32 @@ public class Action extends XmlObject {
 	}
 
 	public void exec() {
-		Actions conenctedAction = this.action;
-		if (conenctedAction != null) {
-			conenctedAction.exec(this);
+		if (this.action != null) {
+
+			// get delay
+			int delay = this.getDelay();
+
+			if (delay > 0) {
+				GameTimeTrigger.getInstance().addEvent(new CallbackEvent(new Runnable() {
+					@Override
+					public void run() {
+						Action.this.action.exec(Action.this);
+					}
+				}, delay));
+			} else {
+				// no delay
+				Action.this.action.exec(Action.this);
+			}
 		}
+	}
+
+	private int getDelay() {
+		XmlAttribute xmlAttr = this.getAttribute("delay");
+		if (!(xmlAttr instanceof Delay)) {
+			return 0;
+		}
+
+		Delay delayAttr = (Delay) xmlAttr;
+		return delayAttr.getValue();
 	}
 }

@@ -84,6 +84,13 @@ public enum XmlAttributeTypes {
 		public XmlAttribute getAttribute() {
 			return new Target();
 		}
+	},
+
+	delay {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Delay();
+		}
 	};
 
 	public abstract XmlAttribute getAttribute();
