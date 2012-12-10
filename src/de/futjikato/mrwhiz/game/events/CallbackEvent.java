@@ -1,5 +1,7 @@
 package de.futjikato.mrwhiz.game.events;
 
+import de.futjikato.mrwhiz.Util;
+
 public class CallbackEvent extends Event {
 
 	private Runnable callback;
@@ -7,6 +9,7 @@ public class CallbackEvent extends Event {
 	public CallbackEvent(Runnable cb, int delay) {
 		this.callback = cb;
 		this.delay = delay;
+		this.createdTime = Util.getTime();
 	}
 
 	@Override
