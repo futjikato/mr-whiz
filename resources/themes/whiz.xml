@@ -24,6 +24,10 @@
         <area tiled="true" name="health.progress" xywh="0,88,100,87"/>
     </images>
     
+    <images file="../images/ui_sprite.png">
+    	<area name="ui.dropdown.button" xywh="0,0,50,50"/>
+    </images>
+    
     <theme name="-defaults">
         <param name="background"><image>none</image></param>
         <param name="overlay"><image>none</image></param>
@@ -34,6 +38,30 @@
         <param name="maxWidth"><int>0</int></param>
         <param name="maxHeight"><int>0</int></param>
         <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+	</theme>
+	
+	<theme name="-default-vscroller" ref="-defaults" allowWildcard="true">
+		<param name="scaleThumb"><bool>true</bool></param>
+	
+		<theme name="thumb" ref="-defaults"></theme>
+		<theme name="upbutton" ref="-defaults"></theme>
+		<theme name="downbutton" ref="-defaults"></theme>
+	</theme>
+	
+	<theme name="menuui" ref="-defaults" allowWildcard="true">
+		<theme name="label" ref="-defaults"></theme>
+		<theme name="button" ref="-defaults"></theme>
+		<theme name="combobox" ref="-defaults">
+			<theme name="button" ref="-defaults">
+				<param name="background"><image>ui.dropdown.button</image></param>
+			</theme>
+			<theme name="display" ref="-defaults">
+				<param name="minWidth"><int>150</int></param>
+	        	<param name="minHeight"><int>30</int></param>
+		        <param name="maxWidth"><int>150</int></param>
+		        <param name="maxHeight"><int>30</int></param>
+			</theme>
+		</theme>
 	</theme>
 	
 	<theme name="mapui" ref="-defaults" allowWildcard="true">
@@ -55,5 +83,21 @@
 	
 	<theme name="tooltipwindow" ref="-defaults" allowWildcard="true">
     	<param name="fadeInTime"><int>100</int></param>
+    </theme>
+    
+    <theme name="comboboxPopup" ref="-defaults" allowWildcard="true">
+    	<param name="fadeInTime"><int>100</int></param>
+    	
+    	<theme name="listbox" ref="-defaults">
+    		<param name="cellHeight"><int>30</int></param>
+			<param name="cellWidth"><int>150</int></param>
+			<param name="rowMajor"><bool>true</bool></param>
+			<param name="fixedCellWidth"><bool>true</bool></param>
+			<param name="fixedCellHeight"><bool>true</bool></param>
+			<param name="minDisplayedRows"><int>5</int></param>
+    	
+    		<theme name="display" ref="-defaults"></theme>
+    		<theme name="vscrollbar" ref="-default-vscroller"></theme>
+    	</theme>
     </theme>
 </themes>

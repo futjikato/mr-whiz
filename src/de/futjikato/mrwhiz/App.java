@@ -13,7 +13,7 @@ public class App {
 	private boolean isUnitTest = false;
 	private static App instance;
 
-	private GameStates state = GameStates.WORLDMAP;
+	private GameStates state = GameStates.MENU;
 	private GameStates nextState;
 
 	private Map nextGameMap;
