@@ -44,7 +44,7 @@ public class ResolutionListEntry implements Comparable<ResolutionListEntry> {
 
 	@Override
 	public String toString() {
-		return String.format("%d * %d ( %d Hrtz )", this.getWidth(), this.getHeight(), this.getFreq());
+		return String.format("%d * %d", this.getWidth(), this.getHeight());
 	}
 
 	/**

@@ -24,8 +24,31 @@ public final class Util {
 
 		try {
 			for ( DisplayMode mode : Display.getAvailableDisplayModes() ) {
-				ResolutionListEntry resEntry = new ResolutionListEntry(mode);
-				list.add(resEntry);
+
+				boolean isProcessed = false;
+
+				for ( ResolutionListEntry cEntry : list ) {
+					if (cEntry.getHeight() == mode.getHeight() && cEntry.getWidth() == mode.getWidth()) {
+						isProcessed = true;
+
+						// add new entry to the list
+						if (cEntry.getFreq() <= mode.getFrequency()) {
+							// remove old entry
+							list.remove(cEntry);
+
+							// add new
+							ResolutionListEntry resEntry = new ResolutionListEntry(mode);
+							list.add(resEntry);
+
+							break;
+						}
+					}
+				}
+
+				if (!isProcessed) {
+					ResolutionListEntry resEntry = new ResolutionListEntry(mode);
+					list.add(resEntry);
+				}
 			}
 		} catch (LWJGLException e) {
 			// TODO Auto-generated catch block

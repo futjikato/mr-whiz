@@ -11,6 +11,7 @@ public class App {
 
 	private boolean debug = false;
 	private boolean isUnitTest = false;
+	private boolean fullscreen = false;
 	private static App instance;
 
 	private GameStates state = GameStates.MENU;
@@ -121,5 +122,15 @@ public class App {
 
 	public Input getInput() {
 		return this.input;
+	}
+
+	public void toggleFullscreen() {
+		try {
+			this.fullscreen = !this.fullscreen;
+			Display.setFullscreen(this.fullscreen);
+			System.out.println("fullscreen : " + this.fullscreen);
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
 	}
 }

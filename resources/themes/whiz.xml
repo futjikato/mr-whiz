@@ -51,6 +51,7 @@
 	<theme name="menuui" ref="-defaults" allowWildcard="true">
 		<theme name="label" ref="-defaults"></theme>
 		<theme name="button" ref="-defaults"></theme>
+		
 		<theme name="combobox" ref="-defaults">
 			<theme name="button" ref="-defaults">
 				<param name="background"><image>ui.dropdown.button</image></param>
@@ -61,6 +62,10 @@
 		        <param name="maxWidth"><int>150</int></param>
 		        <param name="maxHeight"><int>30</int></param>
 			</theme>
+		</theme>
+		
+		<theme name="checkbox" ref="-defaults">
+			<param name="textAlignment"><enum type="alignment">right</enum></param>
 		</theme>
 	</theme>
 	

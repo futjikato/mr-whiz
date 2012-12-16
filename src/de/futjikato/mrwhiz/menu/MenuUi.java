@@ -15,6 +15,7 @@ import de.futjikato.mrwhiz.ui.ResolutionListEntry;
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.ComboBox;
 import de.matthiasmann.twl.GUI;
+import de.matthiasmann.twl.ToggleButton;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.model.SimpleChangableListModel;
 import de.matthiasmann.twl.renderer.lwjgl.LWJGLRenderer;
@@ -26,9 +27,10 @@ public class MenuUi extends Widget {
 	private ThemeManager theme;
 
 	private Button playButton;
+	private ComboBox<ResolutionListEntry> resolutionSelect;
+	private ToggleButton fullscreenCheckbox;
 
 	private boolean isStopRequested = false;
-	private ComboBox<ResolutionListEntry> resolutionSelect;
 
 	public MenuUi() throws LWJGLException {
 
@@ -90,6 +92,18 @@ public class MenuUi extends Widget {
 			}
 		});
 		this.add(this.resolutionSelect);
+
+		this.fullscreenCheckbox = new ToggleButton();
+		this.fullscreenCheckbox.setText("Fullscreen");
+		this.fullscreenCheckbox.setTheme("checkbox");
+		this.fullscreenCheckbox.addCallback(new Runnable() {
+
+			@Override
+			public void run() {
+				App.getInstance().toggleFullscreen();
+			}
+		});
+		this.add(this.fullscreenCheckbox);
 	}
 
 	@Override
@@ -100,6 +114,8 @@ public class MenuUi extends Widget {
 		this.resolutionSelect.setPosition(20, 300);
 		this.resolutionSelect.adjustSize();
 
+		this.fullscreenCheckbox.setPosition(20, 150);
+		this.fullscreenCheckbox.adjustSize();
 	}
 
 	public boolean isStopRequested() {
