@@ -12,13 +12,22 @@ public class Id extends XmlAttribute {
 
 	private XmlObject ref;
 
+	public void editId(String newIDStr) throws AttributeInvalidInput {
+		if (idList.containsKey(this.idStr)) {
+			idList.remove(this.idStr);
+		}
+
+		idList.put(newIDStr, this);
+		this.idStr = newIDStr;
+	}
+
 	@Override
 	public void handleValue(String value, XmlObject xmlObject) throws AttributeInvalidInput {
 		this.ref = xmlObject;
 		this.idStr = value;
 
 		if (idList.containsKey(this.idStr)) {
-			throw new AttributeInvalidInput();
+			idList.remove(this.idStr);
 		}
 
 		idList.put(this.idStr, this);

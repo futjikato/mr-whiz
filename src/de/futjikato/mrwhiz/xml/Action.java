@@ -50,12 +50,39 @@ public class Action extends XmlObject {
 					}
 				}
 			}
+		},
+
+		createEventBlocks() {
+			@Override
+			public void exec(Action caller) {
+				caller.triggeredEvent.addEventBlocks();
+			}
+		},
+
+		rebindEvent() {
+			@Override
+			public void exec(Action caller) {
+				XmlAttribute targetAttr = caller.getAttribute("target");
+
+				if (targetAttr != null && targetAttr instanceof Target) {
+					Target target = (Target) targetAttr;
+					XmlObject xmlo = Id.getReferenceById(target.getValue());
+
+					if (xmlo instanceof Event) {
+						Event evt = (Event) xmlo;
+
+						evt.rebindTriggers();
+					}
+				}
+			}
 		};
 
 		public abstract void exec(Action caller);
 	}
 
 	private Actions action;
+
+	private Event triggeredEvent;
 
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
@@ -73,7 +100,10 @@ public class Action extends XmlObject {
 		throw new ObjectNoChildSupport();
 	}
 
-	public void exec() {
+	public void exec(Event event) {
+
+		this.triggeredEvent = event;
+
 		if (this.action != null) {
 
 			// get delay

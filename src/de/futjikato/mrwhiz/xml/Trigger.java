@@ -8,6 +8,8 @@ public class Trigger extends XmlObject {
 
 	private Event refEvent;
 
+	private String triggerKey;
+
 	public enum Triggers {
 		touch() {
 			@Override
@@ -30,13 +32,7 @@ public class Trigger extends XmlObject {
 
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
-		try {
-			Triggers trigger = Triggers.valueOf(currentValue);
-			trigger.addListenerToTarget(this);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			/* unknown trigger -> do nothing */
-		}
+		this.triggerKey = currentValue;
 	}
 
 	@Override
@@ -46,6 +42,15 @@ public class Trigger extends XmlObject {
 
 	public void bindEvent(Event event) {
 		this.refEvent = event;
+
+		// execute trigger binding
+		try {
+			Triggers trigger = Triggers.valueOf(this.triggerKey);
+			trigger.addListenerToTarget(this);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			/* unknown trigger -> do nothing */
+		}
 	}
 
 	public void trigger() {

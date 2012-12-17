@@ -34,4 +34,10 @@ public class EventCollector extends XmlObject {
 		}
 	}
 
+	public void rebindAllEvents() {
+		for ( Event evt : eventList ) {
+			evt.rebindTriggers();
+		}
+	}
+
 }

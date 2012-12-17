@@ -14,6 +14,8 @@ public class Event extends XmlObject {
 
 	private List<Action> actions = new ArrayList<Action>();
 
+	private List<Block> eventBlocks = new ArrayList<Block>();
+
 	private boolean triggered = false;
 
 	@Override
@@ -29,6 +31,8 @@ public class Event extends XmlObject {
 			triggers.add(trigger);
 		} else if (mapObj instanceof Action) {
 			actions.add((Action) mapObj);
+		} else if (mapObj instanceof Block) {
+			eventBlocks.add((Block) mapObj);
 		} else {
 			throw new ObjectInvalidChild();
 		}
@@ -48,14 +52,14 @@ public class Event extends XmlObject {
 				@Override
 				public void run() {
 					for ( Action act : Event.this.actions ) {
-						act.exec();
+						act.exec(Event.this);
 					}
 				}
 			}, delay));
 		} else {
 			// no delay
 			for ( Action act : this.actions ) {
-				act.exec();
+				act.exec(this);
 			}
 		}
 	}
@@ -68,5 +72,25 @@ public class Event extends XmlObject {
 
 		Delay delayAttr = (Delay) xmlAttr;
 		return delayAttr.getValue();
+	}
+
+	public void addEventBlocks() {
+		for ( Block newBlock : eventBlocks ) {
+			try {
+				BlockCollector.getInstance().addChildObj(newBlock);
+			} catch (ObjectNoChildSupport e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ObjectInvalidChild e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void rebindTriggers() {
+		for ( Trigger trigger : triggers ) {
+			trigger.bindEvent(this);
+		}
 	}
 }
