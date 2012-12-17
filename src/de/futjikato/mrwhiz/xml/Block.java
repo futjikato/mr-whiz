@@ -1,7 +1,9 @@
 package de.futjikato.mrwhiz.xml;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -107,6 +109,26 @@ public class Block extends XmlObject {
 
 		BlockCollector.getInstance().removeBlock(this);
 		dim.moveByDimension(targetMove);
+		try {
+			BlockCollector.getInstance().addChildObj(this);
+		} catch (ObjectNoChildSupport e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ObjectInvalidChild e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void restoreOriginalAttributes() {
+		BlockCollector.getInstance().removeBlock(this);
+
+		HashMap<String, XmlAttribute> clonedList = new HashMap<String, XmlAttribute>();
+		for ( Entry<String, XmlAttribute> cursor : this.orgAttrs.entrySet() ) {
+			clonedList.put(cursor.getKey(), cursor.getValue());
+		}
+		this.attrs = clonedList;
+
 		try {
 			BlockCollector.getInstance().addChildObj(this);
 		} catch (ObjectNoChildSupport e) {
