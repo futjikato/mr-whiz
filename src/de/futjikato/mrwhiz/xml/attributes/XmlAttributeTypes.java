@@ -91,6 +91,20 @@ public enum XmlAttributeTypes {
 		public XmlAttribute getAttribute() {
 			return new Delay();
 		}
+	},
+
+	repeatable {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Repeatable();
+		}
+	},
+
+	pause {
+		@Override
+		public XmlAttribute getAttribute() {
+			return new Pause();
+		}
 	};
 
 	public abstract XmlAttribute getAttribute();

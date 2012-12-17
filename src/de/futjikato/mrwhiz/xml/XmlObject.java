@@ -11,6 +11,8 @@ import de.futjikato.mrwhiz.xml.attributes.XmlAttributeTypes;
 
 public abstract class XmlObject {
 
+	private HashMap<String, XmlAttribute> orgAttrs = new HashMap<String, XmlAttribute>();
+
 	protected HashMap<String, XmlAttribute> attrs = new HashMap<String, XmlAttribute>();
 
 	public abstract void handleValue(String currentValue) throws ObjectNoValueSupport;
@@ -30,6 +32,8 @@ public abstract class XmlObject {
 			try {
 				attr.handleValue(attributes.getValue(i), this);
 				this.attrs.put(name, attr);
+				XmlAttribute clonedOrg = (XmlAttribute) attr.clone();
+				this.orgAttrs.put(name, clonedOrg);
 			} catch (AttributeInvalidInput e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -61,5 +65,10 @@ public abstract class XmlObject {
 		}
 
 		return (Dimensions) xmlAttr;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void restoreOriginalAttributes() {
+		this.attrs = (HashMap<String, XmlAttribute>) this.orgAttrs.clone();
 	}
 }

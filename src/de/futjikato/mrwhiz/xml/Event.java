@@ -3,9 +3,12 @@ package de.futjikato.mrwhiz.xml;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.GameTimeTrigger;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.attributes.Delay;
+import de.futjikato.mrwhiz.xml.attributes.Pause;
+import de.futjikato.mrwhiz.xml.attributes.Repeatable;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
 
 public class Event extends XmlObject {
@@ -17,6 +20,8 @@ public class Event extends XmlObject {
 	private List<Block> eventBlocks = new ArrayList<Block>();
 
 	private boolean triggered = false;
+
+	private long lastTriggered;
 
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
@@ -41,8 +46,17 @@ public class Event extends XmlObject {
 	public void trigger() {
 
 		if (this.triggered) {
-			return;
+			// stop if one time event and already triggered
+			if (!this.isRepeatable()) {
+				return;
+			}
+
+			// stop if pause time is not over yet
+			if (Util.getTime() < (this.lastTriggered + (this.getPauseTime() * 1000))) {
+				return;
+			}
 		}
+		this.lastTriggered = Util.getTime();
 		this.triggered = true;
 
 		int delay = this.getDelay();
@@ -76,6 +90,7 @@ public class Event extends XmlObject {
 
 	public void addEventBlocks() {
 		for ( Block newBlock : eventBlocks ) {
+			newBlock.restoreOriginalAttributes();
 			try {
 				BlockCollector.getInstance().addChildObj(newBlock);
 			} catch (ObjectNoChildSupport e) {
@@ -92,5 +107,23 @@ public class Event extends XmlObject {
 		for ( Trigger trigger : triggers ) {
 			trigger.bindEvent(this);
 		}
+	}
+
+	private boolean isRepeatable() {
+		XmlAttribute xmlAttr = this.getAttribute("repeatable");
+		if (xmlAttr instanceof Repeatable) {
+			Repeatable reapAttr = (Repeatable) xmlAttr;
+			return reapAttr.isRepeatable();
+		}
+		return false;
+	}
+
+	private int getPauseTime() {
+		XmlAttribute xmlAttr = this.getAttribute("repeatable");
+		if (xmlAttr instanceof Pause) {
+			Pause pauseAttr = (Pause) xmlAttr;
+			return pauseAttr.getTime();
+		}
+		return 0;
 	}
 }

@@ -68,7 +68,7 @@
 			<action target="area2MoveBlock2" delay="2">destroyBlock</action>
 		</event>
 		<!-- reset blocks -->
-		<event>
+		<event repeatable="yes" pause="2">
 			<trigger target="area1TriggerBlock2">touch</trigger>
 			<action>createEventBlocks</action>
 			<action target="Area2Event1">rebindEvent</action>
