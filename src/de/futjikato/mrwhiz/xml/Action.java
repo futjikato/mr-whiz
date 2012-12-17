@@ -3,6 +3,7 @@ package de.futjikato.mrwhiz.xml;
 import de.futjikato.mrwhiz.game.GameTimeTrigger;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.attributes.Delay;
+import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 import de.futjikato.mrwhiz.xml.attributes.Id;
 import de.futjikato.mrwhiz.xml.attributes.Target;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
@@ -22,6 +23,30 @@ public class Action extends XmlObject {
 					if (xmlo instanceof Block) {
 						Block block = (Block) xmlo;
 						BlockCollector.getInstance().removeBlock(block);
+					}
+				}
+			}
+		},
+
+		moveBlock() {
+			@Override
+			public void exec(Action caller) {
+				XmlAttribute targetAttr = caller.getAttribute("target");
+				XmlAttribute targetMovDimAttr = caller.getAttribute("xywh");
+
+				if (!(targetMovDimAttr instanceof Dimensions)) {
+					targetMovDimAttr = new Dimensions();
+				}
+				Dimensions targetMove = (Dimensions) targetMovDimAttr;
+
+				if (targetAttr != null && targetAttr instanceof Target) {
+					Target target = (Target) targetAttr;
+					XmlObject xmlo = Id.getReferenceById(target.getValue());
+
+					if (xmlo instanceof Block) {
+						Block block = (Block) xmlo;
+
+						block.moveByDimension(targetMove);
 					}
 				}
 			}

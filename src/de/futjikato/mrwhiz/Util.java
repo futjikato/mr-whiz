@@ -19,6 +19,11 @@ public final class Util {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
+	public static String getUniqString() {
+		int rand = (int) (Math.random() * 1000);
+		return String.format("%d-%d", Util.getTime(), rand);
+	}
+
 	public static List<ResolutionListEntry> getSystemResolutionList() {
 		List<ResolutionListEntry> list = new ArrayList<ResolutionListEntry>();
 

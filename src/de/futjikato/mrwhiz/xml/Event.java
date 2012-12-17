@@ -14,6 +14,8 @@ public class Event extends XmlObject {
 
 	private List<Action> actions = new ArrayList<Action>();
 
+	private boolean triggered = false;
+
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
 		throw new ObjectNoValueSupport();
@@ -33,6 +35,12 @@ public class Event extends XmlObject {
 	}
 
 	public void trigger() {
+
+		if (this.triggered) {
+			return;
+		}
+		this.triggered = true;
+
 		int delay = this.getDelay();
 
 		if (delay > 0) {

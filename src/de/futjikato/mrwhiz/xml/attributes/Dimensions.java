@@ -46,4 +46,9 @@ public class Dimensions extends XmlAttribute {
 	public int getH() {
 		return h;
 	}
+
+	public void moveByDimension(Dimensions targetMove) {
+		this.x += targetMove.getX();
+		this.y += targetMove.getY();
+	}
 }

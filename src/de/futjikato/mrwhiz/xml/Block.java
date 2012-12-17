@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import de.futjikato.mrwhiz.xml.attributes.Damage;
+import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 import de.futjikato.mrwhiz.xml.attributes.Repeat;
 import de.futjikato.mrwhiz.xml.attributes.Speed;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
@@ -91,6 +92,29 @@ public class Block extends XmlObject {
 	public void triggerTouch() {
 		for ( Trigger trigger : this.touchListener ) {
 			trigger.trigger();
+		}
+	}
+
+	public void moveByDimension(Dimensions targetMove) {
+		if (targetMove == null) {
+			return;
+		}
+
+		Dimensions dim = this.getDimensions();
+		if (dim == null) {
+			return;
+		}
+
+		BlockCollector.getInstance().removeBlock(this);
+		dim.moveByDimension(targetMove);
+		try {
+			BlockCollector.getInstance().addChildObj(this);
+		} catch (ObjectNoChildSupport e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ObjectInvalidChild e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

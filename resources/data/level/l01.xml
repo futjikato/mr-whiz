@@ -49,7 +49,7 @@
 		<!-- If the player touches the block it gets destroyed -->
 		<event delay="1">
 			<trigger target="area1TriggerBlock1">touch</trigger>
-			<action target="area1TriggerBlock1">destroyBlock</action>
+			<action target="area1TriggerBlock1" xywh="0,-1,0,0">moveBlock</action>
 			<action target="area1TriggerBlock2" delay="1">destroyBlock</action>
 		</event>
 	</events>
