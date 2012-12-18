@@ -38,4 +38,20 @@ public class Repeat extends XmlAttribute {
 	public int getRepeatYBy() {
 		return repeatYBy;
 	}
+
+	@Override
+	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+		if (!(o instanceof Repeat)) {
+			throw new AttributeCopyError();
+		}
+
+		Repeat oRep = (Repeat) o;
+
+		this.repeatX = oRep.repeatX;
+		this.repeatY = oRep.repeatY;
+		this.repeatXBy = oRep.repeatXBy;
+		this.repeatYBy = oRep.repeatYBy;
+
+		return this;
+	}
 }

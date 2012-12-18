@@ -121,22 +121,10 @@ public class Block extends XmlObject {
 	}
 
 	public void restoreOriginalAttributes() {
-		BlockCollector.getInstance().removeBlock(this);
-
 		HashMap<String, XmlAttribute> clonedList = new HashMap<String, XmlAttribute>();
 		for ( Entry<String, XmlAttribute> cursor : this.orgAttrs.entrySet() ) {
 			clonedList.put(cursor.getKey(), cursor.getValue());
 		}
 		this.attrs = clonedList;
-
-		try {
-			BlockCollector.getInstance().addChildObj(this);
-		} catch (ObjectNoChildSupport e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ObjectInvalidChild e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

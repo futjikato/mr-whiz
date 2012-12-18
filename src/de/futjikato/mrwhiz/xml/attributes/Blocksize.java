@@ -1,17 +1,16 @@
 package de.futjikato.mrwhiz.xml.attributes;
 
-import de.futjikato.mrwhiz.xml.XmlObject;
 
-public class Blocksize extends XmlAttribute {
+public class Blocksize extends IntegerAttribute {
 
-	private int blocksize;
-
-	@Override
-	public void handleValue(String value, XmlObject xmlObject) throws AttributeInvalidInput {
-		this.blocksize = Integer.parseInt(value);
-	}
-
+	/**
+	 * Deprecated<br>
+	 * Use getValue from abstract class !
+	 * 
+	 * @return blocksize
+	 */
+	@Deprecated
 	public int getBlocksize() {
-		return blocksize;
+		return this.getValue();
 	}
 }

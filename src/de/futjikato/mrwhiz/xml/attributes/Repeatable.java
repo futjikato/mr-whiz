@@ -1,17 +1,16 @@
 package de.futjikato.mrwhiz.xml.attributes;
 
-import de.futjikato.mrwhiz.xml.XmlObject;
 
-public class Repeatable extends XmlAttribute {
+public class Repeatable extends BooleanAttribute {
 
-	private boolean isRepeatable;
-
-	@Override
-	public void handleValue(String value, XmlObject xmlObject) throws AttributeInvalidInput {
-		this.isRepeatable = value.toLowerCase().equals("yes");
-	}
-
+	/**
+	 * Deprecated<br>
+	 * Use getValue from abstract class !
+	 * 
+	 * @return true if repeatable
+	 */
+	@Deprecated
 	public boolean isRepeatable() {
-		return this.isRepeatable;
+		return this.getValue();
 	}
 }

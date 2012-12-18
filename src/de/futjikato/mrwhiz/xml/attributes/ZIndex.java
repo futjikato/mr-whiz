@@ -2,21 +2,28 @@ package de.futjikato.mrwhiz.xml.attributes;
 
 import de.futjikato.mrwhiz.xml.XmlObject;
 
-public class ZIndex extends XmlAttribute {
-
-	private Float zIndex = new Float("0.0");
+public class ZIndex extends FloatAttribute {
 
 	@Override
 	public void handleValue(String value, XmlObject xmlObject) throws AttributeInvalidInput {
-		this.zIndex = new Float(value);
+		float val = Float.parseFloat(value);
 
-		if (this.zIndex > 1 || this.zIndex < -1) {
+		if (val > 1 || val < -1) {
 			throw new AttributeInvalidInput();
 		}
+
+		this.setValue(val);
 	}
 
+	/**
+	 * Deprecated<br>
+	 * Use getValue from abstract class !
+	 * 
+	 * @return zIndex
+	 */
+	@Deprecated
 	public Float getZIndex() {
-		return this.zIndex;
+		return this.getValue();
 	}
 
 }

@@ -70,4 +70,18 @@ public class Id extends XmlAttribute {
 		Id idObj = idList.get(id);
 		return idObj.getReference();
 	}
+
+	@Override
+	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+		if (!(o instanceof Id)) {
+			throw new AttributeCopyError();
+		}
+
+		Id oId = (Id) o;
+
+		this.idStr = oId.idStr;
+		this.ref = oId.ref;
+
+		return this;
+	}
 }

@@ -51,4 +51,21 @@ public class Dimensions extends XmlAttribute {
 		this.x += targetMove.getX();
 		this.y += targetMove.getY();
 	}
+
+	@Override
+	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+		if (!(o instanceof Dimensions)) {
+			throw new AttributeCopyError();
+		}
+
+		Dimensions oDim = (Dimensions) o;
+
+		// copy all values
+		this.h = oDim.h;
+		this.w = oDim.w;
+		this.x = oDim.x;
+		this.y = oDim.y;
+
+		return this;
+	}
 }

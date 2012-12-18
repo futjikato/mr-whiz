@@ -90,6 +90,7 @@ public class Event extends XmlObject {
 
 	public void addEventBlocks() {
 		for ( Block newBlock : eventBlocks ) {
+			BlockCollector.getInstance().removeBlock(newBlock);
 			newBlock.restoreOriginalAttributes();
 			try {
 				BlockCollector.getInstance().addChildObj(newBlock);

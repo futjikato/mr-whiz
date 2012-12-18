@@ -1,17 +1,15 @@
 package de.futjikato.mrwhiz.xml.attributes;
 
-import de.futjikato.mrwhiz.xml.XmlObject;
+public class Pause extends IntegerAttribute {
 
-public class Pause extends XmlAttribute {
-
-	private int pauseTime;
-
-	@Override
-	public void handleValue(String value, XmlObject xmlObject) throws AttributeInvalidInput {
-		this.pauseTime = Integer.parseInt(value);
-	}
-
+	/**
+	 * Deprecated<br>
+	 * Use getValue from abstract class !
+	 * 
+	 * @return time
+	 */
+	@Deprecated
 	public int getTime() {
-		return this.pauseTime;
+		return this.getValue();
 	}
 }

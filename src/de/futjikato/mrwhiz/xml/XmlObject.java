@@ -29,15 +29,21 @@ public abstract class XmlObject {
 			// load attribute class from enum
 			XmlAttributeTypes type = XmlAttributeTypes.valueOf(name);
 			XmlAttribute attr = type.getAttribute();
+			XmlAttribute attrCopy = type.getAttribute();
 
 			// push value to attribute object and add attribute to list
 			try {
 				attr.handleValue(attributes.getValue(i), this);
 				this.attrs.put(name, attr);
-				XmlAttribute clonedOrg = (XmlAttribute) attr.clone();
-				this.orgAttrs.put(name, clonedOrg);
 			} catch (AttributeInvalidInput e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// fill and append copy
+			try {
+				attrCopy.handleValue(attributes.getValue(i), this);
+				this.orgAttrs.put(name, attrCopy);
+			} catch (AttributeInvalidInput e) {
 				e.printStackTrace();
 			}
 		}
@@ -55,10 +61,6 @@ public abstract class XmlObject {
 	public XmlAttribute getAttribute(String name) {
 		return this.attrs.get(name);
 	}
-
-	/**
-	 * Easy getter for often used attributes
-	 */
 
 	public Dimensions getDimensions() {
 		XmlAttribute xmlAttr = this.getAttribute("xywh");
