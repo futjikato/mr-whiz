@@ -114,7 +114,7 @@ public class Event extends XmlObject {
 		XmlAttribute xmlAttr = this.getAttribute("repeatable");
 		if (xmlAttr instanceof Repeatable) {
 			Repeatable reapAttr = (Repeatable) xmlAttr;
-			return reapAttr.isRepeatable();
+			return reapAttr.getValue();
 		}
 		return false;
 	}
@@ -123,7 +123,7 @@ public class Event extends XmlObject {
 		XmlAttribute xmlAttr = this.getAttribute("repeatable");
 		if (xmlAttr instanceof Pause) {
 			Pause pauseAttr = (Pause) xmlAttr;
-			return pauseAttr.getTime();
+			return pauseAttr.getValue();
 		}
 		return 0;
 	}
