@@ -1,13 +1,19 @@
 package de.futjikato.mrwhiz.xml.attributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.futjikato.mrwhiz.xml.XmlObject;
 
 public class Dimensions extends XmlAttribute {
 
-	private int x = 0;
-	private int y = 0;
-	private int w = 100;
-	private int h = 100;
+	private List<Integer> xPositions = new ArrayList<Integer>();
+
+	private List<Integer> yPositions = new ArrayList<Integer>();
+
+	private List<Integer> widths = new ArrayList<Integer>();
+
+	private List<Integer> heights = new ArrayList<Integer>();
 
 	@Override
 	public void handleValue(String value, XmlObject xmlObject) {
@@ -15,41 +21,69 @@ public class Dimensions extends XmlAttribute {
 		String[] parts = value.split(",");
 
 		if (parts.length == 4) {
-			this.h = Integer.parseInt(parts[3]);
+			this.heights.add(Integer.parseInt(parts[3]));
 		}
 
 		if (parts.length >= 3) {
-			this.w = Integer.parseInt(parts[2]);
+			this.widths.add(Integer.parseInt(parts[2]));
 		}
 
 		if (parts.length >= 2) {
-			this.y = Integer.parseInt(parts[1]);
+			this.yPositions.add(Integer.parseInt(parts[1]));
 		}
 
 		if (parts.length >= 1) {
-			this.x = Integer.parseInt(parts[0]);
+			this.xPositions.add(Integer.parseInt(parts[0]));
 		}
 	}
 
 	public int getX() {
-		return x;
+		return xPositions.get(xPositions.size() - 1);
 	}
 
 	public int getY() {
-		return y;
+		return yPositions.get(yPositions.size() - 1);
 	}
 
 	public int getW() {
-		return w;
+		if (widths.size() == 0) {
+			return 0;
+		}
+		return widths.get(widths.size() - 1);
 	}
 
 	public int getH() {
-		return h;
+		if (heights.size() == 0) {
+			return 0;
+		}
+		return heights.get(heights.size() - 1);
 	}
 
 	public void moveByDimension(Dimensions targetMove) {
-		this.x += targetMove.getX();
-		this.y += targetMove.getY();
+		int newX = this.getX() + targetMove.getX();
+		int newY = this.getY() + targetMove.getY();
+		int newW = this.getW() + targetMove.getW();
+		int newH = this.getH() + targetMove.getH();
+
+		this.xPositions.add(newX);
+		this.yPositions.add(newY);
+		this.widths.add(newW);
+		this.heights.add(newH);
+	}
+
+	public void rollback(int steps) throws ArrayIndexOutOfBoundsException {
+		if (this.xPositions.size() < steps || this.yPositions.size() < steps || this.widths.size() < steps || this.heights.size() < steps) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+
+		this.xPositions = this.xPositions.subList(0, this.xPositions.size() - steps);
+		this.yPositions = this.yPositions.subList(0, this.yPositions.size() - steps);
+		this.widths = this.widths.subList(0, this.widths.size() - steps);
+		this.heights = this.heights.subList(0, this.heights.size() - steps);
+	}
+
+	public void rollback() throws ArrayIndexOutOfBoundsException {
+		this.rollback(this.xPositions.size() - 1);
 	}
 
 	@Override
@@ -61,13 +95,13 @@ public class Dimensions extends XmlAttribute {
 		Dimensions oDim = (Dimensions) o;
 
 		// copy all values
-		this.h = oDim.h;
-		this.w = oDim.w;
-		this.x = oDim.x;
-		this.y = oDim.y;
+		this.heights.add(oDim.getH());
+		this.widths.add(oDim.getW());
+		this.xPositions.add(oDim.getX());
+		this.yPositions.add(oDim.getY());
 	}
 
 	public String toString() {
-		return String.format("xywh( %d, %d, %d, %d )", x, y, w, h);
+		return String.format("xywh( %d, %d, %d, %d )", this.getX(), this.getY(), this.getW(), this.getH());
 	}
 }

@@ -91,7 +91,7 @@ public class Event extends XmlObject {
 	public void addEventBlocks() {
 		for ( Block newBlock : eventBlocks ) {
 			BlockCollector.getInstance().removeBlock(newBlock);
-			newBlock.restoreOriginalAttributes();
+			newBlock.getDimensions().rollback();
 			try {
 				BlockCollector.getInstance().addChildObj(newBlock);
 			} catch (ObjectNoChildSupport e) {
@@ -105,6 +105,7 @@ public class Event extends XmlObject {
 	}
 
 	public void rebindTriggers() {
+		this.triggered = false;
 		for ( Trigger trigger : triggers ) {
 			trigger.bindEvent(this);
 		}
