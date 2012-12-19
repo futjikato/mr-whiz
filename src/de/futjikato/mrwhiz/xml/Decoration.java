@@ -33,13 +33,4 @@ public class Decoration extends XmlObject {
 
 		img.draw(dim.getX(), dim.getY(), dim.getW(), dim.getH());
 	}
-
-	@Override
-	protected void initAttributeFallback() {
-		XmlAttribute dim = this.attrs.get("xywh");
-		if (dim == null) {
-			dim = new Dimensions();
-			this.attrs.put("xywh", dim);
-		}
-	}
 }

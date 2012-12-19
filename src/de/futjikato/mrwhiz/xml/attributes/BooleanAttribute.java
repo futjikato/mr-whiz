@@ -17,15 +17,13 @@ public abstract class BooleanAttribute extends XmlAttribute {
 	}
 
 	@Override
-	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof BooleanAttribute)) {
 			throw new AttributeCopyError();
 		}
 
 		BooleanAttribute oBol = (BooleanAttribute) o;
 		this.value = oBol.getValue();
-
-		return this;
 	}
 
 	public boolean getValue() {

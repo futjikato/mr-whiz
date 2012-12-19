@@ -72,7 +72,7 @@ public class Id extends XmlAttribute {
 	}
 
 	@Override
-	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof Id)) {
 			throw new AttributeCopyError();
 		}
@@ -81,7 +81,5 @@ public class Id extends XmlAttribute {
 
 		this.idStr = oId.idStr;
 		this.ref = oId.ref;
-
-		return this;
 	}
 }

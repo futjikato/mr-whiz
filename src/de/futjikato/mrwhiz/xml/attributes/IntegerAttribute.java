@@ -15,15 +15,13 @@ public abstract class IntegerAttribute extends XmlAttribute {
 	}
 
 	@Override
-	public IntegerAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof IntegerAttribute)) {
 			throw new AttributeCopyError();
 		}
 
 		IntegerAttribute oInt = (IntegerAttribute) o;
 		this.value = oInt.getValue();
-
-		return this;
 	}
 
 	protected IntegerAttribute setValue(int value) {

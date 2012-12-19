@@ -40,21 +40,6 @@ public class TextureArea extends XmlObject implements Comparable<TextureArea> {
 	}
 
 	@Override
-	protected void initAttributeFallback() {
-		XmlAttribute dim = this.attrs.get("xywh");
-		if (dim == null) {
-			dim = new Dimensions();
-			this.attrs.put("xywh", dim);
-		}
-
-		XmlAttribute zIndex = this.attrs.get("zIndex");
-		if (zIndex == null) {
-			zIndex = new ZIndex();
-			this.attrs.put("zIndex", zIndex);
-		}
-	}
-
-	@Override
 	public int compareTo(TextureArea o) {
 		XmlAttribute oAttr = o.getAttribute("zIndex");
 		XmlAttribute mAttr = this.getAttribute("zIndex");

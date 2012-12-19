@@ -15,15 +15,13 @@ public abstract class StringAttribute extends XmlAttribute {
 	}
 
 	@Override
-	public StringAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof StringAttribute)) {
 			throw new AttributeCopyError();
 		}
 
 		StringAttribute oString = (StringAttribute) o;
 		this.value = oString.getValue();
-
-		return this;
 	}
 
 	protected StringAttribute setValue(String value) {

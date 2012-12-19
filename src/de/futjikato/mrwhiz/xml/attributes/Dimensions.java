@@ -53,7 +53,7 @@ public class Dimensions extends XmlAttribute {
 	}
 
 	@Override
-	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof Dimensions)) {
 			throw new AttributeCopyError();
 		}
@@ -65,7 +65,9 @@ public class Dimensions extends XmlAttribute {
 		this.w = oDim.w;
 		this.x = oDim.x;
 		this.y = oDim.y;
+	}
 
-		return this;
+	public String toString() {
+		return String.format("xywh( %d, %d, %d, %d )", x, y, w, h);
 	}
 }

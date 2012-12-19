@@ -31,6 +31,10 @@ public abstract class XmlObject {
 			XmlAttribute attr = type.getAttribute();
 			XmlAttribute attrCopy = type.getAttribute();
 
+			if (attr == attrCopy) {
+				System.out.println("Copy same as origin");
+			}
+
 			// push value to attribute object and add attribute to list
 			try {
 				attr.handleValue(attributes.getValue(i), this);
@@ -47,15 +51,6 @@ public abstract class XmlObject {
 				e.printStackTrace();
 			}
 		}
-
-		// after all attributes are handled we call initAttributeFallback so any
-		// missing attribute can be replaced by fallback values
-		this.initAttributeFallback();
-	}
-
-	protected void initAttributeFallback() {
-		// no implementation in abstract class
-		// overwrite this if needed
 	}
 
 	public XmlAttribute getAttribute(String name) {

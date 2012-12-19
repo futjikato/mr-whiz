@@ -15,15 +15,13 @@ public abstract class FloatAttribute extends XmlAttribute {
 	}
 
 	@Override
-	public FloatAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof FloatAttribute)) {
 			throw new AttributeCopyError();
 		}
 
 		FloatAttribute oFloat = (FloatAttribute) o;
 		this.value = oFloat.getValue();
-
-		return this;
 	}
 
 	protected FloatAttribute setValue(float value) {

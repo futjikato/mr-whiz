@@ -17,12 +17,10 @@ public abstract class XmlAttribute {
 	public abstract void handleValue(String value, XmlObject xmlObject) throws AttributeInvalidInput;
 
 	/**
-	 * Copy all values from other<br>
-	 * Returns self for chaining
+	 * Copy all values from other
 	 * 
 	 * @param other
-	 * @return self
 	 * @throws AttributeCopyError
 	 */
-	public abstract XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError;
+	public abstract void copyFrom(XmlAttribute o) throws AttributeCopyError;
 }

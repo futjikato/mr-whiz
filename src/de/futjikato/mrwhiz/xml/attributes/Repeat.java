@@ -40,7 +40,7 @@ public class Repeat extends XmlAttribute {
 	}
 
 	@Override
-	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof Repeat)) {
 			throw new AttributeCopyError();
 		}
@@ -51,7 +51,5 @@ public class Repeat extends XmlAttribute {
 		this.repeatY = oRep.repeatY;
 		this.repeatXBy = oRep.repeatXBy;
 		this.repeatYBy = oRep.repeatYBy;
-
-		return this;
 	}
 }

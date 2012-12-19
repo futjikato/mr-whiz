@@ -41,7 +41,7 @@ public class Spawn extends XmlAttribute {
 	}
 
 	@Override
-	public XmlAttribute copyFrom(XmlAttribute o) throws AttributeCopyError {
+	public void copyFrom(XmlAttribute o) throws AttributeCopyError {
 		if (!(o instanceof Spawn)) {
 			throw new AttributeCopyError();
 		}
@@ -50,7 +50,5 @@ public class Spawn extends XmlAttribute {
 
 		this.x = oSpawn.x;
 		this.y = oSpawn.y;
-
-		return this;
 	}
 }

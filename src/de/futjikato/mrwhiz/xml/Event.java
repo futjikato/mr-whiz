@@ -52,7 +52,7 @@ public class Event extends XmlObject {
 			}
 
 			// stop if pause time is not over yet
-			if (Util.getTime() < (this.lastTriggered + (this.getPauseTime() * 1000))) {
+			if (Util.getTime() <= (this.lastTriggered + (this.getPauseTime() * 1000))) {
 				return;
 			}
 		}
