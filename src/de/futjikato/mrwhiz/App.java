@@ -9,6 +9,8 @@ import de.futjikato.mrwhiz.xml.Map;
 
 public class App {
 
+	static final long MAIN_VERSION = 1;
+
 	private boolean debug = false;
 	private boolean isUnitTest = false;
 	private boolean fullscreen = false;
@@ -19,6 +21,7 @@ public class App {
 
 	private Map nextGameMap;
 	private Input input;
+	private Updater updater;
 
 	/**
 	 * Main
@@ -39,8 +42,22 @@ public class App {
 			}
 		}
 
+		if (app.getUpdater().checkForUpdates(MAIN_VERSION)) {
+			System.out.println("UPDATE available !");
+		} else {
+			System.out.println("Running latest version");
+		}
+
 		app.createWindow();
 		app.loop();
+	}
+
+	public Updater getUpdater() {
+		if (this.updater == null) {
+			this.updater = new Updater();
+		}
+
+		return this.updater;
 	}
 
 	public void defineLwjglLibraryPath() throws Exception {
