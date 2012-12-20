@@ -12,6 +12,7 @@ import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.GameStates;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.ui.ResolutionListEntry;
+import de.matthiasmann.twl.BoxLayout;
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.ComboBox;
 import de.matthiasmann.twl.GUI;
@@ -25,6 +26,9 @@ public class MenuUi extends Widget {
 
 	private GUI gui;
 	private ThemeManager theme;
+
+	private BoxLayout topBox;
+	private BoxLayout bottomBox;
 
 	private Button playButton;
 	private ComboBox<ResolutionListEntry> resolutionSelect;
@@ -59,6 +63,12 @@ public class MenuUi extends Widget {
 	}
 
 	private void initUi() {
+
+		topBox = new BoxLayout(BoxLayout.Direction.HORIZONTAL);
+		topBox.setTheme("menubox");
+		bottomBox = new BoxLayout(BoxLayout.Direction.HORIZONTAL);
+		bottomBox.setTheme("menubox");
+
 		this.playButton = new Button();
 		this.playButton.setText("Play");
 		this.playButton.addCallback(new Runnable() {
@@ -69,7 +79,7 @@ public class MenuUi extends Widget {
 				MenuUi.this.isStopRequested = true;
 			}
 		});
-		this.add(this.playButton);
+		bottomBox.add(this.playButton);
 
 		List<ResolutionListEntry> resEntryList = Util.getSystemResolutionList();
 		SimpleChangableListModel<ResolutionListEntry> resolutionSelectListModel = new SimpleChangableListModel<ResolutionListEntry>(resEntryList);
@@ -91,7 +101,7 @@ public class MenuUi extends Widget {
 				}
 			}
 		});
-		this.add(this.resolutionSelect);
+		topBox.add(this.resolutionSelect);
 
 		this.fullscreenCheckbox = new ToggleButton();
 		this.fullscreenCheckbox.setText("Fullscreen");
@@ -103,22 +113,23 @@ public class MenuUi extends Widget {
 				App.getInstance().toggleFullscreen();
 			}
 		});
-		this.add(this.fullscreenCheckbox);
+		topBox.add(this.fullscreenCheckbox);
+
+		this.add(bottomBox);
+		this.add(topBox);
 	}
 
 	@Override
 	protected void layout() {
-		this.playButton.setPosition(20, 20);
-		this.playButton.adjustSize();
+		bottomBox.adjustSize();
+		bottomBox.setPosition(0, Display.getHeight() - bottomBox.getHeight());
+		bottomBox.setInnerSize(Display.getWidth(), bottomBox.getHeight());
 
-		this.resolutionSelect.setPosition(20, 300);
-		this.resolutionSelect.adjustSize();
-
-		this.fullscreenCheckbox.setPosition(20, 150);
-		this.fullscreenCheckbox.adjustSize();
+		topBox.adjustSize();
+		topBox.setPosition(0, 0);
 	}
 
 	public boolean isStopRequested() {
-		return this.isStopRequested;
+		return this.isStopRequested || Display.isCloseRequested();
 	}
 }

@@ -25,7 +25,12 @@
     </images>
     
     <images file="../images/ui_sprite.png">
-    	<area name="ui.dropdown.button" xywh="0,0,50,50"/>
+    	<area name="ui.dropdown.button" xywh="0,0,30,30"/>
+    	<area name="ui.area.black" xywh="31,31,30,30"/>
+    </images>
+    
+    <images file="../images/backgrounds/dev.png">
+    	<area name="dev" xywh="0,0,128,128"/>
     </images>
     
     <theme name="-defaults">
@@ -48,11 +53,16 @@
 		<theme name="downbutton" ref="-defaults"></theme>
 	</theme>
 	
-	<theme name="menuui" ref="-defaults" allowWildcard="true">
+	<theme name="-default-menuui" ref="-defaults">
 		<theme name="label" ref="-defaults"></theme>
-		<theme name="button" ref="-defaults"></theme>
+		<theme name="button" ref="-defaults">
+			<param name="background"><image>ui.area.black</image></param>
+		</theme>
 		
 		<theme name="combobox" ref="-defaults">
+			<param name="maxHeight"><int>30</int></param>
+        	<param name="minHeight"><int>30</int></param>
+		
 			<theme name="button" ref="-defaults">
 				<param name="background"><image>ui.dropdown.button</image></param>
 			</theme>
@@ -65,7 +75,17 @@
 		</theme>
 		
 		<theme name="checkbox" ref="-defaults">
+			<param name="maxHeight"><int>30</int></param>
+        	<param name="minHeight"><int>30</int></param>
 			<param name="textAlignment"><enum type="alignment">right</enum></param>
+		</theme>
+	</theme>
+	
+	<theme name="menuui" ref="-default-menuui" allowWildcard="true">
+		<theme name="menubox" ref="-default-menuui">
+			<param name="background"><image>dev</image></param>
+			<param name="spacing"><int>20</int></param>
+			<param name="alignment"><enum type="alignment">TOP</enum></param>
 		</theme>
 	</theme>
 	
