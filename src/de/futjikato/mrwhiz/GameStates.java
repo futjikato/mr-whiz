@@ -22,7 +22,7 @@ public enum GameStates {
 	},
 	GAME() {
 		protected Renderer getRenderer() {
-			return new GameRenderer();
+			return GameRenderer.getInstance();
 		}
 	};
 

@@ -59,7 +59,11 @@ public abstract class Physical {
 		this.y = y;
 	}
 
-	protected void calcNewPos(float x, float y, int blocksize, long delta) {
+	protected void calcNewPos(int blocksize, long delta) {
+
+		float x = getX();
+		float y = getY();
+
 		// calc new velocitys
 		float yv = this.getYVel();
 		float xv = this.getXvel();

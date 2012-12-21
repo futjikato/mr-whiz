@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Renderer;
+import de.futjikato.mrwhiz.game.ai.NpcManager;
 import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Gamemap;
@@ -29,6 +30,15 @@ public final class GameRenderer extends Renderer {
 	private int viewPortyb = 0;
 	private int viewPortwb;
 	private int viewPorthb;
+
+	private static GameRenderer instance;
+
+	public static GameRenderer getInstance() {
+		if (null == instance) {
+			instance = new GameRenderer();
+		}
+		return instance;
+	}
 
 	@Override
 	protected void init() throws LWJGLException {
@@ -54,6 +64,9 @@ public final class GameRenderer extends Renderer {
 	protected void renderScene(long delta) {
 		// invoke event trigger class
 		GameTimeTrigger.getInstance().update();
+
+		// invoke all npc´s
+		NpcManager.getInstance().invokeAll();
 
 		// calc new screen position
 		this.calcNewScreenViewportPosition();
@@ -113,5 +126,9 @@ public final class GameRenderer extends Renderer {
 
 		this.viewPortxb = (int) Math.floor(this.viewPortX / this.map.getBlocksize().getValue());
 		this.viewPortyb = (int) Math.floor(this.viewPortY / this.map.getBlocksize().getValue());
+	}
+
+	public int getBlocksize() {
+		return this.map.getBlocksize().getValue();
 	}
 }

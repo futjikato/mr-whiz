@@ -3,6 +3,7 @@ package de.futjikato.mrwhiz.xml.attributes;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.futjikato.mrwhiz.game.GameRenderer;
 import de.futjikato.mrwhiz.xml.XmlObject;
 
 public class Dimensions extends XmlAttribute {
@@ -43,6 +44,14 @@ public class Dimensions extends XmlAttribute {
 
 	public int getY() {
 		return yPositions.get(yPositions.size() - 1);
+	}
+
+	public float getAbsX() {
+		return (float) xPositions.get(xPositions.size() - 1) * GameRenderer.getInstance().getBlocksize();
+	}
+
+	public float getAbsY() {
+		return yPositions.get(yPositions.size() - 1) * GameRenderer.getInstance().getBlocksize();
 	}
 
 	public int getW() {

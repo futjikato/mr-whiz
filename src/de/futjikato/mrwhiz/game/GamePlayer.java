@@ -153,7 +153,7 @@ public class GamePlayer extends Physical {
 			return;
 
 		// get new y position
-		this.calcNewPos(this.getX(), this.getY(), this.blocksize, delta);
+		this.calcNewPos(this.blocksize, delta);
 
 		if (input.isKeyDown(Input.KEY_D)) {
 			this.setXvel(this.speed);
