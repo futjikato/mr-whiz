@@ -3,7 +3,6 @@ package de.futjikato.mrwhiz.game.ai;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class NpcManager {
 
 	private static NpcManager instance;
@@ -21,9 +20,9 @@ public class NpcManager {
 		return instance;
 	}
 
-	public void invokeAll() {
+	public void invokeAll(float vpx, float vpy, int blocksize, long delta) {
 		for ( Npc npc : list ) {
-			npc.invoke();
+			npc.invoke(vpx, vpy, blocksize, delta);
 		}
 	}
 

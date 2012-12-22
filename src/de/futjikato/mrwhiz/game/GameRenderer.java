@@ -65,9 +65,6 @@ public final class GameRenderer extends Renderer {
 		// invoke event trigger class
 		GameTimeTrigger.getInstance().update();
 
-		// invoke all npc´s
-		NpcManager.getInstance().invokeAll();
-
 		// calc new screen position
 		this.calcNewScreenViewportPosition();
 
@@ -86,6 +83,9 @@ public final class GameRenderer extends Renderer {
 		for ( Item item : items ) {
 			item.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getValue());
 		}
+
+		// invoke all npc´s
+		NpcManager.getInstance().invokeAll(this.viewPortX, this.viewPortY, this.map.getBlocksize().getValue(), delta);
 
 		this.player.render(this.viewPortX, this.viewPortY);
 	}

@@ -19,7 +19,11 @@ public abstract class Npc extends GamePhysicalObject {
 	public void spawn(float x, float y) {
 		setX(x);
 		setY(y);
+
 		isAlive = true;
+
+		setGrip(1.2f);
+		setMaxYVal(1.5f);
 	}
 
 	protected void hitBlock(Block block) {
@@ -37,14 +41,14 @@ public abstract class Npc extends GamePhysicalObject {
 		isAlive = false;
 	}
 
-	public void invoke() {
+	public void invoke(float vpx, float vpy, int blocksize, long delta) {
 		if (isAlive) {
-			this.nextStep();
-			this.draw();
+			this.nextStep(blocksize, delta);
+			this.draw(vpx, vpy);
 		}
 	}
 
-	public abstract void draw();
+	public abstract void draw(float vpx, float vpy);
 
-	protected abstract void nextStep();
+	protected abstract void nextStep(int blocksize, long delta);
 }

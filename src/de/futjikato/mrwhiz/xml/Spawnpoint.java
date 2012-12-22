@@ -23,13 +23,12 @@ public class Spawnpoint extends XmlObject {
 
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
-		throw new ObjectNoValueSupport();
+		this.npcType = currentValue;
 	}
 
 	@Override
 	public void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport, ObjectInvalidChild {
-		// TODO Auto-generated method stub
-
+		throw new ObjectNoChildSupport();
 	}
 
 	public void triggerSpawn() {

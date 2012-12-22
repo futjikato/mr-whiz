@@ -21,7 +21,6 @@ public abstract class GamePhysicalObject extends Physical {
 			if (block != null) {
 				free = false;
 				this.hitBlock(block);
-				break;
 			}
 		}
 
@@ -43,7 +42,6 @@ public abstract class GamePhysicalObject extends Physical {
 			if (block != null) {
 				free = false;
 				this.hitBlock(block);
-				break;
 			}
 		}
 

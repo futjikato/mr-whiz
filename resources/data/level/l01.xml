@@ -32,7 +32,7 @@
 				<block id="area1TriggerBlock1" xywh="10,2,1,1">
 					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
 				</block>
-				<block xywh="7,4,6,1" repeat="x" damage="50">
+				<block xywh="7,4,6,1" repeat="x" damage="10">
 					<texture><![CDATA[resources/images/backgrounds/game_thorn.png]]></texture>
 				</block>
 				<block id="area1TriggerBlock2" xywh="13,2,2,3" repeat="xy">
@@ -44,6 +44,9 @@
 	</blocks>
 	<items>
 	</items>
+	<spawnpoints>
+		<spawn id="dogspawn1" xywh="25,0,0,0">dog</spawn>
+	</spawnpoints>
 	<events>
 		<!-- If the player touches the block it gets destroyed -->
 		<event delay="1">
@@ -87,6 +90,11 @@
 			<block id="area2MoveEnd" xywh="20,20,1,1" repeat="xy">
 				<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
 			</block>
+		</event>
+		
+		<event>
+			<trigger target="area2MoveEnd">touch</trigger>
+			<action target="dogspawn1">spawn</action>
 		</event>
 	</events>
 </gamemap>

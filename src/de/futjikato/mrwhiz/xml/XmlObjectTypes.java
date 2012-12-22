@@ -126,6 +126,20 @@ public enum XmlObjectTypes {
 		public XmlObject getType() {
 			return new Action();
 		}
+	},
+
+	spawnpoints {
+		@Override
+		public XmlObject getType() {
+			return SpawnpointCollector.getInstance();
+		}
+	},
+
+	spawn {
+		@Override
+		public XmlObject getType() {
+			return new Spawnpoint();
+		}
 	};
 
 	public abstract XmlObject getType();
