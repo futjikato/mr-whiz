@@ -38,6 +38,10 @@
 				<block id="area1TriggerBlock2" xywh="13,2,2,3" repeat="xy">
 					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
 				</block>
+			<!-- Dogstopper -->
+				<block xywh="30,4,1,1">
+					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
+				</block>
 			<!-- TODO -->
 		<!-- House -->
 		<!-- TODO -->

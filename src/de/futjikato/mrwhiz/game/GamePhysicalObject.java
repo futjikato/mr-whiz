@@ -20,7 +20,7 @@ public abstract class GamePhysicalObject extends Physical {
 			Block block = BlockCollector.getInstance().getBlock(bx, by + j);
 			if (block != null) {
 				free = false;
-				this.hitBlock(block);
+				this.hitBlock(block, "y");
 			}
 		}
 
@@ -41,7 +41,7 @@ public abstract class GamePhysicalObject extends Physical {
 			Block block = BlockCollector.getInstance().getBlock(bx + j, by);
 			if (block != null) {
 				free = false;
-				this.hitBlock(block);
+				this.hitBlock(block, "x");
 			}
 		}
 
@@ -52,5 +52,5 @@ public abstract class GamePhysicalObject extends Physical {
 
 	protected abstract int getWidth();
 
-	protected abstract void hitBlock(Block block);
+	protected abstract void hitBlock(Block block, String direction);
 }
