@@ -8,19 +8,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import de.futjikato.mrwhiz.App;
-import de.futjikato.mrwhiz.Physical;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.Block;
-import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Item;
-import de.futjikato.mrwhiz.xml.ItemCollector;
 
-public class GamePlayer extends Physical {
+public class GamePlayer extends GamePhysicalObject {
 
 	private GameUi gui;
 
-	private static final int PLAYER_WIDTH = 80;
+	private static final int PLAYER_WIDTH = 30;
 	private static final int PLAYER_HEIGHT = 149;
 
 	private float spawnX;
@@ -207,51 +204,7 @@ public class GamePlayer extends Physical {
 		return PLAYER_WIDTH;
 	}
 
-	@Override
-	protected boolean yCol(float x, float y, int blocksize) {
-		ItemCollector itemCol = ItemCollector.getInstance();
-
-		// get block coords
-		int by = (int) Math.floor(y / blocksize);
-		int bx = (int) Math.floor(x / blocksize);
-
-		Item item = itemCol.getItem(bx, by);
-		if (item != null) {
-			this.hitItem(item);
-			itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
-		}
-
-		Block block = BlockCollector.getInstance().getBlock(bx, by);
-		if (block != null) {
-			this.hitBlock(block);
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	protected boolean xCol(float x, float y, int blocksize) {
-		ItemCollector itemCol = ItemCollector.getInstance();
-
-		// get block coords
-		int by = (int) Math.floor(y / blocksize);
-		int bx = (int) Math.floor(x / blocksize);
-
-		Item item = itemCol.getItem(bx, by);
-		if (item != null) {
-			this.hitItem(item);
-			itemCol.removeItem(item.getDimensions().getX(), item.getDimensions().getY());
-		}
-
-		Block block = BlockCollector.getInstance().getBlock(bx, by);
-		if (block != null) {
-			this.hitBlock(block);
-			return false;
-		}
-		return true;
-	}
-
-	protected void hitBlock(Block block) {
+	protected void hitBlock(Block block, int type) {
 
 		if (!this.alive)
 			return;
@@ -295,5 +248,11 @@ public class GamePlayer extends Physical {
 
 	public void setGui(GameUi gui) {
 		this.gui = gui;
+	}
+
+	@Override
+	protected void handleCollision(int type) {
+		// TODO Auto-generated method stub
+
 	}
 }

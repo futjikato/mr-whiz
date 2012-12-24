@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.futjikato.mrwhiz.game.GameRenderer;
 import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 
 public final class BlockCollector extends XmlObject {
@@ -101,5 +102,14 @@ public final class BlockCollector extends XmlObject {
 			String key = String.format("%d,%d", dim.getX(), dim.getY());
 			this.areamap.remove(key);
 		}
+	}
+
+	public Block getBlockByPixel(float x, float y) {
+		// calc block dimension
+		int blocksize = GameRenderer.getInstance().getBlocksize();
+		int by = (int) Math.floor(y / blocksize);
+		int bx = (int) Math.floor(x / blocksize);
+
+		return getBlock(bx, by);
 	}
 }

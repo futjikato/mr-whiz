@@ -83,7 +83,6 @@
 	
 	<theme name="menuui" ref="-default-menuui" allowWildcard="true">
 		<theme name="menubox" ref="-default-menuui">
-			<param name="background"><image>dev</image></param>
 			<param name="spacing"><int>20</int></param>
 			<param name="alignment"><enum type="alignment">TOP</enum></param>
 		</theme>

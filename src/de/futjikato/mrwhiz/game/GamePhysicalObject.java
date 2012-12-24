@@ -7,50 +7,42 @@ import de.futjikato.mrwhiz.xml.BlockCollector;
 public abstract class GamePhysicalObject extends Physical {
 
 	@Override
-	protected boolean yCol(float x, float y, int blocksize) {
-		// get block coords
-		int by = (int) Math.floor(y / blocksize);
-		int bx = (int) Math.floor(x / blocksize);
-
-		// calc block height
-		int bh = this.getHeight() / blocksize;
-
-		boolean free = true;
-		for ( int j = 0 ; j < bh ; j++ ) {
-			Block block = BlockCollector.getInstance().getBlock(bx, by + j);
-			if (block != null) {
-				free = false;
-				this.hitBlock(block, "y");
-			}
+	protected int yCol(float x, float y, int blocksize) {
+		Block frontblock = BlockCollector.getInstance().getBlockByPixel(x, y);
+		if (frontblock != null) {
+			this.hitBlock(frontblock, Physical.COLLISION_Y_BLOCKED);
+			return Physical.COLLISION_Y_BLOCKED;
 		}
 
-		return free;
+		Block backblock = BlockCollector.getInstance().getBlockByPixel(x, y - getHeight());
+		if (backblock != null) {
+			this.hitBlock(backblock, Physical.COLLISION_Y_BLOCKED);
+			return Physical.COLLISION_Y_BLOCKED;
+		}
+
+		return Physical.COLLISION_Y_NONE;
 	}
 
 	@Override
-	protected boolean xCol(float x, float y, int blocksize) {
-		// get block coords
-		int by = (int) Math.floor(y / blocksize);
-		int bx = (int) Math.floor(x / blocksize);
-
-		// calc block height
-		int bw = this.getWidth() / blocksize;
-
-		boolean free = true;
-		for ( int j = 0 ; j < bw ; j++ ) {
-			Block block = BlockCollector.getInstance().getBlock(bx + j, by);
-			if (block != null) {
-				free = false;
-				this.hitBlock(block, "x");
-			}
+	protected int xCol(float x, float y, int blocksize) {
+		Block frontblock = BlockCollector.getInstance().getBlockByPixel(x, y);
+		if (frontblock != null) {
+			this.hitBlock(frontblock, Physical.COLLISION_X_BLOCKED);
+			return Physical.COLLISION_X_BLOCKED;
 		}
 
-		return free;
+		Block backblock = BlockCollector.getInstance().getBlockByPixel(x + getWidth(), y);
+		if (backblock != null) {
+			this.hitBlock(backblock, Physical.COLLISION_X_BLOCKED);
+			return Physical.COLLISION_X_BLOCKED;
+		}
+
+		return Physical.COLLISION_X_NONE;
 	}
 
 	protected abstract int getHeight();
 
 	protected abstract int getWidth();
 
-	protected abstract void hitBlock(Block block, String direction);
+	protected abstract void hitBlock(Block block, int type);
 }
