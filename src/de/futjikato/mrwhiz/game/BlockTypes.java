@@ -59,6 +59,23 @@ public enum BlockTypes {
 			Gamemap.getInstance().setMapSpawnX((float) absX);
 			Gamemap.getInstance().setMapSpawnY((float) absY);
 		}
+	},
+
+	t() {
+		@Override
+		public Image getTexture() {
+			try {
+				return new Image("resources/images/backgrounds/game_thorn.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		public int getDamage() {
+			return 20;
+		}
 	};
 
 	public Image getTexture() {
@@ -71,5 +88,9 @@ public enum BlockTypes {
 
 	public void informGame(Block self) {
 		// do nothing in default implememtation
+	}
+
+	public int getDamage() {
+		return 0;
 	}
 }

@@ -10,7 +10,10 @@
 		</area>
 	</textureAreas>
 	<blocks>
-		<blockfile><![CDATA[resources/data/level/l01.blockfile]]></blockfile>
+		<blockfile>
+			<!-- maybe add a define block ? -->
+			<![CDATA[resources/data/level/l01.blockfile]]>
+		</blockfile>
 	</blocks>
 	<items>
 	</items>

@@ -47,6 +47,9 @@ public class Block {
 			}
 		}
 
+		// load block damage from type
+		dmg = blockType.getDamage();
+
 		blockType.informGame(this);
 	}
 
