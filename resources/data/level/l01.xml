@@ -1,50 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gamemap spawn="20,200" blocksize="50">
+<gamemap blocksize="50">
 	<!-- Sky background -->
 	<textureAreas>
-		<area xywh="-20,-10,55,15" zIndex="0.0">
+		<area xywh="0,0,55,15" zIndex="0.0">
 			<texture><![CDATA[resources/images/backgrounds/sky_babyblue.png]]></texture>
 		</area>
-		<area xywh="-20,6,55,7" zIndex="0.0">
+		<area xywh="0,15,55,7" zIndex="0.0">
 			<texture><![CDATA[resources/images/backgrounds/game_dirt.png]]></texture>
 		</area>
 	</textureAreas>
 	<blocks>
-		<!-- Brickwall & street ( mapend left ) -->
-			<block xywh="-10,5,5,1" repeat="xy">
-				<texture><![CDATA[resources/images/backgrounds/game_street_ground.png]]></texture>
-			</block>
-			<block xywh="-5,0,1,6" repeat="xy">
-				<texture><![CDATA[resources/images/backgrounds/game_brick.png]]></texture>
-			</block>
-		<!-- Frontyard -->
-			<!-- Ground -->
-			<block xywh="-4,5,19,1" repeat="x">
-				<texture><![CDATA[resources/images/backgrounds/game_grass_ground.png]]></texture>
-			</block>
-			<block xywh="15,5,20,1" repeat="x">
-				<texture><![CDATA[resources/images/backgrounds/game_grass_ground.png]]></texture>
-			</block>
-			<!-- Area #1 -->
-				<block xywh="5,2,2,3" repeat="xy">
-					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-				</block>
-				<block id="area1TriggerBlock1" xywh="10,2,1,1">
-					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-				</block>
-				<block xywh="7,4,6,1" repeat="x" damage="10">
-					<texture><![CDATA[resources/images/backgrounds/game_thorn.png]]></texture>
-				</block>
-				<block id="area1TriggerBlock2" xywh="13,2,2,3" repeat="xy">
-					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-				</block>
-			<!-- Dogstopper -->
-				<block xywh="30,4,1,1">
-					<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-				</block>
-			<!-- TODO -->
-		<!-- House -->
-		<!-- TODO -->
+		<blockfile><![CDATA[resources/data/level/l01.blockfile]]></blockfile>
 	</blocks>
 	<items>
 	</items>
@@ -52,53 +18,6 @@
 		<spawn id="dogspawn1" xywh="25,0,0,0">dog</spawn>
 	</spawnpoints>
 	<events>
-		<!-- If the player touches the block it gets destroyed -->
-		<event delay="1">
-			<trigger target="area1TriggerBlock1">touch</trigger>
-			<action target="area1TriggerBlock1">destroyBlock</action>
-		</event>
-		
-		<!-- All the events for the second little tech demo -->
-		<event id="Area2Event1">
-			<trigger target="area2InitalTrigger">touch</trigger>
-			<action delay="1" target="area2MoveBlock1" xywh="0,-20">moveBlock</action>
-			<action target="area2InitalTrigger" delay="2">destroyBlock</action>
-		</event>
-		<event id="Area2Event2">
-			<trigger target="area2MoveBlock1">touch</trigger>
-			<action delay="1" target="area2MoveBlock2" xywh="0,-23">moveBlock</action>
-			<action target="area2MoveBlock1" delay="2">destroyBlock</action>
-		</event>
-		<event id="Area2Event3">
-			<trigger target="area2MoveBlock2">touch</trigger>
-			<action delay="1" target="area2MoveEnd" xywh="0,-26">moveBlock</action>
-			<action target="area2MoveBlock2" delay="2">destroyBlock</action>
-		</event>
-		<!-- reset blocks -->
-		<event repeatable="yes" pause="2">
-			<trigger target="area1TriggerBlock2">touch</trigger>
-			<action>createEventBlocks</action>
-			<action target="Area2Event1">rebindEvent</action>
-			<action target="Area2Event2">rebindEvent</action>
-			<action target="Area2Event3">rebindEvent</action>
-			
-			<block id="area2InitalTrigger" xywh="18,3,1,1" repeat="xy">
-				<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-			</block>
-			<block id="area2MoveBlock1" xywh="20,20,1,1" repeat="xy">
-				<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-			</block>
-			<block id="area2MoveBlock2" xywh="18,20,1,1" repeat="xy">
-				<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-			</block>
-			<block id="area2MoveEnd" xywh="20,20,1,1" repeat="xy">
-				<texture><![CDATA[resources/images/backgrounds/game_bush.png]]></texture>
-			</block>
-		</event>
-		
-		<event>
-			<trigger target="area2MoveEnd">touch</trigger>
-			<action target="dogspawn1">spawn</action>
-		</event>
+		<!-- TODO add if reimplemented with new block storage -->
 	</events>
 </gamemap>

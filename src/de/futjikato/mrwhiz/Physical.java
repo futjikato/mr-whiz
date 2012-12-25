@@ -1,12 +1,6 @@
 package de.futjikato.mrwhiz;
 
 public abstract class Physical {
-
-	public static final int COLLISION_X_NONE = 0;
-	public static final int COLLISION_X_BLOCKED = 1;
-	public static final int COLLISION_Y_NONE = 3;
-	public static final int COLLISION_Y_BLOCKED = 5;
-
 	private float x;
 	private float y;
 
@@ -104,26 +98,17 @@ public abstract class Physical {
 		float ny = delta * yv;
 		float nx = delta * xv;
 
-		int yCollisionType = this.yCol(x, y + ny, blocksize);
-		if (yCollisionType == COLLISION_Y_NONE) {
+		if (this.checkCollision(x, y + ny, 0)) {
 			this.setY(this.getY() + ny);
 		} else {
 			// reset y velocity on landing somewhere
 			this.setYVel(0);
-			handleCollision(yCollisionType);
 		}
 
-		int xCollisionType = this.xCol(x + nx, y, blocksize);
-		if (xCollisionType == COLLISION_X_NONE) {
+		if (this.checkCollision(x + nx, y, 1)) {
 			this.setX(this.getX() + nx);
-		} else {
-			handleCollision(xCollisionType);
 		}
 	}
 
-	protected abstract int yCol(float x, float y, int blocksize);
-
-	protected abstract int xCol(float x, float y, int blocksize);
-
-	protected abstract void handleCollision(int type);
+	protected abstract boolean checkCollision(float x, float y, int type);
 }

@@ -1,7 +1,7 @@
 package de.futjikato.mrwhiz.game.ai;
 
+import de.futjikato.mrwhiz.game.Block;
 import de.futjikato.mrwhiz.game.GamePhysicalObject;
-import de.futjikato.mrwhiz.xml.Block;
 
 public abstract class Npc extends GamePhysicalObject {
 

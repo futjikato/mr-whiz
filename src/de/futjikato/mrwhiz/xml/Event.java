@@ -17,8 +17,6 @@ public class Event extends XmlObject {
 
 	private List<Action> actions = new ArrayList<Action>();
 
-	private List<Block> eventBlocks = new ArrayList<Block>();
-
 	private boolean triggered = false;
 
 	private long lastTriggered;
@@ -36,8 +34,6 @@ public class Event extends XmlObject {
 			triggers.add(trigger);
 		} else if (mapObj instanceof Action) {
 			actions.add((Action) mapObj);
-		} else if (mapObj instanceof Block) {
-			eventBlocks.add((Block) mapObj);
 		} else {
 			throw new ObjectInvalidChild();
 		}
@@ -86,22 +82,6 @@ public class Event extends XmlObject {
 
 		Delay delayAttr = (Delay) xmlAttr;
 		return delayAttr.getValue();
-	}
-
-	public void addEventBlocks() {
-		for ( Block newBlock : eventBlocks ) {
-			BlockCollector.getInstance().removeBlock(newBlock);
-			newBlock.getDimensions().rollback();
-			try {
-				BlockCollector.getInstance().addChildObj(newBlock);
-			} catch (ObjectNoChildSupport e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ObjectInvalidChild e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public void rebindTriggers() {

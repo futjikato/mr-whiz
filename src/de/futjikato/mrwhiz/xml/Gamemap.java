@@ -8,6 +8,22 @@ public class Gamemap extends XmlObject {
 
 	private Blocksize blocksize;
 
+	private static Gamemap instance;
+
+	private float spawnX;
+
+	private float spawnY;
+
+	private Gamemap() {
+	}
+
+	public static Gamemap getInstance() {
+		if (null == instance) {
+			instance = new Gamemap();
+		}
+		return instance;
+	}
+
 	@Override
 	public void handleValue(String currentValue) throws ObjectNoValueSupport {
 		throw new ObjectNoValueSupport();
@@ -31,11 +47,28 @@ public class Gamemap extends XmlObject {
 		return this.blocksize;
 	}
 
+	@Deprecated
 	public Spawn getSpawn() {
 		XmlAttribute xmlAttr = this.getAttribute("spawn");
 		if (xmlAttr instanceof Spawn) {
 			return (Spawn) xmlAttr;
 		}
 		return null;
+	}
+
+	public void setMapSpawnX(float x) {
+		spawnX = x;
+	}
+
+	public void setMapSpawnY(float y) {
+		spawnY = y;
+	}
+
+	public float getMapSpawnX() {
+		return spawnX;
+	}
+
+	public float getMapSpawnY() {
+		return spawnY;
 	}
 }

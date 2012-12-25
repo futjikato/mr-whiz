@@ -3,7 +3,6 @@ package de.futjikato.mrwhiz.xml;
 import de.futjikato.mrwhiz.game.GameTimeTrigger;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.attributes.Delay;
-import de.futjikato.mrwhiz.xml.attributes.Dimensions;
 import de.futjikato.mrwhiz.xml.attributes.Id;
 import de.futjikato.mrwhiz.xml.attributes.Target;
 import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
@@ -15,47 +14,14 @@ public class Action extends XmlObject {
 		destroyBlock() {
 			@Override
 			public void exec(Action caller) {
-				XmlAttribute targetAttr = caller.getAttribute("target");
-				if (targetAttr != null && targetAttr instanceof Target) {
-					Target target = (Target) targetAttr;
-					XmlObject xmlo = Id.getReferenceById(target.getValue());
-
-					if (xmlo instanceof Block) {
-						Block block = (Block) xmlo;
-						BlockCollector.getInstance().removeBlock(block);
-					}
-				}
+				// TODO reimplement with new block storage
 			}
 		},
 
 		moveBlock() {
 			@Override
 			public void exec(Action caller) {
-				XmlAttribute targetAttr = caller.getAttribute("target");
-				XmlAttribute targetMovDimAttr = caller.getAttribute("xywh");
-
-				if (!(targetMovDimAttr instanceof Dimensions)) {
-					targetMovDimAttr = new Dimensions();
-				}
-				Dimensions targetMove = (Dimensions) targetMovDimAttr;
-
-				if (targetAttr != null && targetAttr instanceof Target) {
-					Target target = (Target) targetAttr;
-					XmlObject xmlo = Id.getReferenceById(target.getValue());
-
-					if (xmlo instanceof Block) {
-						Block block = (Block) xmlo;
-
-						block.moveByDimension(targetMove);
-					}
-				}
-			}
-		},
-
-		createEventBlocks() {
-			@Override
-			public void exec(Action caller) {
-				caller.triggeredEvent.addEventBlocks();
+				// TODO reimplement with new block storage
 			}
 		},
 

@@ -12,7 +12,7 @@ public enum XmlObjectTypes {
 	gamemap {
 		@Override
 		public XmlObject getType() {
-			return new Gamemap();
+			return Gamemap.getInstance();
 		}
 	},
 
@@ -79,10 +79,10 @@ public enum XmlObjectTypes {
 		}
 	},
 
-	block {
+	blockfile {
 		@Override
 		public XmlObject getType() {
-			return new Block();
+			return new Blockfile();
 		}
 	},
 

@@ -1,9 +1,5 @@
 package de.futjikato.mrwhiz.xml;
 
-import de.futjikato.mrwhiz.xml.attributes.Id;
-import de.futjikato.mrwhiz.xml.attributes.Target;
-import de.futjikato.mrwhiz.xml.attributes.XmlAttribute;
-
 public class Trigger extends XmlObject {
 
 	private Event refEvent;
@@ -14,16 +10,7 @@ public class Trigger extends XmlObject {
 		touch() {
 			@Override
 			public void addListenerToTarget(Trigger caller) {
-				XmlAttribute targetAttr = caller.getAttribute("target");
-				if (targetAttr != null && targetAttr instanceof Target) {
-					Target target = (Target) targetAttr;
-					XmlObject xmlo = Id.getReferenceById(target.getValue());
-
-					if (xmlo instanceof Block) {
-						Block block = (Block) xmlo;
-						block.addTouchListener(caller);
-					}
-				}
+				// TODO reimplement with new block storage
 			}
 		};
 

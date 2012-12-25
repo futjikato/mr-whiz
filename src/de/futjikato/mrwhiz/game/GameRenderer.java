@@ -9,7 +9,6 @@ import org.newdawn.slick.Input;
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Renderer;
 import de.futjikato.mrwhiz.game.ai.NpcManager;
-import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Gamemap;
 import de.futjikato.mrwhiz.xml.Item;
@@ -17,7 +16,6 @@ import de.futjikato.mrwhiz.xml.ItemCollector;
 import de.futjikato.mrwhiz.xml.LevelCollector;
 import de.futjikato.mrwhiz.xml.TextureAreaCollector;
 import de.futjikato.mrwhiz.xml.XmlReader;
-import de.futjikato.mrwhiz.xml.attributes.Spawn;
 
 public final class GameRenderer extends Renderer {
 	private Gamemap map;
@@ -53,8 +51,7 @@ public final class GameRenderer extends Renderer {
 		this.viewPorthb = (int) Math.ceil(Display.getHeight() / (double) this.map.getBlocksize().getValue()) + 1;
 
 		// init player
-		Spawn spawn = this.map.getSpawn();
-		this.player = new GamePlayer(spawn.getX(), spawn.getY(), this.map.getBlocksize().getValue());
+		this.player = new GamePlayer(map.getMapSpawnX(), map.getMapSpawnY(), this.map.getBlocksize().getValue());
 
 		// init ui
 		this.ui = new GameUi(this.player);
@@ -73,7 +70,7 @@ public final class GameRenderer extends Renderer {
 		areaCollector.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getValue());
 
 		// render blocks
-		List<Block> blocks = BlockCollector.getInstance().getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb, this.map.getBlocksize().getBlocksize());
+		List<Block> blocks = BlockCollector.getInstance().getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
 		for ( Block block : blocks ) {
 			block.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getValue());
 		}
@@ -124,8 +121,8 @@ public final class GameRenderer extends Renderer {
 
 		// TODO check if we can center camera or if we need to add/sub an offset
 
-		this.viewPortxb = (int) Math.floor(this.viewPortX / this.map.getBlocksize().getValue());
-		this.viewPortyb = (int) Math.floor(this.viewPortY / this.map.getBlocksize().getValue());
+		this.viewPortxb = (int) Math.floor(this.viewPortX / getBlocksize());
+		this.viewPortyb = (int) Math.floor(this.viewPortY / getBlocksize());
 	}
 
 	public int getBlocksize() {

@@ -10,7 +10,6 @@ import org.newdawn.slick.SpriteSheet;
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
-import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.Item;
 
 public class GamePlayer extends GamePhysicalObject {
@@ -204,6 +203,7 @@ public class GamePlayer extends GamePhysicalObject {
 		return PLAYER_WIDTH;
 	}
 
+	@Override
 	protected void hitBlock(Block block, int type) {
 
 		if (!this.alive)
@@ -248,11 +248,5 @@ public class GamePlayer extends GamePhysicalObject {
 
 	public void setGui(GameUi gui) {
 		this.gui = gui;
-	}
-
-	@Override
-	protected void handleCollision(int type) {
-		// TODO Auto-generated method stub
-
 	}
 }

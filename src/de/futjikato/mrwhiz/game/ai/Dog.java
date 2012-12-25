@@ -4,8 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import de.futjikato.mrwhiz.Physical;
-import de.futjikato.mrwhiz.xml.Block;
+import de.futjikato.mrwhiz.game.Block;
 
 public final class Dog extends Enemy {
 
@@ -51,21 +50,15 @@ public final class Dog extends Enemy {
 	}
 
 	@Override
-	protected void hitBlock(Block block, int direction) {
+	protected void hitBlock(Block block, int type) {
 		super.hitBlock(block);
 
-		if (Physical.COLLISION_X_BLOCKED == direction) {
+		if (type == 0) {
 			if (currSpeed > 0) {
 				currSpeed = -0.2f;
 			} else {
 				currSpeed = 0.2f;
 			}
 		}
-	}
-
-	@Override
-	protected void handleCollision(int type) {
-		// TODO Auto-generated method stub
-
 	}
 }

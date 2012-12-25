@@ -1,43 +1,27 @@
 package de.futjikato.mrwhiz.game;
 
+import java.util.List;
+
 import de.futjikato.mrwhiz.Physical;
-import de.futjikato.mrwhiz.xml.Block;
 import de.futjikato.mrwhiz.xml.BlockCollector;
 
 public abstract class GamePhysicalObject extends Physical {
 
 	@Override
-	protected int yCol(float x, float y, int blocksize) {
-		Block frontblock = BlockCollector.getInstance().getBlockByPixel(x, y);
-		if (frontblock != null) {
-			this.hitBlock(frontblock, Physical.COLLISION_Y_BLOCKED);
-			return Physical.COLLISION_Y_BLOCKED;
+	protected boolean checkCollision(float x, float y, int type) {
+		boolean free = true;
+
+		List<Block> blocklist = BlockCollector.getInstance().getBlocks(x, y, x + getWidth(), y - getHeight());
+		if (blocklist.size() > 0) {
+			for ( Block cBlock : blocklist ) {
+				if (cBlock.doRender()) {
+					free = false;
+					hitBlock(cBlock, type);
+				}
+			}
 		}
 
-		Block backblock = BlockCollector.getInstance().getBlockByPixel(x, y - getHeight());
-		if (backblock != null) {
-			this.hitBlock(backblock, Physical.COLLISION_Y_BLOCKED);
-			return Physical.COLLISION_Y_BLOCKED;
-		}
-
-		return Physical.COLLISION_Y_NONE;
-	}
-
-	@Override
-	protected int xCol(float x, float y, int blocksize) {
-		Block frontblock = BlockCollector.getInstance().getBlockByPixel(x, y);
-		if (frontblock != null) {
-			this.hitBlock(frontblock, Physical.COLLISION_X_BLOCKED);
-			return Physical.COLLISION_X_BLOCKED;
-		}
-
-		Block backblock = BlockCollector.getInstance().getBlockByPixel(x + getWidth(), y);
-		if (backblock != null) {
-			this.hitBlock(backblock, Physical.COLLISION_X_BLOCKED);
-			return Physical.COLLISION_X_BLOCKED;
-		}
-
-		return Physical.COLLISION_X_NONE;
+		return free;
 	}
 
 	protected abstract int getHeight();
