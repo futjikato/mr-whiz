@@ -50,6 +50,9 @@ public class App {
 
 		app.createWindow();
 		app.loop();
+
+		// remove display on app exit
+		Display.destroy();
 	}
 
 	public Updater getUpdater() {
