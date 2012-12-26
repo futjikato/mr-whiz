@@ -79,20 +79,6 @@ public enum XmlObjectTypes {
 		}
 	},
 
-	items {
-		@Override
-		public XmlObject getType() {
-			return ItemCollector.getInstance();
-		}
-	},
-
-	item {
-		@Override
-		public XmlObject getType() {
-			return new Item();
-		}
-	},
-
 	events {
 		@Override
 		public XmlObject getType() {
