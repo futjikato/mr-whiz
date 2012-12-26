@@ -11,15 +11,10 @@
 	</textureAreas>
 	<blocks>
 		<blockfile>
-			<!-- maybe add a define block ? -->
-			<![CDATA[resources/data/level/l01.blockfile]]>
+			<file><![CDATA[resources/data/level/l01.defines]]></file>
+			<file><![CDATA[resources/data/level/l01.blocks]]></file>
 		</blockfile>
 	</blocks>
-	<items>
-	</items>
-	<spawnpoints>
-		<spawn id="dogspawn1" xywh="25,0,0,0">dog</spawn>
-	</spawnpoints>
 	<events>
 		<!-- TODO add if reimplemented with new block storage -->
 	</events>

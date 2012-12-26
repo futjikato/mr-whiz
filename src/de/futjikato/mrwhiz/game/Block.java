@@ -6,6 +6,7 @@ import java.util.List;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import de.futjikato.mrwhiz.xml.Gamemap;
 import de.futjikato.mrwhiz.xml.Trigger;
 
 public class Block {
@@ -26,31 +27,39 @@ public class Block {
 
 	private int dmg;
 
-	private BlockTypes type;
-
 	private boolean doRender = false;
 
-	public Block(int bx, int by, char type) {
+	private char type;
+
+	public Block(int bx, int by, char type, BlockDefinitions defines) {
 		cx = bx;
 		cy = by;
 
-		// get texture by type
-		BlockTypes blockType = BlockTypes.valueOf(String.valueOf(type));
-		this.type = blockType;
-		doRender = blockType.doRender();
+		this.type = type;
+		doRender = defines.getBlockAttributeAsBoolean(type, "render", true);
 
 		if (doRender) {
-			this.texture = blockType.getTexture();
+			this.texture = defines.getTexture(type);
 			if (texture == null) {
 				// fallback behavior if no texture is applied
 				System.out.println(String.format("Block (%d/%d) should be rendered but has no texture !", cx, cy));
+				doRender = false;
+			}
+		}
+
+		String special = defines.getBlockAttributeAsString(type, "special");
+		if (special != null) {
+			// TODO create enum for block specials
+			if (special.equals("PlayerSpawn")) {
+				// TODO fix blocksize getter on GameRenderer
+				int bs = 50;
+				Gamemap.getInstance().setMapSpawnX(bx * bs);
+				Gamemap.getInstance().setMapSpawnY(by * bs);
 			}
 		}
 
 		// load block damage from type
-		dmg = blockType.getDamage();
-
-		blockType.informGame(this);
+		dmg = defines.getBlockAttributeAsInt(type, "damage", 0);
 	}
 
 	public void draw(float vpx, float vpy, int blocksize) {
@@ -107,6 +116,10 @@ public class Block {
 
 	public int getY() {
 		return cy;
+	}
+
+	public char getType() {
+		return type;
 	}
 
 	public void rollback(int steps) throws HistoryOutOfBoundsException {

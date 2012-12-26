@@ -18,6 +18,10 @@ public abstract class XmlObject {
 
 	public abstract void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport, ObjectInvalidChild;
 
+	protected void complete() throws ObjectIncomplete {
+		// do nothing in default implementation
+	}
+
 	public void handleAttributes(Attributes attributes) {
 		for ( int i = 0 ; i < attributes.getLength() ; i++ ) {
 			// get attribute name

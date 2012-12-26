@@ -7,10 +7,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 public class Updater {
 
 	private static String infoUrl = "http://futjikato.koding.com/whiz/update.json";
@@ -40,26 +36,7 @@ public class Updater {
 		}
 
 		if (buf.length() > 0) {
-			JSONParser parser = new JSONParser();
-			Object res = parser.parse(buf.toString());
-
-			if (!(res instanceof JSONObject)) {
-				throw new Exception("Invalid JSON result.");
-			}
-
-			JSONObject jsonobj = (JSONObject) res;
-
-			this.latestVersion = (Long) jsonobj.get("latestVersion");
-
-			Object newsContainer = jsonobj.get("news");
-			if (newsContainer instanceof JSONArray) {
-				JSONArray newsArray = (JSONArray) newsContainer;
-				for ( Object newsEntry : newsArray ) {
-					if (newsEntry instanceof JSONObject) {
-						newsList.add(new UpdaterNews((JSONObject) newsEntry));
-					}
-				}
-			}
+			// TODO reimplemnt updater logic with Gson lib
 		}
 	}
 

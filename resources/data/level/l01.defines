@@ -1,0 +1,25 @@
+{
+	"definitions" : {
+		"B" : {
+			"texture" : "resources/images/backgrounds/game_brick.png",
+			"render" : "1"
+		},
+		"G" : {
+			"texture" : "resources/images/backgrounds/game_grass_ground.png",
+			"render" : "1"
+		},
+		"D" : {
+			"texture" : "resources/images/backgrounds/game_dirt.png",
+			"render" : "1"
+		},
+		"P" : {
+			"render" : "0",
+			"special" : "PlayerSpawn"
+		},
+		"t" : {
+			"render" : "1",
+			"texture" : "resources/images/backgrounds/game_thorn.png",
+			"damage" : "20"
+		}
+	}
+}

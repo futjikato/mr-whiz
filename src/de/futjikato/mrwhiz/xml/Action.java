@@ -41,23 +41,6 @@ public class Action extends XmlObject {
 					}
 				}
 			}
-		},
-
-		spawn() {
-			@Override
-			public void exec(Action caller) {
-				XmlAttribute targetAttr = caller.getAttribute("target");
-
-				if (targetAttr != null && targetAttr instanceof Target) {
-					Target target = (Target) targetAttr;
-					XmlObject xmlo = Id.getReferenceById(target.getValue());
-
-					if (xmlo instanceof Spawnpoint) {
-						Spawnpoint sp = (Spawnpoint) xmlo;
-						sp.triggerSpawn();
-					}
-				}
-			}
 		};
 
 		public abstract void exec(Action caller);

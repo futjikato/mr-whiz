@@ -115,6 +115,13 @@ public class XmlReader implements ContentHandler {
 			this.objStack.push(parentMapObj);
 		}
 
+		try {
+			mapObj.complete();
+		} catch (ObjectIncomplete e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// put the world back on the stack
 		if ((mapObj instanceof Worldmap) || (mapObj instanceof Gamemap)) {
 			this.objStack.push(mapObj);

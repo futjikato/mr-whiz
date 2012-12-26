@@ -16,13 +16,6 @@ public enum XmlObjectTypes {
 		}
 	},
 
-	decorations {
-		@Override
-		public XmlObject getType() {
-			return DecorationCollector.getInstance();
-		}
-	},
-
 	textureAreas {
 		@Override
 		public XmlObject getType() {
@@ -128,17 +121,10 @@ public enum XmlObjectTypes {
 		}
 	},
 
-	spawnpoints {
+	file() {
 		@Override
 		public XmlObject getType() {
-			return SpawnpointCollector.getInstance();
-		}
-	},
-
-	spawn {
-		@Override
-		public XmlObject getType() {
-			return new Spawnpoint();
+			return new File();
 		}
 	};
 
