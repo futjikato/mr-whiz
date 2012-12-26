@@ -66,7 +66,7 @@ public final class BlockCollector extends XmlObject {
 	}
 
 	public void removeBlock(Block block) {
-
+		blockAry[block.getX()][block.getY()] = null;
 	}
 
 	public List<Block> getBlocks(float x, float y, float x2, float y2) {

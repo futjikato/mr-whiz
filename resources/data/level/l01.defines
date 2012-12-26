@@ -20,6 +20,12 @@
 			"render" : "1",
 			"texture" : "resources/images/backgrounds/game_thorn.png",
 			"damage" : "20"
+		},
+		"1" : {
+			"type" : "item",
+			"render" : "1",
+			"texture" : "resources/images/items/dev_money.png",
+			"score" : "20"
 		}
 	}
 }

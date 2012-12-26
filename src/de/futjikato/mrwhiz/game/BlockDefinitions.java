@@ -6,10 +6,22 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class BlockDefinitions {
+
+	public static final String TYPE_BLOCK = "block";
+	public static final String TYPE_ITEM = "item";
+
 	private HashMap<Character, HashMap<String, String>> definitions = new HashMap<Character, HashMap<String, String>>();
 
 	public boolean isDefined(char type) {
 		return definitions.containsKey(type);
+	}
+
+	public String getType(char type) {
+		String strVal = getBlockAttributeAsString(type, "type");
+		if (strVal == null) {
+			return TYPE_BLOCK;
+		}
+		return strVal;
 	}
 
 	public String getBlockAttributeAsString(char type, String attribute) {

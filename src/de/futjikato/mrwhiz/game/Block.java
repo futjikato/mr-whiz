@@ -21,7 +21,7 @@ public class Block {
 
 	private int cy;
 
-	private List<Trigger> touchListener = new ArrayList<Trigger>();
+	protected List<Trigger> touchListener = new ArrayList<Trigger>();
 
 	private float speed;
 

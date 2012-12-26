@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 
 import de.futjikato.mrwhiz.game.Block;
 import de.futjikato.mrwhiz.game.BlockDefinitions;
+import de.futjikato.mrwhiz.game.Item;
+import de.futjikato.mrwhiz.game.UnknownType;
 
 public class Blockfile extends XmlObject {
 
@@ -22,7 +24,7 @@ public class Blockfile extends XmlObject {
 		throw new ObjectNoValueSupport();
 	}
 
-	private void readBlockFile(BufferedReader reader) throws IOException {
+	private void readBlockFile(BufferedReader reader) throws IOException, UnknownType {
 		String line = reader.readLine();
 
 		int y = 0;
@@ -38,8 +40,18 @@ public class Blockfile extends XmlObject {
 					continue;
 				}
 
-				Block cBlock = new Block(x, y, ch, definitions);
-				BlockCollector.getInstance().addBlock(cBlock, x, y);
+				String blockType = definitions.getType(ch);
+
+				if (blockType.equals(BlockDefinitions.TYPE_BLOCK)) {
+					Block cBlock = new Block(x, y, ch, definitions);
+					BlockCollector.getInstance().addBlock(cBlock, x, y);
+				} else if (blockType.equals(BlockDefinitions.TYPE_ITEM)) {
+					Item cItem = new Item(x, y, ch, definitions);
+					BlockCollector.getInstance().addBlock(cItem, x, y);
+				} else {
+					throw new UnknownType(ch);
+				}
+
 				x++;
 			}
 
@@ -81,6 +93,9 @@ public class Blockfile extends XmlObject {
 			readBlockFile(new BufferedReader(blockReader));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnknownType e) {
+			System.out.println("Unknown type found : " + e.getUnknownType());
 			e.printStackTrace();
 		}
 	}

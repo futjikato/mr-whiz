@@ -10,7 +10,6 @@ import org.newdawn.slick.SpriteSheet;
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
-import de.futjikato.mrwhiz.xml.Item;
 
 public class GamePlayer extends GamePhysicalObject {
 
@@ -209,6 +208,11 @@ public class GamePlayer extends GamePhysicalObject {
 		if (!this.alive)
 			return;
 
+		if (block instanceof Item) {
+			Item item = (Item) block;
+			score += item.getScore();
+		}
+
 		block.triggerTouch();
 
 		int dmg = block.getDamage();
@@ -218,20 +222,6 @@ public class GamePlayer extends GamePhysicalObject {
 
 		float speed = block.getSpeed();
 		this.setBlockSpeed(speed);
-	}
-
-	protected void hitItem(Item item) {
-		if (!this.alive)
-			return;
-
-		int score = item.getScore();
-		if (score > 0) {
-			this.addScore(score);
-		}
-	}
-
-	public void addScore(int score) {
-		this.score += score;
 	}
 
 	public int getScore() {
