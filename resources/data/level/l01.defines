@@ -21,11 +21,22 @@
 			"texture" : "resources/images/backgrounds/game_thorn.png",
 			"damage" : "20"
 		},
+		"d" : {
+			"render" : "1",
+			"texture" : "resources/images/backgrounds/dev.png",
+			"type" : "door"
+		},
 		"1" : {
 			"type" : "item",
 			"render" : "1",
 			"texture" : "resources/images/items/dev_money.png",
 			"score" : "20"
+		},
+		"2" : {
+			"type" : "item",
+			"render" : "1",
+			"texture" : "resources/images/backgrounds/dev.png",
+			"tool" : "Key"
 		}
 	}
 }

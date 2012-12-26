@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import de.futjikato.mrwhiz.game.Block;
 import de.futjikato.mrwhiz.game.BlockDefinitions;
+import de.futjikato.mrwhiz.game.Door;
 import de.futjikato.mrwhiz.game.Item;
 import de.futjikato.mrwhiz.game.UnknownType;
 
@@ -48,6 +49,9 @@ public class Blockfile extends XmlObject {
 				} else if (blockType.equals(BlockDefinitions.TYPE_ITEM)) {
 					Item cItem = new Item(x, y, ch, definitions);
 					BlockCollector.getInstance().addBlock(cItem, x, y);
+				} else if (blockType.equals(BlockDefinitions.TYPE_DOOR)) {
+					Door cDoor = new Door(x, y, ch, definitions);
+					BlockCollector.getInstance().addBlock(cDoor, x, y);
 				} else {
 					throw new UnknownType(ch);
 				}

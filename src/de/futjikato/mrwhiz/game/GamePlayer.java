@@ -1,5 +1,7 @@
 package de.futjikato.mrwhiz.game;
 
+import java.util.List;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -10,6 +12,8 @@ import org.newdawn.slick.SpriteSheet;
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
+import de.futjikato.mrwhiz.game.inventory.Inventory;
+import de.futjikato.mrwhiz.game.inventory.Tool;
 
 public class GamePlayer extends GamePhysicalObject {
 
@@ -44,6 +48,8 @@ public class GamePlayer extends GamePhysicalObject {
 
 	private int score;
 
+	private Inventory inventory;
+
 	static {
 		// deactivate image loading in unit test
 		if (!App.getInstance().isUnittest()) {
@@ -75,6 +81,8 @@ public class GamePlayer extends GamePhysicalObject {
 		this.speed = BASE_SPEED;
 		this.health = START_HEALTH;
 		this.lives = 5;
+
+		inventory = new Inventory(this);
 
 		// deactivate image loading in unit test
 		if (!App.getInstance().isUnittest()) {
@@ -168,6 +176,15 @@ public class GamePlayer extends GamePhysicalObject {
 			}
 		}
 
+		// TODO implement active tool
+		// TODO only use active tool
+		if (input.isKeyDown(Input.KEY_E)) {
+			List<Tool> tools = inventory.getInventory();
+			for ( Tool cTool : tools ) {
+				cTool.use(this);
+			}
+		}
+
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			this.jump();
 		} else {
@@ -194,11 +211,11 @@ public class GamePlayer extends GamePhysicalObject {
 		}
 	}
 
-	protected int getHeight() {
+	public int getHeight() {
 		return PLAYER_HEIGHT;
 	}
 
-	protected int getWidth() {
+	public int getWidth() {
 		return PLAYER_WIDTH;
 	}
 
@@ -211,6 +228,11 @@ public class GamePlayer extends GamePhysicalObject {
 		if (block instanceof Item) {
 			Item item = (Item) block;
 			score += item.getScore();
+
+			Tool itemTool = item.getTool();
+			if (itemTool != null) {
+				inventory.addItem(itemTool);
+			}
 		}
 
 		block.triggerTouch();

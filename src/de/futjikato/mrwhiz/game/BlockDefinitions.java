@@ -9,6 +9,7 @@ public class BlockDefinitions {
 
 	public static final String TYPE_BLOCK = "block";
 	public static final String TYPE_ITEM = "item";
+	public static final String TYPE_DOOR = "door";
 
 	private HashMap<Character, HashMap<String, String>> definitions = new HashMap<Character, HashMap<String, String>>();
 
