@@ -42,11 +42,11 @@ public class App {
 			}
 		}
 
-		if (app.getUpdater().checkForUpdates(MAIN_VERSION)) {
-			System.out.println("UPDATE available !");
-		} else {
-			System.out.println("Running latest version");
-		}
+		/*
+		 * if (app.getUpdater().checkForUpdates(MAIN_VERSION)) {
+		 * System.out.println("UPDATE available !"); } else {
+		 * System.out.println("Running latest version"); }
+		 */
 
 		app.createWindow();
 		app.loop();
