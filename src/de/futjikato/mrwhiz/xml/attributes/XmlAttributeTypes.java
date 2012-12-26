@@ -44,24 +44,10 @@ public enum XmlAttributeTypes {
 		}
 	},
 
-	speed {
-		@Override
-		public XmlAttribute getAttribute() {
-			return new Speed();
-		}
-	},
-
 	volume {
 		@Override
 		public XmlAttribute getAttribute() {
 			return new Volume();
-		}
-	},
-
-	damage {
-		@Override
-		public XmlAttribute getAttribute() {
-			return new Damage();
 		}
 	},
 
