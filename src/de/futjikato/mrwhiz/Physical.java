@@ -101,8 +101,13 @@ public abstract class Physical {
 		if (this.checkCollision(x, y + ny, 0)) {
 			this.setY(this.getY() + ny);
 		} else {
-			// reset y velocity on landing somewhere
-			this.setYVel(0);
+			if (ny > 0) {
+				// reset y velocity on landing somewhere
+				this.setYVel(0);
+			} else {
+				// add initial down movement on hit at top to prevent physic bug
+				this.setYVel(0.002f);
+			}
 		}
 
 		if (this.checkCollision(x + nx, y, 1)) {
