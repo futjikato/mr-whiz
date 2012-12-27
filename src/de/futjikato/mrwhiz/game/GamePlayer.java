@@ -258,6 +258,10 @@ public class GamePlayer extends GamePhysicalObject {
 		return this.health;
 	}
 
+	public Inventory getInventory() {
+		return inventory;
+	}
+
 	public void setGui(GameUi gui) {
 		this.gui = gui;
 	}

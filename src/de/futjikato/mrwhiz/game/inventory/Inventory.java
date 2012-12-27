@@ -11,6 +11,8 @@ public class Inventory {
 
 	private List<Tool> inventory = new ArrayList<Tool>();
 
+	private List<Tool> removeList = new ArrayList<Tool>();
+
 	public Inventory(GamePlayer player) {
 		this.player = player;
 	}
@@ -20,6 +22,19 @@ public class Inventory {
 	}
 
 	public List<Tool> getInventory() {
+
+		if (removeList.size() > 0) {
+			for ( Tool cTool : removeList ) {
+				if (inventory.contains(cTool)) {
+					inventory.remove(cTool);
+				}
+			}
+		}
+
 		return inventory;
+	}
+
+	public void setItemRemoveFlag(Tool item) {
+		removeList.add(item);
 	}
 }
