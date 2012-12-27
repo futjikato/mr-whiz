@@ -30,7 +30,8 @@ public final class BlockCollector extends XmlObject {
 
 	@Override
 	public void addChildObj(XmlObject mapObj) throws ObjectNoChildSupport, ObjectInvalidChild {
-		if (mapObj instanceof Blockfile) {
+		if (!(mapObj instanceof Blockfile)) {
+			throw new ObjectInvalidChild();
 		}
 	}
 

@@ -24,7 +24,8 @@
 		"d" : {
 			"render" : "1",
 			"texture" : "resources/images/backgrounds/dev.png",
-			"type" : "door"
+			"type" : "door",
+			"height" : "3"
 		},
 		"1" : {
 			"type" : "item",

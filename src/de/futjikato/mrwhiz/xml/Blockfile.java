@@ -43,17 +43,27 @@ public class Blockfile extends XmlObject {
 
 				String blockType = definitions.getType(ch);
 
+				// variable to insert into block collector
+				Block cElem;
+
 				if (blockType.equals(BlockDefinitions.TYPE_BLOCK)) {
-					Block cBlock = new Block(x, y, ch, definitions);
-					BlockCollector.getInstance().addBlock(cBlock, x, y);
+					cElem = new Block(x, y, ch, definitions);
 				} else if (blockType.equals(BlockDefinitions.TYPE_ITEM)) {
-					Item cItem = new Item(x, y, ch, definitions);
-					BlockCollector.getInstance().addBlock(cItem, x, y);
+					cElem = new Item(x, y, ch, definitions);
 				} else if (blockType.equals(BlockDefinitions.TYPE_DOOR)) {
-					Door cDoor = new Door(x, y, ch, definitions);
-					BlockCollector.getInstance().addBlock(cDoor, x, y);
+					cElem = new Door(x, y, ch, definitions);
 				} else {
 					throw new UnknownType(ch);
+				}
+
+				// create one block class which can be at multiple positions
+				int cHeight = definitions.getBlockAttributeAsInt(ch, "height", 1);
+				int cWidth = definitions.getBlockAttributeAsInt(ch, "width", 1);
+
+				for ( int i = 0 ; i < cHeight ; i++ ) {
+					for ( int j = 0 ; j < cWidth ; j++ ) {
+						BlockCollector.getInstance().addBlock(cElem, x + j, y + i);
+					}
 				}
 
 				x++;

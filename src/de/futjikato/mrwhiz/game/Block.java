@@ -21,6 +21,10 @@ public class Block {
 
 	private int cy;
 
+	private int w;
+
+	private int h;
+
 	protected List<Trigger> touchListener = new ArrayList<Trigger>();
 
 	private float speed;
@@ -34,6 +38,9 @@ public class Block {
 	public Block(int bx, int by, char type, BlockDefinitions defines) {
 		cx = bx;
 		cy = by;
+
+		h = defines.getBlockAttributeAsInt(type, "height", 1);
+		w = defines.getBlockAttributeAsInt(type, "width", 1);
 
 		this.type = type;
 		doRender = defines.getBlockAttributeAsBoolean(type, "render", true);
@@ -72,8 +79,10 @@ public class Block {
 
 		int abX = (cx * blocksize) - (int) vpx;
 		int abY = (cy * blocksize) - (int) vpy;
+		int bw = blocksize * w;
+		int bh = blocksize * h;
 
-		gra.drawImage(img, abX, abY, abX + blocksize, abY + blocksize, 0, 0, img.getWidth(), img.getHeight());
+		gra.drawImage(img, abX, abY, abX + bw, abY + bh, 0, 0, img.getWidth(), img.getHeight());
 	}
 
 	public int getDamage() {
