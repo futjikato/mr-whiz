@@ -4,8 +4,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import de.futjikato.mrwhiz.game.Block;
-
 public final class Dog extends Enemy {
 
 	private static SpriteSheet sprite;
@@ -22,7 +20,6 @@ public final class Dog extends Enemy {
 
 	@Override
 	protected void nextStep(int blocksize, long delta) {
-
 		setXvel(currSpeed);
 
 		this.calcNewPos(blocksize, delta);
@@ -50,15 +47,17 @@ public final class Dog extends Enemy {
 	}
 
 	@Override
-	protected void hitBlock(Block block, int type) {
-		super.hitBlock(block);
+	protected boolean checkCollision(float x, float y, int type) {
+		boolean free = super.checkCollision(x, y, type);
 
-		if (type == 0) {
+		if (type == 1 && !free) {
 			if (currSpeed > 0) {
 				currSpeed = -0.2f;
 			} else {
 				currSpeed = 0.2f;
 			}
 		}
+
+		return free;
 	}
 }

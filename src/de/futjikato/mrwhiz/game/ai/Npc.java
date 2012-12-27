@@ -26,7 +26,8 @@ public abstract class Npc extends GamePhysicalObject {
 		setMaxYVal(1.5f);
 	}
 
-	protected void hitBlock(Block block) {
+	@Override
+	protected void hitBlock(Block block, int type) {
 		int blockDmg = block.getDamage();
 		if (blockDmg > 0) {
 			health -= blockDmg;

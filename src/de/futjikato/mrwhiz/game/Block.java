@@ -6,6 +6,8 @@ import java.util.List;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import de.futjikato.mrwhiz.game.ai.Dog;
+import de.futjikato.mrwhiz.game.ai.NpcManager;
 import de.futjikato.mrwhiz.xml.Gamemap;
 import de.futjikato.mrwhiz.xml.Trigger;
 
@@ -62,6 +64,19 @@ public class Block {
 				int bs = 50;
 				Gamemap.getInstance().setMapSpawnX(bx * bs);
 				Gamemap.getInstance().setMapSpawnY(by * bs);
+			}
+
+			if (special.equals("NpcSpawn")) {
+				String npcClassName = defines.getBlockAttributeAsString(type, "npc");
+				// TODO create enum for NPC classes
+				if (npcClassName.equals("Dog")) {
+					// TODO fix blocksize getter on GameRenderer
+					int bs = 50;
+
+					Dog cDog = new Dog();
+					cDog.spawn(bx * bs, by * bs);
+					NpcManager.getInstance().add(cDog);
+				}
 			}
 		}
 

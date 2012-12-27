@@ -16,6 +16,11 @@
 			"render" : "0",
 			"special" : "PlayerSpawn"
 		},
+		"E" : {
+			"render" : "0",
+			"special" : "NpcSpawn",
+			"npc" : "Dog"
+		},
 		"t" : {
 			"render" : "1",
 			"texture" : "resources/images/backgrounds/game_thorn.png",
