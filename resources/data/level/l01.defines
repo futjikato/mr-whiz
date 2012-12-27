@@ -23,9 +23,9 @@
 		},
 		"d" : {
 			"render" : "1",
-			"texture" : "resources/images/backgrounds/dev.png",
+			"texture" : "resources/images/backgrounds/wooden_door.png",
 			"type" : "door",
-			"height" : "3"
+			"height" : "4"
 		},
 		"1" : {
 			"type" : "item",
