@@ -36,7 +36,7 @@
 		"2" : {
 			"type" : "item",
 			"render" : "1",
-			"texture" : "resources/images/backgrounds/dev.png",
+			"texture" : "resources/images/items/key.png",
 			"tool" : "Key"
 		}
 	}
