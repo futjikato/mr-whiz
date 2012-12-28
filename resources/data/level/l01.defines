@@ -44,5 +44,12 @@
 			"texture" : "resources/images/items/key.png",
 			"tool" : "Key"
 		}
+	},
+	"names" : {
+		"Trap01Trigger" : [
+		 	[33,15],
+		 	[34,15],
+		 	[35,15]
+		]
 	}
 }

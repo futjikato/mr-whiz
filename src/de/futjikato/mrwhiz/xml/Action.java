@@ -1,5 +1,8 @@
 package de.futjikato.mrwhiz.xml;
 
+import java.util.List;
+
+import de.futjikato.mrwhiz.game.Block;
 import de.futjikato.mrwhiz.game.GameTimeTrigger;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
 import de.futjikato.mrwhiz.xml.attributes.Delay;
@@ -14,14 +17,17 @@ public class Action extends XmlObject {
 		destroyBlock() {
 			@Override
 			public void exec(Action caller) {
-				// TODO reimplement with new block storage
-			}
-		},
+				String target = caller.getTarget();
+				if (target == null) {
+					return;
+				}
 
-		moveBlock() {
-			@Override
-			public void exec(Action caller) {
-				// TODO reimplement with new block storage
+				BlockCollector bc = BlockCollector.getInstance();
+				List<Block> blocks = bc.getBlocksByName(target);
+
+				for ( Block cBlock : blocks ) {
+					cBlock.setDoRender(false);
+				}
 			}
 		},
 
@@ -97,5 +103,15 @@ public class Action extends XmlObject {
 
 		Delay delayAttr = (Delay) xmlAttr;
 		return delayAttr.getValue();
+	}
+
+	private String getTarget() {
+		XmlAttribute xmlAttr = this.getAttribute("target");
+		if (xmlAttr != null) {
+			Target target = (Target) xmlAttr;
+			return target.getValue();
+		}
+
+		return null;
 	}
 }

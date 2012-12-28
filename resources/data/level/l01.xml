@@ -31,6 +31,9 @@
 		</blockfile>
 	</blocks>
 	<events>
-		<!-- TODO add if reimplemented with new block storage -->
+		<event>
+			<trigger target="Trap01Trigger">touch</trigger>
+			<action target="Trap01Trigger">destroyBlock</action>
+		</event>
 	</events>
 </gamemap>

@@ -1,6 +1,7 @@
 package de.futjikato.mrwhiz.xml;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.futjikato.mrwhiz.game.Block;
@@ -9,6 +10,8 @@ import de.futjikato.mrwhiz.game.GameRenderer;
 public final class BlockCollector extends XmlObject {
 
 	private Block[][] blockAry;
+
+	private HashMap<String, List<Block>> nameMap = new HashMap<String, List<Block>>();
 
 	private static BlockCollector instance;
 
@@ -119,5 +122,13 @@ public final class BlockCollector extends XmlObject {
 		}
 
 		blockAry[x][y] = cBlock;
+	}
+
+	public void addNameList(String name, List<Block> blockList) {
+		nameMap.put(name, blockList);
+	}
+
+	public List<Block> getBlocksByName(String name) {
+		return nameMap.get(name);
 	}
 }
