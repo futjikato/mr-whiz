@@ -36,6 +36,8 @@ public abstract class Npc extends GamePhysicalObject {
 			if (health == 0)
 				die();
 		}
+
+		block.triggerNpcTouch();
 	}
 
 	protected void die() {

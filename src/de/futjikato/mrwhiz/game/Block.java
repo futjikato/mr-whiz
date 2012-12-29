@@ -170,9 +170,31 @@ public class Block {
 		this.touchListener.add(caller);
 	}
 
+	/**
+	 * Use one of the following methods instead triggerPlayerTouch<br>
+	 * triggerNpcTouch<br>
+	 * triggerPlayerTouch<br>
+	 * 
+	 * Using this method triggerPlayerTouch is executed !
+	 */
+	@Deprecated
 	public void triggerTouch() {
+		triggerPlayerTouch();
+	}
+
+	public void triggerPlayerTouch() {
 		for ( Trigger trigger : this.touchListener ) {
-			trigger.trigger();
+			if (trigger.playerCanTrigger()) {
+				trigger.trigger();
+			}
+		}
+	}
+
+	public void triggerNpcTouch() {
+		for ( Trigger trigger : this.touchListener ) {
+			if (trigger.npcCanTrigger()) {
+				trigger.trigger();
+			}
 		}
 	}
 }

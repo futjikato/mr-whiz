@@ -235,7 +235,7 @@ public class GamePlayer extends GamePhysicalObject {
 			}
 		}
 
-		block.triggerTouch();
+		block.triggerPlayerTouch();
 
 		int dmg = block.getDamage();
 		if (dmg > 0) {

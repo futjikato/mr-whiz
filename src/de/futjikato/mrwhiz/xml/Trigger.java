@@ -67,4 +67,12 @@ public class Trigger extends XmlObject {
 
 		return null;
 	}
+
+	public boolean playerCanTrigger() {
+		return true;
+	}
+
+	public boolean npcCanTrigger() {
+		return true;
+	}
 }

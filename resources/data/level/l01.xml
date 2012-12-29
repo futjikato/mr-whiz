@@ -33,7 +33,7 @@
 	<events>
 		<event>
 			<trigger target="Trap01Trigger">touch</trigger>
-			<action target="Trap01Trigger">destroyBlock</action>
+			<action target="Trap01Target">hideBlocks</action>
 		</event>
 	</events>
 </gamemap>

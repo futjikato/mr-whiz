@@ -14,7 +14,7 @@ public class Action extends XmlObject {
 
 	private enum Actions {
 
-		destroyBlock() {
+		hideBlocks() {
 			@Override
 			public void exec(Action caller) {
 				String target = caller.getTarget();
@@ -27,6 +27,40 @@ public class Action extends XmlObject {
 
 				for ( Block cBlock : blocks ) {
 					cBlock.setDoRender(false);
+				}
+			}
+		},
+
+		showBlocks() {
+			@Override
+			public void exec(Action caller) {
+				String target = caller.getTarget();
+				if (target == null) {
+					return;
+				}
+
+				BlockCollector bc = BlockCollector.getInstance();
+				List<Block> blocks = bc.getBlocksByName(target);
+
+				for ( Block cBlock : blocks ) {
+					cBlock.setDoRender(true);
+				}
+			}
+		},
+
+		toggleBlocks() {
+			@Override
+			public void exec(Action caller) {
+				String target = caller.getTarget();
+				if (target == null) {
+					return;
+				}
+
+				BlockCollector bc = BlockCollector.getInstance();
+				List<Block> blocks = bc.getBlocksByName(target);
+
+				for ( Block cBlock : blocks ) {
+					cBlock.setDoRender(!cBlock.doRender());
 				}
 			}
 		},
