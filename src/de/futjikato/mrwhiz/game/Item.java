@@ -1,7 +1,6 @@
 package de.futjikato.mrwhiz.game;
 
 import de.futjikato.mrwhiz.game.inventory.Tool;
-import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Trigger;
 
 public class Item extends Block {
@@ -34,8 +33,5 @@ public class Item extends Block {
 		for ( Trigger trigger : touchListener ) {
 			trigger.trigger();
 		}
-
-		// remove item after usage
-		BlockCollector.getInstance().removeBlock(this);
 	}
 }

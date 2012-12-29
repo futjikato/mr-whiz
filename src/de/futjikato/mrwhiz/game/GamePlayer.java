@@ -232,6 +232,7 @@ public class GamePlayer extends GamePhysicalObject {
 			Tool itemTool = item.getTool();
 			if (itemTool != null) {
 				inventory.addItem(itemTool);
+				item.setDoRender(false);
 			}
 		}
 
