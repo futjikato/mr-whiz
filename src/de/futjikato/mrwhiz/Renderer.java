@@ -1,7 +1,6 @@
 package de.futjikato.mrwhiz;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Input;
@@ -82,26 +81,14 @@ public abstract class Renderer {
 	protected long fps;
 
 	/**
-	 * Get the accurate system time
-	 * 
-	 * @deprecated use Util.getTime instead
-	 * 
-	 * @return The system time in milliseconds
-	 */
-	@Deprecated
-	public long getTime() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
-	}
-
-	/**
 	 * Calculate how many milliseconds have passed since last frame.
 	 * 
 	 * @return milliseconds passed since last frame
 	 */
 	public int getDelta() {
-		long time = getTime();
+		long time = Util.getTime();
 		int delta = (int) (time - this.lastFrame);
-		this.lastFrame = this.getTime();
+		this.lastFrame = Util.getTime();
 
 		return delta;
 	}
@@ -112,7 +99,7 @@ public abstract class Renderer {
 	 * Calculate the FPS and set it in the title bar
 	 */
 	private void updateFPS() {
-		if (getTime() - this.lastFPS > 1000) {
+		if (Util.getTime() - this.lastFPS > 1000) {
 			this.printFps(this.fps);
 			this.fps = 0; // reset the FPS counter
 			this.lastFPS += 1000; // add one second
@@ -122,8 +109,8 @@ public abstract class Renderer {
 
 	private void initFPS() {
 		// init fps variables
-		this.lastFrame = this.getTime();
-		this.lastFPS = this.getTime();
+		this.lastFrame = Util.getTime();
+		this.lastFPS = Util.getTime();
 		this.fps = 0;
 	}
 
