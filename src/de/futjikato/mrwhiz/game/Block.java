@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 
 import de.futjikato.mrwhiz.game.ai.Dog;
 import de.futjikato.mrwhiz.game.ai.NpcManager;
+import de.futjikato.mrwhiz.xml.BlockCollector;
 import de.futjikato.mrwhiz.xml.Gamemap;
 import de.futjikato.mrwhiz.xml.Trigger;
 
@@ -40,6 +41,12 @@ public class Block {
 	protected boolean doRender = false;
 
 	private char type;
+
+	protected Route route;
+
+	protected int routeIndex;
+
+	protected boolean patroll = false;
 
 	public Block(int bx, int by, char type, BlockDefinitions defines) {
 		cx = bx;
@@ -96,6 +103,10 @@ public class Block {
 		if (!doRender)
 			return;
 
+		if (patroll) {
+			calcNewPosition();
+		}
+
 		Image img = this.texture;
 		Graphics gra = new Graphics();
 
@@ -105,6 +116,77 @@ public class Block {
 		int bh = blocksize * h;
 
 		gra.drawImage(img, abX, abY, abX + bw, abY + bh, 0, 0, img.getWidth(), img.getHeight());
+	}
+
+	private void calcNewPosition() {
+		if (!patroll) {
+			return;
+		}
+
+		// get position of next routepoint
+		int finalBx = route.getX(routeIndex);
+		int finalBy = route.getY(routeIndex);
+
+		// check if we reached that point and get next one if so
+		if (getX() == finalBx && xOffset == 0 && getY() == finalBy && yOffset == 0) {
+			routeIndex = route.getNextIndex(routeIndex);
+
+			finalBx = route.getX(routeIndex);
+			finalBy = route.getY(routeIndex);
+		}
+
+		int blocksize = GameRenderer.getInstance().getBlocksize();
+
+		// TODO make speed configurable
+		float speed = 0.2f;
+
+		// ok now calc direction ( x )
+		float xVel = 0;
+		if (getX() == finalBx) {
+			if (xOffset > 0) {
+				xVel = -speed;
+			}
+		} else {
+			if (finalBx > getX()) {
+				xVel = -speed;
+			} else {
+				xVel = speed;
+			}
+		}
+
+		// ok now calc direction ( y )
+		float yVel = 0;
+		if (getY() == finalBy) {
+			if (yOffset > 0) {
+				yVel = -speed;
+			}
+		} else {
+			if (finalBy > getY()) {
+				yVel = -speed;
+			} else {
+				yVel = speed;
+			}
+		}
+
+		xOffset += xVel;
+		yOffset += yVel;
+
+		if (xOffset > blocksize) {
+			setX(getX() - 1);
+			xOffset = 0;
+		}
+		if (yOffset > blocksize) {
+			setY(getY() - 1);
+			yOffset = 0;
+		}
+		if (xOffset < 0) {
+			setX(getX() + 1);
+			xOffset = blocksize;
+		}
+		if (yOffset < 0) {
+			setY(getY() + 1);
+			yOffset = blocksize;
+		}
 	}
 
 	public int getDamage() {
@@ -132,12 +214,22 @@ public class Block {
 	}
 
 	public void setX(int newX) {
+		// add old position to history
 		xPos.add(cx);
+
+		// update position in blockcollector
+		BlockCollector.getInstance().moveBlock(cx, cy, newX, cy);
+
 		cx = newX;
 	}
 
 	public void setY(int newY) {
+		// add current position to hostory
 		yPos.add(cy);
+
+		// update position in blockcollector
+		BlockCollector.getInstance().moveBlock(cx, cy, cx, newY);
+
 		cy = newY;
 	}
 
@@ -223,5 +315,14 @@ public class Block {
 
 	public boolean hasCollision() {
 		return true;
+	}
+
+	public void setRoute(Route cRoute) {
+		route = cRoute;
+		routeIndex = 0;
+	}
+
+	public void startPatroll() {
+		patroll = true;
 	}
 }

@@ -30,6 +30,9 @@
 			<file><![CDATA[resources/data/level/l01.blocks]]></file>
 		</blockfile>
 	</blocks>
+	<routes>
+		<route target="MovingBlock01">RouteMovingBlock01</route>
+	</routes>
 	<events>
 		<event>
 			<trigger target="Trap01Trigger">touch</trigger>

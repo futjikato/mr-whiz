@@ -112,6 +112,21 @@ public enum XmlObjectTypes {
 		public XmlObject getType() {
 			return new File();
 		}
+	},
+
+	routes() {
+		@Override
+		public XmlObject getType() {
+			// TODO this is an unused class. try to get rid of it
+			return new RouteCollector();
+		}
+	},
+
+	route() {
+		@Override
+		public XmlObject getType() {
+			return new RouteConnector();
+		}
 	};
 
 	public abstract XmlObject getType();

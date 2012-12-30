@@ -12,6 +12,7 @@ import de.futjikato.mrwhiz.game.Block;
 import de.futjikato.mrwhiz.game.BlockDefinitions;
 import de.futjikato.mrwhiz.game.Door;
 import de.futjikato.mrwhiz.game.Item;
+import de.futjikato.mrwhiz.game.Route;
 import de.futjikato.mrwhiz.game.UnknownType;
 
 public class Blockfile extends XmlObject {
@@ -121,12 +122,31 @@ public class Blockfile extends XmlObject {
 			readDefineFile(defineReader);
 			readBlockFile(new BufferedReader(blockReader));
 			processNames();
+			saveRoutes();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnknownType e) {
 			System.out.println("Unknown type found : " + e.getUnknownType());
 			e.printStackTrace();
+		}
+	}
+
+	private void saveRoutes() {
+		BlockCollector bc = BlockCollector.getInstance();
+
+		Set<String> routeNames = definitions.getRoutes();
+		for ( String cName : routeNames ) {
+			// create new route class
+			Route cRoute = new Route();
+
+			List<List<Integer>> routeCoords = definitions.getRoute(cName);
+			for ( List<Integer> cCoords : routeCoords ) {
+				cRoute.addCoords(cCoords);
+			}
+
+			// add route to blockCollector
+			bc.addRoute(cName, cRoute);
 		}
 	}
 }

@@ -20,6 +20,8 @@ public class BlockDefinitions {
 
 	private HashMap<String, List<List<Integer>>> names = new HashMap<String, List<List<Integer>>>();
 
+	private HashMap<String, List<List<Integer>>> routes = new HashMap<String, List<List<Integer>>>();
+
 	public boolean isDefined(char type) {
 		return definitions.containsKey(type);
 	}
@@ -110,5 +112,13 @@ public class BlockDefinitions {
 
 	public Set<String> getNames() {
 		return names.keySet();
+	}
+
+	public List<List<Integer>> getRoute(String name) {
+		return routes.get(name);
+	}
+
+	public Set<String> getRoutes() {
+		return routes.keySet();
 	}
 }

@@ -6,12 +6,15 @@ import java.util.List;
 
 import de.futjikato.mrwhiz.game.Block;
 import de.futjikato.mrwhiz.game.GameRenderer;
+import de.futjikato.mrwhiz.game.Route;
 
 public final class BlockCollector extends XmlObject {
 
 	private Block[][] blockAry;
 
 	private HashMap<String, List<Block>> nameMap = new HashMap<String, List<Block>>();
+
+	private HashMap<String, Route> routeMap = new HashMap<String, Route>();
 
 	private static BlockCollector instance;
 
@@ -130,5 +133,19 @@ public final class BlockCollector extends XmlObject {
 
 	public List<Block> getBlocksByName(String name) {
 		return nameMap.get(name);
+	}
+
+	public void addRoute(String cName, Route cRoute) {
+		routeMap.put(cName, cRoute);
+	}
+
+	public Route getRoute(String name) {
+		return routeMap.get(name);
+	}
+
+	public void moveBlock(int oldX, int oldY, int newX, int newY) {
+		// TODO verify psoition is a valid array position
+		blockAry[newX][newY] = blockAry[oldX][oldY];
+		blockAry[oldX][newY] = null;
 	}
 }
