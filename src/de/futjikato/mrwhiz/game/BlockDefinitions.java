@@ -67,7 +67,11 @@ public class BlockDefinitions {
 	}
 
 	public Image getTexture(char type) {
-		String value = getBlockAttributeAsString(type, "texture");
+		return getTexture(type, "texture");
+	}
+
+	public Image getTexture(char type, String fieldname) {
+		String value = getBlockAttributeAsString(type, fieldname);
 		if (value == null) {
 			return null;
 		}

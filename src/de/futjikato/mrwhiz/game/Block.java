@@ -13,19 +13,23 @@ import de.futjikato.mrwhiz.xml.Trigger;
 
 public class Block {
 
-	private Image texture;
+	protected Image texture;
 
 	private List<Integer> xPos = new ArrayList<Integer>();
 
 	private List<Integer> yPos = new ArrayList<Integer>();
 
-	private int cx;
+	protected int cx;
 
-	private int cy;
+	protected int cy;
 
-	private int w;
+	protected int w;
 
-	private int h;
+	protected int h;
+
+	protected float xOffset;
+
+	protected float yOffset;
 
 	protected List<Trigger> touchListener = new ArrayList<Trigger>();
 
@@ -33,7 +37,7 @@ public class Block {
 
 	private int dmg;
 
-	private boolean doRender = false;
+	protected boolean doRender = false;
 
 	private char type;
 
@@ -43,6 +47,9 @@ public class Block {
 
 		h = defines.getBlockAttributeAsInt(type, "height", 1);
 		w = defines.getBlockAttributeAsInt(type, "width", 1);
+
+		xOffset = defines.getBlockAttributeAsInt(type, "xOffset", 0);
+		yOffset = defines.getBlockAttributeAsInt(type, "yOffset", 0);
 
 		this.type = type;
 		doRender = defines.getBlockAttributeAsBoolean(type, "render", true);
@@ -92,8 +99,8 @@ public class Block {
 		Image img = this.texture;
 		Graphics gra = new Graphics();
 
-		int abX = (cx * blocksize) - (int) vpx;
-		int abY = (cy * blocksize) - (int) vpy;
+		int abX = (cx * blocksize) - (int) vpx - (int) xOffset;
+		int abY = (cy * blocksize) - (int) vpy - (int) yOffset;
 		int bw = blocksize * w;
 		int bh = blocksize * h;
 
@@ -140,6 +147,22 @@ public class Block {
 
 	public int getY() {
 		return cy;
+	}
+
+	public float getxOffset() {
+		return xOffset;
+	}
+
+	public void setxOffset(float xOffset) {
+		this.xOffset = xOffset;
+	}
+
+	public float getyOffset() {
+		return yOffset;
+	}
+
+	public void setyOffset(float yOffset) {
+		this.yOffset = yOffset;
 	}
 
 	public char getType() {
@@ -196,5 +219,9 @@ public class Block {
 				trigger.trigger();
 			}
 		}
+	}
+
+	public boolean hasCollision() {
+		return true;
 	}
 }

@@ -29,7 +29,9 @@
 		"d" : {
 			"render" : "1",
 			"texture" : "resources/images/backgrounds/wooden_door.png",
+			"openTexture" : "resources/images/backgrounds/wooden_door_open.png",
 			"type" : "door",
+			"xOffset" : "25",
 			"height" : "4"
 		},
 		"1" : {

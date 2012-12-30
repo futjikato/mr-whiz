@@ -15,7 +15,7 @@ public abstract class GamePhysicalObject extends Physical {
 		if (blocklist.size() > 0) {
 			for ( Block cBlock : blocklist ) {
 				if (cBlock.doRender()) {
-					if (!(cBlock instanceof Item)) {
+					if (cBlock.hasCollision()) {
 						free = false;
 					}
 					hitBlock(cBlock, type);

@@ -34,4 +34,9 @@ public class Item extends Block {
 			trigger.trigger();
 		}
 	}
+
+	@Override
+	public boolean hasCollision() {
+		return false;
+	}
 }
