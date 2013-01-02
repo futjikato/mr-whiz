@@ -75,7 +75,7 @@ public final class GameRenderer extends Renderer {
 		}
 
 		// render blocks
-		List<Block> insightBlocks = bc.getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
+		List<Block> insightBlocks = bc.getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb + this.viewPorthb, this.viewPortxb + this.viewPortwb, this.viewPortyb);
 		for ( Block block : insightBlocks ) {
 			block.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getValue());
 		}

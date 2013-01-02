@@ -43,25 +43,25 @@ public final class BlockCollector extends XmlObject {
 		}
 	}
 
-	public List<Block> getBlocksByBlockCoords(int bx, int by, int bw, int bh) {
+	public List<Block> getBlocksByBlockCoords(int bx, int by, int bx2, int by2) {
 		List<Block> list = new ArrayList<Block>();
 
-		// run thought all requested blocks
-		for ( int cx = bx - 1 ; cx < bx + bw + 1 ; cx++ ) {
-			// prevent access on negative values
-			if (cx < 0) {
-				continue;
-			}
+		for ( int cx = bx ; cx <= bx2 ; cx++ ) {
+			for ( int cy = by ; cy >= by2 ; cy-- ) {
 
-			for ( int cy = by - 1 ; cy < by + bh ; cy++ ) {
 				// prevent access on negative values
-				if (cy < 0) {
+				if (cx < 0 || cy < 0) {
+					continue;
+				}
+
+				// prevent from running out of upper bound
+				if (blockAry.length <= cx || blockAry[cx].length <= cy) {
 					continue;
 				}
 
 				Block cBlock = blockAry[cx][cy];
 
-				if (cBlock != null && cBlock.doRender()) {
+				if (cBlock != null) {
 					list.add(cBlock);
 				}
 			}
@@ -79,31 +79,13 @@ public final class BlockCollector extends XmlObject {
 	}
 
 	public List<Block> getBlocks(float x, float y, float x2, float y2) {
-		List<Block> list = new ArrayList<Block>();
-
 		int blocksize = GameRenderer.getInstance().getBlocksize();
 		int by = (int) Math.floor(y / blocksize);
 		int bx = (int) Math.floor(x / blocksize);
 		int by2 = (int) Math.floor(y2 / blocksize);
 		int bx2 = (int) Math.floor(x2 / blocksize);
 
-		for ( int cx = bx ; cx <= bx2 ; cx++ ) {
-			for ( int cy = by ; cy >= by2 ; cy-- ) {
-
-				// prevent access on negative values
-				if (cx < 0 || cy < 0) {
-					continue;
-				}
-
-				Block cBlock = blockAry[cx][cy];
-
-				if (cBlock != null) {
-					list.add(cBlock);
-				}
-			}
-		}
-
-		return list;
+		return getBlocksByBlockCoords(bx, by, bx2, by2);
 	}
 
 	public void addBlock(Block cBlock, int x, int y) {
