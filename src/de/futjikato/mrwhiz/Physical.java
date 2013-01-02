@@ -59,7 +59,6 @@ public abstract class Physical {
 	}
 
 	protected void calcNewPos(int blocksize, long delta) {
-
 		float x = getX();
 		float y = getY();
 
@@ -71,16 +70,16 @@ public abstract class Physical {
 		if (yv < 0) {
 			yv += delta * 0.005f;
 		} else {
-			yv += delta * 0.002f;
+			yv += delta * 0.003f;
 		}
 
 		// calculate new x-axis speed
 		if (xv > 0) {
-			xv -= delta * 0.01f;
+			xv -= delta * 0.15f;
 			if (xv < 0)
 				xv = 0;
 		} else if (xv < 0) {
-			xv += delta * 0.01f;
+			xv += delta * 0.15f;
 			if (xv > 0)
 				xv = 0;
 		}
@@ -94,14 +93,10 @@ public abstract class Physical {
 		this.setYVel(yv);
 		this.setXvel(xv);
 
-		// set new y position
-		float ny = delta * yv;
-		float nx = delta * xv;
-
-		if (this.checkCollision(x, y + ny, 0)) {
-			this.setY(this.getY() + ny);
+		if (this.checkCollision(x, y + yv, 0)) {
+			this.setY(this.getY() + yv);
 		} else {
-			if (ny > 0) {
+			if (yv > 0) {
 				// reset y velocity on landing somewhere
 				this.setYVel(0);
 			} else {
@@ -110,8 +105,8 @@ public abstract class Physical {
 			}
 		}
 
-		if (this.checkCollision(x + nx, y, 1)) {
-			this.setX(this.getX() + nx);
+		if (this.checkCollision(x + xv, y, 1)) {
+			this.setX(this.getX() + xv);
 		}
 	}
 
