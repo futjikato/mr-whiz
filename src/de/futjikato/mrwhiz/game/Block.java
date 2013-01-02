@@ -46,7 +46,7 @@ public class Block {
 
 	protected int routeIndex;
 
-	protected boolean patroll = false;
+	protected boolean patrol = false;
 
 	public Block(int bx, int by, char type, BlockDefinitions defines) {
 		cx = bx;
@@ -99,13 +99,8 @@ public class Block {
 	}
 
 	public void draw(float vpx, float vpy, int blocksize) {
-
 		if (!doRender)
 			return;
-
-		if (patroll) {
-			calcNewPosition();
-		}
 
 		Image img = this.texture;
 		Graphics gra = new Graphics();
@@ -118,8 +113,8 @@ public class Block {
 		gra.drawImage(img, abX, abY, abX + bw, abY + bh, 0, 0, img.getWidth(), img.getHeight());
 	}
 
-	private void calcNewPosition() {
-		if (!patroll) {
+	public void calcNewPosition(long delta) {
+		if (!patrol) {
 			return;
 		}
 
@@ -138,7 +133,7 @@ public class Block {
 		int blocksize = GameRenderer.getInstance().getBlocksize();
 
 		// TODO make speed configurable
-		float speed = 0.2f;
+		float speed = 0.07f * delta;
 
 		// ok now calc direction ( x )
 		float xVel = 0;
@@ -322,7 +317,13 @@ public class Block {
 		routeIndex = 0;
 	}
 
-	public void startPatroll() {
-		patroll = true;
+	public void startPatrol() {
+		patrol = true;
+		BlockCollector.getInstance().addPatrollingBlock(this);
+	}
+
+	public void stopPatrol() {
+		patrol = false;
+		BlockCollector.getInstance().addPatrollingBlock(this);
 	}
 }

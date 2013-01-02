@@ -67,9 +67,16 @@ public final class GameRenderer extends Renderer {
 		TextureAreaCollector areaCollector = TextureAreaCollector.getInstance();
 		areaCollector.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getValue());
 
+		// calc new blocks positions
+		BlockCollector bc = BlockCollector.getInstance();
+		List<Block> patrolBlocks = bc.getPatrollingBlocks();
+		for ( Block cBlock : patrolBlocks ) {
+			cBlock.calcNewPosition(delta);
+		}
+
 		// render blocks
-		List<Block> blocks = BlockCollector.getInstance().getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
-		for ( Block block : blocks ) {
+		List<Block> insightBlocks = bc.getBlocksByBlockCoords(this.viewPortxb, this.viewPortyb, this.viewPortwb, this.viewPorthb);
+		for ( Block block : insightBlocks ) {
 			block.draw(this.viewPortX, this.viewPortY, this.map.getBlocksize().getValue());
 		}
 

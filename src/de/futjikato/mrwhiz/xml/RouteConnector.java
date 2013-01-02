@@ -22,7 +22,7 @@ public class RouteConnector extends XmlObject {
 		Route cRoute = bc.getRoute(currentValue);
 		for ( Block cBlock : blocks ) {
 			cBlock.setRoute(cRoute);
-			cBlock.startPatroll();
+			cBlock.startPatrol();
 		}
 	}
 

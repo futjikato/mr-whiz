@@ -16,6 +16,8 @@ public final class BlockCollector extends XmlObject {
 
 	private HashMap<String, Route> routeMap = new HashMap<String, Route>();
 
+	private List<Block> patrollingBlocks = new ArrayList<Block>();
+
 	private static BlockCollector instance;
 
 	private BlockCollector() {
@@ -147,5 +149,21 @@ public final class BlockCollector extends XmlObject {
 		// TODO verify psoition is a valid array position
 		blockAry[newX][newY] = blockAry[oldX][oldY];
 		blockAry[oldX][newY] = null;
+	}
+
+	public List<Block> getPatrollingBlocks() {
+		return patrollingBlocks;
+	}
+
+	public void addPatrollingBlock(Block cBlock) {
+		if (!patrollingBlocks.contains(cBlock)) {
+			patrollingBlocks.add(cBlock);
+		}
+	}
+
+	public void removePatrollingBlock(Block cBlock) {
+		if (patrollingBlocks.contains(cBlock)) {
+			patrollingBlocks.remove(cBlock);
+		}
 	}
 }
