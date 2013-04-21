@@ -1,6 +1,6 @@
 package de.futjikato.mrwhiz.rendering;
 
-import de.futjikato.mrwhiz.xml.Map;
+import de.futjikato.mrwhiz.game.Map;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -47,6 +47,10 @@ public class Boundary implements Iterable<Coordinate> {
 
     public Map getOrigin() {
         return origin;
+    }
+
+    public Coordinate getUpperLeft() {
+        return upperLeft;
     }
 
     /**

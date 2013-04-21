@@ -1,5 +1,7 @@
-package de.futjikato.mrwhiz;
+package de.futjikato.mrwhiz.rendering;
 
+import de.futjikato.mrwhiz.App;
+import de.futjikato.mrwhiz.Util;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -72,7 +74,8 @@ public abstract class Renderer {
 	protected abstract void handleInput(long delta, Input input);
 
 	/**
-	 * ++++++++++++++++++++++++++++++++++++++++++++ FPS calculation and stuff
+	 * ++++++++++++++++++++++++++++++++++++++++++++
+     * FPS calculation and stuff
 	 * ++++++++++++++++++++++++++++++++++++++++++++
 	 */
 

@@ -26,16 +26,6 @@ public final class Dog extends Enemy {
 	}
 
 	@Override
-	protected int getHeight() {
-		return 90;
-	}
-
-	@Override
-	protected int getWidth() {
-		return 129;
-	}
-
-	@Override
 	public void draw(float vpx, float vpy) {
 
 		int spriteIndex = 0;
@@ -48,7 +38,7 @@ public final class Dog extends Enemy {
 
 	@Override
 	protected boolean checkCollision(float x, float y, int type) {
-		boolean free = super.checkCollision(x, y, type);
+		boolean free = false;
 
 		if (type == 1 && !free) {
 			if (currSpeed > 0) {

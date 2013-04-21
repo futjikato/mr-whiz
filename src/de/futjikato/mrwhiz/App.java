@@ -1,27 +1,31 @@
 package de.futjikato.mrwhiz;
 
+import com.google.gson.Gson;
+import de.futjikato.mrwhiz.game.BlockDefinitions;
+import de.futjikato.mrwhiz.game.GamePlayer;
+import de.futjikato.mrwhiz.game.GameRenderer;
+import de.futjikato.mrwhiz.game.Map;
+import de.futjikato.mrwhiz.rendering.ImageStorage;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.Input;
 
-import de.futjikato.mrwhiz.xml.Map;
+import java.io.File;
+import java.io.IOException;
 
 public class App {
 
 	static final long MAIN_VERSION = 1;
+    private static String mapName;
 
-	private boolean debug = false;
+    private boolean debug = false;
 	private boolean isUnitTest = false;
 	private boolean fullscreen = false;
 	private static App instance;
 
-	private GameStates state = GameStates.MENU;
-	private GameStates nextState;
-
 	private Map nextGameMap;
 	private Input input;
-	private Updater updater;
 
 	/**
 	 * Main
@@ -36,34 +40,51 @@ public class App {
 		app.defineLwjglLibraryPath();
 
 		// parse arguments
-		for ( String arg : args ) {
-			if (arg.equals("-debug")) {
-				app.enableDebug();
-			}
-		}
-
-		/*
-		 * if (app.getUpdater().checkForUpdates(MAIN_VERSION)) {
-		 * System.out.println("UPDATE available !"); } else {
-		 * System.out.println("Running latest version"); }
-		 */
+		for(int i = 0 ; i < args.length ; ) {
+            // get Launchoption
+            LaunchOptions option = LaunchOptions.getByOption(args[i++]);
+            int paramCount = option.getParamCount();
+            // build argument parameter array
+            String[] optionParameter = new String[paramCount];
+            for(int j = 0 ; j < paramCount ; j++) {
+                optionParameter[j] = args[i++];
+            }
+            // process option
+            option.process(optionParameter);
+        }
 
 		app.createWindow();
-		app.loop();
+		app.loadMap();
 
 		// remove display on app exit
 		Display.destroy();
 	}
 
-	public Updater getUpdater() {
-		if (this.updater == null) {
-			this.updater = new Updater();
-		}
+    private void loadMap() {
+        File structureFile = new File("resources/data/lebel/" + mapName + ".png");
+        File defineFile = new File("resources/data/lebel/" + mapName + ".defines");
 
-		return this.updater;
-	}
+        // @todo show loading screen
 
-	public void defineLwjglLibraryPath() throws Exception {
+        // load structures
+        ImageStorage structure = null;
+        try {
+            BlockDefinitions definition = BlockDefinitions.create(defineFile);
+            structure = new ImageStorage(structureFile, definition);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //@todo show error window
+        }
+
+        Map map = new Map(structure);
+        GameRenderer.getInstance().startMap(map);
+    }
+
+    public static void setMapName(String mapName) {
+        App.mapName = mapName;
+    }
+
+    public void defineLwjglLibraryPath() throws Exception {
 		String os = System.getProperty("os.name");
 		if (os.toLowerCase().contains("windows")) {
 			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "\\libs\\lwjgl-2.8.4\\native\\windows");
@@ -114,30 +135,6 @@ public class App {
 
 	private void enableDebug() {
 		this.debug = true;
-	}
-
-	public void setNextStep(GameStates gs) {
-		this.nextState = gs;
-	}
-
-	private void loop() {
-		while (this.state != null && this.state != GameStates.QUIT) {
-			// set next step to exit state of new state
-			this.nextState = this.state.getExistState();
-
-			// start state now
-			this.state.start();
-
-			this.state = this.nextState;
-		}
-	}
-
-	public void setNextGameMap(Map map) {
-		this.nextGameMap = map;
-	}
-
-	public Map getNextGameMap() {
-		return this.nextGameMap;
 	}
 
 	public Input getInput() {

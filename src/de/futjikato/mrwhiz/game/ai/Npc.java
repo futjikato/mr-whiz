@@ -1,9 +1,8 @@
 package de.futjikato.mrwhiz.game.ai;
 
-import de.futjikato.mrwhiz.game.Block;
-import de.futjikato.mrwhiz.game.GamePhysicalObject;
+import de.futjikato.mrwhiz.Physical;
 
-public abstract class Npc extends GamePhysicalObject {
+public abstract class Npc extends Physical {
 
 	protected int health = 100;
 	protected boolean isAlive;
@@ -24,20 +23,6 @@ public abstract class Npc extends GamePhysicalObject {
 
 		setGrip(1.2f);
 		setMaxYVal(1.5f);
-	}
-
-	@Override
-	protected void hitBlock(Block block, int type) {
-		int blockDmg = block.getDamage();
-		if (blockDmg > 0) {
-			health -= blockDmg;
-			if (health < 0)
-				health = 0;
-			if (health == 0)
-				die();
-		}
-
-		block.triggerNpcTouch();
 	}
 
 	protected void die() {

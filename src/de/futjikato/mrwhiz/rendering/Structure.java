@@ -1,16 +1,17 @@
 package de.futjikato.mrwhiz.rendering;
 
+import java.util.HashMap;
+
 /**
  *
  */
 public class Structure {
 
-    private Structure() {
+    public Structure(HashMap<String, String> definition) {
 
     }
 
-    public static Structure create() {
-        return new Structure();
-    }
+    public void render(Boundary bound) {
 
+    }
 }

@@ -1,5 +1,11 @@
 {
+    "config" : {
+        "blocksize" : "25"
+    }
 	"definitions" : {
+	    16777215 : {
+
+	    },
 		"B" : {
 			"texture" : "resources/images/backgrounds/game_brick.png",
 			"render" : "1"

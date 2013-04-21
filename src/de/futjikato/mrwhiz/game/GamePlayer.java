@@ -1,7 +1,9 @@
 package de.futjikato.mrwhiz.game;
 
 import java.util.List;
+import java.util.Observable;
 
+import de.futjikato.mrwhiz.Physical;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -12,10 +14,8 @@ import org.newdawn.slick.SpriteSheet;
 import de.futjikato.mrwhiz.App;
 import de.futjikato.mrwhiz.Util;
 import de.futjikato.mrwhiz.game.events.CallbackEvent;
-import de.futjikato.mrwhiz.game.inventory.Inventory;
-import de.futjikato.mrwhiz.game.inventory.Tool;
 
-public class GamePlayer extends GamePhysicalObject {
+public class GamePlayer extends Physical {
 
 	private GameUi gui;
 
@@ -48,8 +48,6 @@ public class GamePlayer extends GamePhysicalObject {
 
 	private int score;
 
-	private Inventory inventory;
-
 	static {
 		// deactivate image loading in unit test
 		if (!App.getInstance().isUnittest()) {
@@ -81,8 +79,6 @@ public class GamePlayer extends GamePhysicalObject {
 		this.speed = BASE_SPEED;
 		this.health = START_HEALTH;
 		this.lives = 5;
-
-		inventory = new Inventory(this);
 
 		// deactivate image loading in unit test
 		if (!App.getInstance().isUnittest()) {
@@ -176,15 +172,6 @@ public class GamePlayer extends GamePhysicalObject {
 			}
 		}
 
-		// TODO implement active tool
-		// TODO only use active tool
-		if (input.isKeyDown(Input.KEY_E)) {
-			List<Tool> tools = inventory.getInventory();
-			for ( Tool cTool : tools ) {
-				cTool.use(this);
-			}
-		}
-
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			this.jump();
 		} else {
@@ -219,34 +206,6 @@ public class GamePlayer extends GamePhysicalObject {
 		return PLAYER_WIDTH;
 	}
 
-	@Override
-	protected void hitBlock(Block block, int type) {
-
-		if (!this.alive)
-			return;
-
-		if (block instanceof Item) {
-			Item item = (Item) block;
-			score += item.getScore();
-
-			Tool itemTool = item.getTool();
-			if (itemTool != null) {
-				inventory.addItem(itemTool);
-				item.setDoRender(false);
-			}
-		}
-
-		block.triggerPlayerTouch();
-
-		int dmg = block.getDamage();
-		if (dmg > 0) {
-			this.damage(dmg);
-		}
-
-		float speed = block.getSpeed();
-		this.setBlockSpeed(speed);
-	}
-
 	public int getScore() {
 		return this.score;
 	}
@@ -259,11 +218,12 @@ public class GamePlayer extends GamePhysicalObject {
 		return this.health;
 	}
 
-	public Inventory getInventory() {
-		return inventory;
-	}
-
 	public void setGui(GameUi gui) {
 		this.gui = gui;
 	}
+
+    @Override
+    protected boolean checkCollision(float x, float y, int type) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

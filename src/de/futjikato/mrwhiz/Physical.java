@@ -1,6 +1,8 @@
 package de.futjikato.mrwhiz;
 
-public abstract class Physical {
+import java.util.Observable;
+
+public abstract class Physical extends Observable {
 	private float x;
 	private float y;
 
