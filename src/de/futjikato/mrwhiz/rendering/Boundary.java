@@ -12,19 +12,17 @@ import java.util.NoSuchElementException;
  * Time: 21:53
  * To change this template use File | Settings | File Templates.
  */
-public class Boundary implements Iterable<Coordinate> {
+public class Boundary extends Coordinate implements Iterable<Coordinate> {
 
     protected Map origin;
-
-    protected Coordinate upperLeft;
 
     protected int width;
 
     protected int height;
 
     public Boundary(Map origin, int x, int y, int width, int height) {
+        super(x, y);
         this.origin = origin;
-        this.upperLeft = new Coordinate(x, y);
         this.width = width;
         this.height = height;
     }
@@ -49,8 +47,28 @@ public class Boundary implements Iterable<Coordinate> {
         return origin;
     }
 
-    public Coordinate getUpperLeft() {
-        return upperLeft;
+    @Override
+    public Boundary left() {
+        this.x--;
+        return this;
+    }
+
+    @Override
+    public Boundary right() {
+        this.x++;
+        return this;
+    }
+
+    @Override
+    public Boundary up() {
+        this.y--;
+        return this;
+    }
+
+    @Override
+    public Boundary down() {
+        this.y++;
+        return this;
     }
 
     /**
@@ -61,8 +79,8 @@ public class Boundary implements Iterable<Coordinate> {
     @Override
     public Iterator<Coordinate> iterator() {
 
-        final int startX = Boundary.this.upperLeft.getX() + Boundary.this.getWidth() + 1;
-        final int startY = Boundary.this.upperLeft.getY() + Boundary.this.getHeight();
+        final int startX = Boundary.this.getX() + Boundary.this.getWidth() + 1;
+        final int startY = Boundary.this.getY() + Boundary.this.getHeight();
 
         return new Iterator<Coordinate>() {
 
@@ -70,17 +88,17 @@ public class Boundary implements Iterable<Coordinate> {
 
             @Override
             public boolean hasNext() {
-                return Boundary.this.upperLeft.isRight(readCursor) || Boundary.this.upperLeft.isBelow(readCursor);
+                return Boundary.this.isRight(readCursor) || Boundary.this.isBelow(readCursor);
             }
 
             @Override
             public Coordinate next() throws NoSuchElementException {
-                if(Boundary.this.upperLeft.isRight(readCursor)) {
+                if(Boundary.this.isRight(readCursor)) {
                     readCursor = readCursor.left();
                     return readCursor;
                 }
 
-                if(Boundary.this.upperLeft.isBelow(readCursor)) {
+                if(Boundary.this.isBelow(readCursor)) {
                     readCursor = readCursor.moveRelative(Boundary.this.getWidth(), -1);
                     return readCursor;
                 }

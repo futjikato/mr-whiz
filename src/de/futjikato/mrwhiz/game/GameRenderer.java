@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import de.futjikato.mrwhiz.rendering.Boundary;
+import de.futjikato.mrwhiz.rendering.Coordinate;
 import de.futjikato.mrwhiz.rendering.Structure;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -73,7 +74,7 @@ public final class GameRenderer extends Renderer {
         this.map = map;
 
         // create boundary
-        bound = new Boundary(map, 0, 0, Display.getWidth(), Display.getHeight());
+        bound = new Boundary(map, 20, 180, Display.getWidth() / 60, Display.getHeight() / 60);
 
         start();
     }

@@ -27,8 +27,13 @@ public class BlockDefinitions {
         return gson.fromJson(bufferedReader, BlockDefinitions.class);
     }
 
-    public Structure getStructure(int id) {
+    public Structure getStructure(int id, int x, int y) {
         HashMap<String, String> definition = definitions.get(id);
-        return new Structure(definition);
+
+        //@todo transform to user exception
+        if(definition == null)
+            throw new IllegalArgumentException(String.format("Missing definition for id %s", id));
+
+        return new Structure(definition, x, y);
     }
 }

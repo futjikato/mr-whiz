@@ -12,6 +12,9 @@ public class ImageStorage extends AbstractStorage {
     protected Structure[][] mapStorage;
 
     public ImageStorage(File image, BlockDefinitions definition) throws IOException {
+
+        System.out.println("Start parsing map file");
+
         BufferedImage imgBuffer = ImageIO.read(image);
 
         mapStorage = new Structure[imgBuffer.getWidth()][imgBuffer.getHeight()];
@@ -21,13 +24,26 @@ public class ImageStorage extends AbstractStorage {
                 int rgb = imgBuffer.getRGB(x, y);
                 int id = (rgb) & 0xFFFFFF;
 
-                mapStorage[x][y] = definition.getStructure(id);
+                mapStorage[x][y] = definition.getStructure(id, x, y);
             }
         }
+
+        System.out.println("Done parsing map file");
     }
 
     @Override
     protected Structure loadStructure(int x, int y) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if(mapStorage.length < x)
+            throw new IndexOutOfBoundsException("Out of X bound.");
+
+        Structure[] col = mapStorage[x];
+
+        if(col.length < y)
+            throw new IndexOutOfBoundsException("Out of Y bound.");
+
+        if(col[y] == null)
+            throw new IllegalArgumentException("No Structure at given coords");
+
+        return col[y];
     }
 }
