@@ -30,6 +30,8 @@ public final class GameRenderer extends Renderer {
 	protected void init() throws LWJGLException {
 		super.init();
 
+        this.player = new GamePlayer(0, 0, 50);
+
 		// init ui
 		this.ui = new GameUi(this.player);
 	}

@@ -11,11 +11,7 @@ public class ImageStorage extends AbstractStorage {
 
     protected Structure[][] mapStorage;
 
-    public ImageStorage(File image, BlockDefinitions definition) throws StorageException, IOException {
-
-        if(!image.exists()) {
-            throw new StorageException("Image file not found at " + image.getAbsolutePath());
-        }
+    public ImageStorage(File image, BlockDefinitions definition) throws IOException {
         BufferedImage imgBuffer = ImageIO.read(image);
 
         mapStorage = new Structure[imgBuffer.getWidth()][imgBuffer.getHeight()];

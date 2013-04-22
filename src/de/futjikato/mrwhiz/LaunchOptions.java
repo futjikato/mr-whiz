@@ -25,7 +25,7 @@ public enum LaunchOptions {
                 throw new IllegalArgumentException("Missing map argument");
             }
 
-            App.setMapName(optionParameter[1]);
+            App.setMapName(optionParameter[0]);
         }
     };
 
@@ -55,12 +55,12 @@ public enum LaunchOptions {
         }
 
         for(LaunchOptions v : values()) {
-            if(v.getOptionKey() == optionKey) {
+            if(v.getOptionKey().equals(optionKey)) {
                 return v;
             }
         }
 
-        throw new IllegalArgumentException("Unknown option key given");
+        throw new IllegalArgumentException(String.format("Unknown option key `%s` given", optionKey));
     }
 
     public abstract void process(String[] optionParameter);

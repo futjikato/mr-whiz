@@ -61,8 +61,8 @@ public class App {
 	}
 
     private void loadMap() {
-        File structureFile = new File("resources/data/lebel/" + mapName + ".png");
-        File defineFile = new File("resources/data/lebel/" + mapName + ".defines");
+        File structureFile = new File("resources/data/level/" + mapName + ".png");
+        File defineFile = new File("resources/data/level/" + mapName + ".defines");
 
         // @todo show loading screen
 
@@ -87,9 +87,9 @@ public class App {
     public void defineLwjglLibraryPath() throws Exception {
 		String os = System.getProperty("os.name");
 		if (os.toLowerCase().contains("windows")) {
-			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "\\libs\\lwjgl-2.8.4\\native\\windows");
+			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "\\libs\\lwjgl-2.9.0\\native\\windows");
 		} else if (os.toLowerCase().contains("mac")) {
-			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "/libs/lwjgl-2.8.4/native/macosx");
+			System.setProperty("org.lwjgl.librarypath", System.getProperty("user.dir") + "/libs/lwjgl-2.9.0/native/macosx");
 		} else {
 			throw new Exception("For this os we haven´t jet assigned the native libs : \"" + os + "\"");
 		}
