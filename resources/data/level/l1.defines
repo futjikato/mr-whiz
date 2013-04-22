@@ -6,7 +6,35 @@
 	    "16777215" : {
             "texture" : "resources/images/backgrounds/sky_babyblue.png",
             "render" : "1"
-	    }
+	    },
+	    "12019231" : {
+	        "texture" : "resources/images/backgrounds/game_dirt.png",
+            "render" : "1"
+	    },
+	    "928729" : {
+	        "texture" : "resources/images/backgrounds/game_bush.png",
+            "render" : "1"
+	    },
+	    "16579836" : {
+	        "texture" : "resources/images/backgrounds/game_brick.png",
+            "render" : "1"
+	    },
+	    "16448250" : {
+	        "texture" : "resources/images/backgrounds/game_brick.png",
+            "render" : "1"
+	    },
+	    "15856113" : {
+	        "texture" : "resources/images/backgrounds/game_brick.png",
+            "render" : "1"
+	    },
+	    "16250871" : {
+	        "texture" : "resources/images/backgrounds/game_brick.png",
+            "render" : "1"
+	    },
+        "16711422" : {
+            "texture" : "resources/images/backgrounds/game_brick.png",
+             "render" : "1"
+        }
 	},
 	"names" : {
 		"Trap01Trigger" : [
