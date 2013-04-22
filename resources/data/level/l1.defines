@@ -1,57 +1,12 @@
 {
     "config" : {
         "blocksize" : "25"
-    }
+    },
 	"definitions" : {
-	    16777215 : {
-
-	    },
-		"B" : {
-			"texture" : "resources/images/backgrounds/game_brick.png",
-			"render" : "1"
-		},
-		"G" : {
-			"texture" : "resources/images/backgrounds/game_grass_ground.png",
-			"render" : "1"
-		},
-		"D" : {
-			"texture" : "resources/images/backgrounds/game_dirt.png",
-			"render" : "1"
-		},
-		"P" : {
-			"render" : "0",
-			"special" : "PlayerSpawn"
-		},
-		"E" : {
-			"render" : "0",
-			"special" : "NpcSpawn",
-			"npc" : "Dog"
-		},
-		"t" : {
-			"render" : "1",
-			"texture" : "resources/images/backgrounds/game_thorn.png",
-			"damage" : "20"
-		},
-		"d" : {
-			"render" : "1",
-			"texture" : "resources/images/backgrounds/wooden_door.png",
-			"openTexture" : "resources/images/backgrounds/wooden_door_open.png",
-			"type" : "door",
-			"xOffset" : "25",
-			"height" : "4"
-		},
-		"1" : {
-			"type" : "item",
-			"render" : "1",
-			"texture" : "resources/images/items/dev_money.png",
-			"score" : "20"
-		},
-		"2" : {
-			"type" : "item",
-			"render" : "1",
-			"texture" : "resources/images/items/key.png",
-			"tool" : "Key"
-		}
+	    "16777215" : {
+            "texture" : "resources/images/backgrounds/sky_babyblue.png",
+            "render" : "1"
+	    }
 	},
 	"names" : {
 		"Trap01Trigger" : [
