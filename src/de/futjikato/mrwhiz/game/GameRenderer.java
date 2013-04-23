@@ -3,14 +3,11 @@ package de.futjikato.mrwhiz.game;
 import java.util.Collection;
 import java.util.List;
 
-import de.futjikato.mrwhiz.rendering.Boundary;
-import de.futjikato.mrwhiz.rendering.Coordinate;
-import de.futjikato.mrwhiz.rendering.Structure;
+import de.futjikato.mrwhiz.rendering.*;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-
-import de.futjikato.mrwhiz.rendering.Renderer;
 
 public final class GameRenderer extends Renderer {
 	private Map map;
@@ -38,11 +35,25 @@ public final class GameRenderer extends Renderer {
 	}
 
 	@Override
-	protected void renderScene(long delta) {
-        Collection<Structure> renderStructures = map.storage.getStructures(bound);
+	protected void renderScene(long delta) throws RenderException {
+        int blocksize = Integer.valueOf(map.getConfigVar("blocksize", "50"));
 
-        for(Structure struc : renderStructures) {
-            struc.render(bound);
+        for(Coordinate coord : bound) {
+            // get the structure
+            Structure struc = map.storage.getStructure(coord.getX(), coord.getY());
+
+            // skip if not existing or should not be rendered
+            if(struc == null || !struc.doRender())
+                continue;
+
+            Image texture = struc.getTexture();
+            if(texture == null)
+                throw new RenderException("Renderable structures must have a texture.");
+
+            // calculate rendering location on screen
+            int realX = (coord.getX() - bound.getX()) * blocksize;
+            int realY = (coord.getY() - bound.getY()) * blocksize;
+            texture.draw(realX, realY, texture.getWidth(), texture.getHeight());
         }
 	}
 
@@ -74,7 +85,7 @@ public final class GameRenderer extends Renderer {
         this.map = map;
 
         // create boundary
-        bound = new Boundary(map, 20, 180, Display.getWidth() / 60, Display.getHeight() / 60);
+        bound = new Boundary(map, 20, 180, Display.getWidth(), Display.getHeight());
 
         start();
     }

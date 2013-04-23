@@ -68,16 +68,17 @@ public class App {
 
         // load structures
         ImageStorage structure = null;
+        BlockDefinitions definition = null;
         try {
-            BlockDefinitions definition = BlockDefinitions.create(defineFile);
+            definition = BlockDefinitions.create(defineFile);
             structure = new ImageStorage(structureFile, definition);
+
+            Map map = new Map(structure, definition);
+            GameRenderer.getInstance().startMap(map);
         } catch (Exception e) {
             e.printStackTrace();
             //@todo show error window
         }
-
-        Map map = new Map(structure);
-        GameRenderer.getInstance().startMap(map);
     }
 
     public static void setMapName(String mapName) {

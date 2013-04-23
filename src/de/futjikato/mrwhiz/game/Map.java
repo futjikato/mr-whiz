@@ -14,12 +14,34 @@ import java.util.Observer;
  */
 public class Map implements Observer {
 
-    protected GamePlayer player;
+    protected BlockDefinitions defines;
 
     protected Storage storage;
 
-    public Map(Storage storage) {
+    public Map(Storage storage, BlockDefinitions defines) {
         this.storage = storage;
+        this.defines = defines;
+    }
+
+    /**
+     * Read an option from the config in the definition file
+     * If the option is not set in the config the fallback value is returned.
+     * While the option name must begiven the fallback value can also be null
+     *
+     * @param option        the option name
+     * @param defaultValue  the fallback value
+     * @return value
+     */
+    public String getConfigVar(String option, String defaultValue) {
+        // throw exception if option is null
+        if(option == null)
+            throw new IllegalArgumentException("Option name cannot be null");
+
+        // return default if option not existing
+        if(!defines.config.containsKey(option))
+            return defaultValue;
+
+        return defines.config.get(option);
     }
 
     /**

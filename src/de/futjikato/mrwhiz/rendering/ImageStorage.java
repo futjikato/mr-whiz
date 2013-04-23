@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class ImageStorage extends AbstractStorage {
+public class ImageStorage extends Storage {
 
     protected Structure[][] mapStorage;
 
@@ -24,7 +24,7 @@ public class ImageStorage extends AbstractStorage {
                 int rgb = imgBuffer.getRGB(x, y);
                 int id = (rgb) & 0xFFFFFF;
 
-                mapStorage[x][y] = definition.getStructure(id, x, y);
+                mapStorage[x][y] = definition.getStructure(id);
             }
         }
 
@@ -32,7 +32,11 @@ public class ImageStorage extends AbstractStorage {
     }
 
     @Override
-    protected Structure loadStructure(int x, int y) {
+    public Structure getStructure(int x, int y) {
+
+        if(x < 0 || y < 0)
+            throw new IllegalArgumentException("No negative coordinates allowed.");
+
         if(mapStorage.length < x)
             throw new IndexOutOfBoundsException("Out of X bound.");
 
@@ -42,7 +46,7 @@ public class ImageStorage extends AbstractStorage {
             throw new IndexOutOfBoundsException("Out of Y bound.");
 
         if(col[y] == null)
-            throw new IllegalArgumentException("No Structure at given coords");
+            throw new IllegalArgumentException("No Structure at given coordinates.");
 
         return col[y];
     }

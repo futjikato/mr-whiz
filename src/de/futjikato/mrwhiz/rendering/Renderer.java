@@ -67,7 +67,7 @@ public abstract class Renderer {
 
 	protected abstract void clean();
 
-	protected abstract void renderScene(long delta);
+	protected abstract void renderScene(long delta) throws RenderException;
 
 	protected abstract void renderUi(long delta);
 

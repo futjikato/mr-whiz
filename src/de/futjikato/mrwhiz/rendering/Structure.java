@@ -12,15 +12,7 @@ public class Structure {
 
     protected Image texture;
 
-    protected int x;
-
-    protected int y;
-
-    public Structure(HashMap<String, String> definition, int x, int y) {
-
-        this.x = x;
-        this.y = y;
-
+    public Structure(HashMap<String, String> definition) {
         try {
             texture = new Image(definition.get("texture"));
         } catch (SlickException e) {
@@ -28,10 +20,12 @@ public class Structure {
         }
     }
 
-    public void render(Coordinate relativeTo) {
-        float realX = x - relativeTo.getX();
-        float realY = y - relativeTo.getY();
+    public Image getTexture() {
+        return texture;
+    }
 
-        texture.draw(realX * 60, realY * 60, texture.getWidth(), texture.getHeight());
+    public boolean doRender() {
+        // @todo read from definition with fallback to true
+        return true;
     }
 }
