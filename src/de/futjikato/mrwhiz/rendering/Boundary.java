@@ -81,22 +81,27 @@ public class Boundary implements Iterable<Coordinate> {
 
             @Override
             public boolean hasNext() {
-                return Boundary.this.isInSight(readCursor);
+                return readCursor != null;
             }
 
             @Override
             public Coordinate next() throws NoSuchElementException {
+
+                if(readCursor == null) {
+                    throw new NoSuchElementException();
+                }
+
+                Coordinate tmp = (Coordinate) readCursor.clone();
+
                 if (readCursor.getX() > Boundary.this.coord_x) {
                     readCursor = readCursor.left();
-                    return readCursor;
-                }
-
-                if (readCursor.getY() > Boundary.this.coord_y) {
+                } else if (readCursor.getY() > Boundary.this.coord_y) {
                     readCursor = readCursor.moveRelative(Boundary.this.getWidth(), -1);
-                    return readCursor;
+                } else {
+                    readCursor = null;
                 }
 
-                throw new NoSuchElementException();
+                return tmp;
             }
 
             @Override

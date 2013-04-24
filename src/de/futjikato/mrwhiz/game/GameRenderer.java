@@ -53,7 +53,12 @@ public final class GameRenderer extends Renderer {
             // calculate rendering location on screen
             int realX = (coord.getX() - bound.getX()) * blocksize;
             int realY = (coord.getY() - bound.getY()) * blocksize;
-            texture.draw(realX, realY, texture.getWidth(), texture.getHeight());
+
+            if(struc.getTextureMode().equals("fit")) {
+                texture.draw(realX, realY, realX + blocksize, realY + blocksize, 0, 0, texture.getWidth(), texture.getHeight());
+            } else {
+                texture.draw(realX, realY, texture.getWidth(), texture.getHeight());
+            }
         }
 	}
 
@@ -85,7 +90,8 @@ public final class GameRenderer extends Renderer {
         this.map = map;
 
         // create boundary
-        bound = new Boundary(map, 20, 180, Display.getWidth(), Display.getHeight());
+        int blocksize = Integer.valueOf(map.getConfigVar("blocksize", "50"));
+        bound = new Boundary(map, blocksize * 1, blocksize * 189, Display.getWidth(), Display.getHeight());
 
         start();
     }

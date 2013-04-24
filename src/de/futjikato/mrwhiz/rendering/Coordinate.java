@@ -7,7 +7,7 @@ package de.futjikato.mrwhiz.rendering;
  * Time: 22:11
  * To change this template use File | Settings | File Templates.
  */
-public class Coordinate {
+public class Coordinate implements Cloneable {
 
     protected int x;
 
@@ -74,5 +74,10 @@ public class Coordinate {
         }
 
         return (other.x == x && other.y == y);
+    }
+
+    @Override
+    public Object clone() {
+        return new Coordinate(x, y);
     }
 }

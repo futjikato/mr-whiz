@@ -12,11 +12,24 @@ public class Structure {
 
     protected Image texture;
 
+    protected int render = 0;
+
+    //@todo make this an internal enum
+    protected String textureMode = "fit";
+
     public Structure(HashMap<String, String> definition) {
         try {
             texture = new Image(definition.get("texture"));
         } catch (SlickException e) {
             e.printStackTrace();
+        }
+
+        if(definition.containsKey("render")) {
+            render = Integer.valueOf(definition.get("render"));
+        }
+
+        if(definition.containsKey("textureMode")) {
+            textureMode = definition.get("textureMode");
         }
     }
 
@@ -25,7 +38,10 @@ public class Structure {
     }
 
     public boolean doRender() {
-        // @todo read from definition with fallback to true
-        return true;
+        return render == 1;
+    }
+
+    public String getTextureMode() {
+        return textureMode;
     }
 }
