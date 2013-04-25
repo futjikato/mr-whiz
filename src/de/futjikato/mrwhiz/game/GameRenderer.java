@@ -1,13 +1,12 @@
 package de.futjikato.mrwhiz.game;
 
-import java.util.Collection;
-import java.util.List;
-
 import de.futjikato.mrwhiz.rendering.*;
+import de.futjikato.mrwhiz.rendering.positioning.Coordinate;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 public final class GameRenderer extends Renderer {
 	private Map map;
@@ -28,7 +27,7 @@ public final class GameRenderer extends Renderer {
 	protected void init() throws LWJGLException {
 		super.init();
 
-        this.player = new GamePlayer(0, 0, 50);
+        this.player = new GamePlayer();
 
 		// init ui
 		this.ui = new GameUi(this.player);
@@ -38,7 +37,7 @@ public final class GameRenderer extends Renderer {
 	protected void renderScene(long delta) throws RenderException {
         int blocksize = Integer.valueOf(map.getConfigVar("blocksize", "50"));
 
-        for(Coordinate coord : bound) {
+        for(Coordinate<Integer> coord : bound) {
             // get the structure
             Structure struc = map.storage.getStructure(coord.getX(), coord.getY());
 
@@ -54,13 +53,26 @@ public final class GameRenderer extends Renderer {
             int realX = (coord.getX() - bound.getX()) * blocksize;
             int realY = (coord.getY() - bound.getY()) * blocksize;
 
-            if(struc.getTextureMode().equals("fit")) {
+            // render texture according to texture mode
+            String txtMode = struc.getTextureMode();
+            if(txtMode.equals(Structure.OPT_TEXTUREMODE_FIT)) {
                 texture.draw(realX, realY, realX + blocksize, realY + blocksize, 0, 0, texture.getWidth(), texture.getHeight());
-            } else {
+            } else if(txtMode.equals(Structure.OPT_TEXTUREMODE_FULL)) {
                 texture.draw(realX, realY, texture.getWidth(), texture.getHeight());
+            } else if(txtMode.equals(Structure.OPT_TEXTUREMODE_CROP)) {
+                texture.draw(realX, realY, realX + blocksize, realY + blocksize, 0, 0, blocksize, blocksize);
+            } else {
+                throw new RenderException(String.format("Unknown texture mode %s", txtMode));
             }
         }
-	}
+
+        // render players
+        try {
+            Image playerTexture = player.getTexture();
+        } catch (SlickException e) {
+            throw new RenderException(e);
+        }
+    }
 
 	@Override
 	protected void renderUi(long delta) {
@@ -72,8 +84,6 @@ public final class GameRenderer extends Renderer {
 		if (Display.isCloseRequested()) {
 			this.isStoped = true;
 		}
-
-		this.player.handleInput(delta, input);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package de.futjikato.mrwhiz.rendering;
 
 import de.futjikato.mrwhiz.game.Map;
+import de.futjikato.mrwhiz.rendering.positioning.Coordinate;
+import de.futjikato.mrwhiz.rendering.positioning.IntegerCalculator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,7 +14,7 @@ import java.util.NoSuchElementException;
  * Time: 21:53
  * To change this template use File | Settings | File Templates.
  */
-public class Boundary implements Iterable<Coordinate> {
+public class Boundary implements Iterable<Coordinate<Integer>> {
 
     protected float screen_x;
 
@@ -70,14 +72,14 @@ public class Boundary implements Iterable<Coordinate> {
      * @return an Iterator.
      */
     @Override
-    public Iterator<Coordinate> iterator() {
+    public Iterator<Coordinate<Integer>> iterator() {
 
         final int startX = Boundary.this.getX() + Boundary.this.getWidth();
         final int startY = Boundary.this.getY() + Boundary.this.getHeight();
 
-        return new Iterator<Coordinate>() {
+        return new Iterator<Coordinate<Integer>>() {
 
-            private Coordinate readCursor = new Coordinate(startX, startY);
+            private Coordinate readCursor = new Coordinate<Integer>(startX, startY, IntegerCalculator.INSTANCE);
 
             @Override
             public boolean hasNext() {
@@ -85,17 +87,17 @@ public class Boundary implements Iterable<Coordinate> {
             }
 
             @Override
-            public Coordinate next() throws NoSuchElementException {
+            public Coordinate<Integer> next() throws NoSuchElementException {
 
                 if(readCursor == null) {
                     throw new NoSuchElementException();
                 }
 
-                Coordinate tmp = (Coordinate) readCursor.clone();
+                Coordinate<Integer> tmp = (Coordinate) readCursor.clone();
 
-                if (readCursor.getX() > Boundary.this.coord_x) {
-                    readCursor = readCursor.left();
-                } else if (readCursor.getY() > Boundary.this.coord_y) {
+                if (readCursor.getCalculator().gt(readCursor.getX(), Boundary.this.coord_x)) {
+                    readCursor = readCursor.left(1);
+                } else if (readCursor.getCalculator().gt(readCursor.getY(), Boundary.this.coord_y)) {
                     readCursor = readCursor.moveRelative(Boundary.this.getWidth(), -1);
                 } else {
                     readCursor = null;
@@ -111,7 +113,7 @@ public class Boundary implements Iterable<Coordinate> {
         };
     }
 
-    private boolean isInSight(Coordinate coordinate) {
+    private boolean isInSight(Coordinate<Integer> coordinate) {
         if(coordinate.getY() < coord_y)
             return false;
 
