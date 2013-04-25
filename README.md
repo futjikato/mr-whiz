@@ -1,12 +1,7 @@
-# Mr. Whiz ( Final name may differ )
+# Mr. Whiz ( Final name will differ )
 
-A small 2D Jump n' Run game written in java.
-This project is currently at its development start.
-
-## Build Mr.Whiz
-
-You can build and run the application with [Ant](http://ant.apache.org/).<br>
-Use the build.xml from the root folder.<br>
+Personal game development playground.
+The aim is to build a 2d online platformer.
 
 ## License ( [MIT](http://www.opensource.org/licenses/MIT) )
 
