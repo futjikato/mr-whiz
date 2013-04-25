@@ -10,38 +10,50 @@ import java.util.HashMap;
  */
 public class Structure {
 
-    protected Image texture;
+    public static final String OPT_RENDER = "1";
 
-    protected int render = 0;
+    public static final String OPT_TEXTUREMODE_FIT = "fit";
+    public static final String OPT_TEXTUREMODE_FULL = "full";
+    public static final String OPT_TEXTUREMODE_CROP = "crop";
 
-    //@todo make this an internal enum
-    protected String textureMode = "fit";
+    protected HashMap<String, String> structureConfig;
 
     public Structure(HashMap<String, String> definition) {
-        try {
-            texture = new Image(definition.get("texture"));
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-
-        if(definition.containsKey("render")) {
-            render = Integer.valueOf(definition.get("render"));
-        }
-
-        if(definition.containsKey("textureMode")) {
-            textureMode = definition.get("textureMode");
-        }
+        structureConfig = definition;
     }
 
-    public Image getTexture() {
-        return texture;
+    private String get(String var, String defaultVal) {
+        if(!structureConfig.containsKey(var)) {
+            return defaultVal;
+        }
+        return structureConfig.get(var);
+    }
+
+    private String get(String var) {
+       return get(var, null);
+    }
+
+    public Image getTexture() throws RenderException {
+        if(!doRender())
+            throw new RenderException("Structure should not be rendered. Do not request a texture for it!");
+
+        String textureFile = get("texture");
+
+        if(textureFile == null)
+            throw new RenderException("No texture applied to structure!");
+
+        try {
+            return new Image(textureFile);
+        } catch (SlickException e) {
+            throw new RenderException(e);
+        }
     }
 
     public boolean doRender() {
-        return render == 1;
+        return get("render", OPT_RENDER).equals(OPT_RENDER);
     }
 
     public String getTextureMode() {
-        return textureMode;
+        return get("texturemode", OPT_TEXTUREMODE_FIT);
     }
 }
