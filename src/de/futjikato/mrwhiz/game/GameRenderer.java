@@ -27,10 +27,8 @@ public final class GameRenderer extends Renderer {
 	protected void init() throws LWJGLException {
 		super.init();
 
-        this.player = new GamePlayer();
-
 		// init ui
-		this.ui = new GameUi(this.player);
+		ui = new GameUi(player);
 	}
 
 	@Override
@@ -50,8 +48,8 @@ public final class GameRenderer extends Renderer {
                 throw new RenderException("Renderable structures must have a texture.");
 
             // calculate rendering location on screen
-            int realX = (coord.getX() - bound.getX()) * blocksize;
-            int realY = (coord.getY() - bound.getY()) * blocksize;
+            float realX = (coord.getX() * blocksize) - bound.getScreenX();
+            float realY = (coord.getY() * blocksize) - bound.getScreenY();
 
             // render texture according to texture mode
             String txtMode = struc.getTextureMode();
@@ -69,6 +67,9 @@ public final class GameRenderer extends Renderer {
         // render players
         try {
             Image playerTexture = player.getTexture();
+            Coordinate<Float> playerPosition = player.getPosition();
+
+            playerTexture.draw(playerPosition.getX() - bound.getScreenX(), playerPosition.getY() - bound.getScreenY());
         } catch (SlickException e) {
             throw new RenderException(e);
         }
@@ -84,6 +85,10 @@ public final class GameRenderer extends Renderer {
 		if (Display.isCloseRequested()) {
 			this.isStoped = true;
 		}
+
+        player.intersect(input);
+
+        bound.center(player.getPosition());
 	}
 
 	@Override
@@ -102,6 +107,9 @@ public final class GameRenderer extends Renderer {
         // create boundary
         int blocksize = Integer.valueOf(map.getConfigVar("blocksize", "50"));
         bound = new Boundary(map, blocksize * 1, blocksize * 189, Display.getWidth(), Display.getHeight());
+
+        player = new GamePlayer();
+        player.setPosition(blocksize * 6, blocksize * 193);
 
         start();
     }

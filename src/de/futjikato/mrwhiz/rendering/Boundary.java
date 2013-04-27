@@ -16,6 +16,10 @@ import java.util.NoSuchElementException;
  */
 public class Boundary implements Iterable<Coordinate<Integer>> {
 
+    private final int screen_width;
+
+    private final int screen_height;
+
     protected float screen_x;
 
     protected float screen_y;
@@ -26,6 +30,8 @@ public class Boundary implements Iterable<Coordinate<Integer>> {
 
     protected Map origin;
 
+    protected int blocksize;
+
     protected int width;
 
     protected int height;
@@ -35,10 +41,12 @@ public class Boundary implements Iterable<Coordinate<Integer>> {
         // set property values
         this.screen_x = screen_x;
         this.screen_y = screen_y;
+        this.screen_width = screen_width;
+        this.screen_height = screen_height;
         this.origin = origin;
 
         // calculate coord position
-        int blocksize = Integer.valueOf(origin.getConfigVar("blocksize", "50"));
+        blocksize = Integer.valueOf(origin.getConfigVar("blocksize", "50"));
         coord_x = (int) Math.floor(screen_x / blocksize);
         coord_y = (int) Math.floor(screen_y / blocksize);
         // and dimensions
@@ -137,13 +145,19 @@ public class Boundary implements Iterable<Coordinate<Integer>> {
         return coord_y;
     }
 
-    public void moveScreenView(float x, float y) {
-        // add movement to screen values
-        screen_x += x;
-        screen_y += y;
+    public float getScreenX() {
+        return screen_x;
+    }
 
-        // calculate new coordinate position
-        int blocksize = Integer.valueOf(origin.getConfigVar("blocksize", "50"));
+    public float getScreenY() {
+        return screen_y;
+    }
+
+    public void center(Coordinate<Float> position) {
+        screen_x = position.getX() - ( screen_width / 2 );
+        screen_y = position.getY() - ( screen_height / 2 );
+
+        // calculate coord position
         coord_x = (int) Math.floor(screen_x / blocksize);
         coord_y = (int) Math.floor(screen_y / blocksize);
     }

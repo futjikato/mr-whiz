@@ -1,0 +1,6 @@
+{
+    "jump"          : "57",     // KEY_SPACE
+    "run"           : "42",     // KEY_LSHIFT
+    "moveLeft"      : "203",    // KEY_LEFT
+    "moveRight"     : "205"     // KEY_RIGHT
+}

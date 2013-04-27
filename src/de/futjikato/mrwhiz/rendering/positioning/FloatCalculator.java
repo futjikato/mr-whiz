@@ -8,6 +8,9 @@ package de.futjikato.mrwhiz.rendering.positioning;
  * To change this template use File | Settings | File Templates.
  */
 public class FloatCalculator implements Calculator<Float> {
+
+    public static final FloatCalculator INSTANCE = new FloatCalculator();
+
     @Override
     public Float add(Float a, Float b) {
         return a + b;
