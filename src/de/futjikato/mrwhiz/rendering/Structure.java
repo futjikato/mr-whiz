@@ -18,8 +18,17 @@ public class Structure {
 
     protected HashMap<String, String> structureConfig;
 
+    private Image texture;
+
+    private boolean render = true;
+
+    private String textureMode;
+
     public Structure(HashMap<String, String> definition) {
         structureConfig = definition;
+
+        // set basic values
+        render = get("render", OPT_RENDER).equals(OPT_RENDER);
     }
 
     private String get(String var, String defaultVal) {
@@ -34,26 +43,33 @@ public class Structure {
     }
 
     public Image getTexture() throws RenderException {
-        if(!doRender())
-            throw new RenderException("Structure should not be rendered. Do not request a texture for it!");
+        if(texture == null) {
+            if(!doRender())
+                throw new RenderException("Structure should not be rendered. Do not request a texture for it!");
 
-        String textureFile = get("texture");
+            String textureFile = get("texture");
 
-        if(textureFile == null)
-            throw new RenderException("No texture applied to structure!");
+            if(textureFile == null)
+                throw new RenderException("No texture applied to structure!");
 
-        try {
-            return new Image(textureFile);
-        } catch (SlickException e) {
-            throw new RenderException(e);
+            try {
+                texture = new Image(textureFile);
+            } catch (SlickException e) {
+                throw new RenderException(e);
+            }
         }
+
+        return texture;
     }
 
     public boolean doRender() {
-        return get("render", OPT_RENDER).equals(OPT_RENDER);
+        return render;
     }
 
     public String getTextureMode() {
-        return get("texturemode", OPT_TEXTUREMODE_FIT);
+        if(textureMode == null) {
+            textureMode = get("texturemode", OPT_TEXTUREMODE_FIT);
+        }
+        return textureMode;
     }
 }
