@@ -1,4 +1,5 @@
 # Mr. Whiz ( Final name will differ )
+[![Build Status](https://travis-ci.org/futjikato/mr-whiz.png?branch=master)](https://travis-ci.org/futjikato/mr-whiz)
 
 Personal game development playground.
 The aim is to build a 2d online platformer.
