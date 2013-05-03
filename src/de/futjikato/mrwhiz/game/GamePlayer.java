@@ -69,7 +69,7 @@ public class GamePlayer {
     }
 
     public boolean canJump() {
-        return true;
+        return !physicalState.isFalling();
     }
 
     public void jump() {

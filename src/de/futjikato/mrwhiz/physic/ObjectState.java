@@ -10,13 +10,19 @@ import de.futjikato.mrwhiz.rendering.positioning.FloatCalculator;
  * Time: 18:38
  * To change this template use File | Settings | File Templates.
  */
-public class ObjectState {
+public class ObjectState<T implements > {
+
+    protected T baseObject;
 
     protected boolean isFalling = false;
 
     protected float xv;
 
     protected float yv;
+
+    public ObjectState(T object) {
+        baseObject = object;
+    }
 
     public boolean isFalling() {
         return isFalling;
