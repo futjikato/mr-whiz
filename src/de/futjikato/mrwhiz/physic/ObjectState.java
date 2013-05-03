@@ -43,6 +43,7 @@ public class ObjectState {
     }
 
     public void decrease() {
+        // decrease X speed
         if(xv < 0.01f && xv > -0.01f) {
             xv = 0.0f;
         } else {
@@ -51,6 +52,16 @@ public class ObjectState {
             } else {
                 xv += 0.01f;
             }
+        }
+
+        // decrease Y speed
+        if(yv >= 0) {
+            yv += 0.0001f;
+            if(true) { // isBlocked
+                yv = 0;
+            }
+        } else {
+            yv += 0.001f;
         }
     }
 }
