@@ -2,6 +2,7 @@ package de.futjikato.mrwhiz.game;
 
 import de.futjikato.mrwhiz.game.ui.InputHandler;
 import de.futjikato.mrwhiz.physic.ObjectState;
+import de.futjikato.mrwhiz.physic.PhysicalObject;
 import de.futjikato.mrwhiz.rendering.positioning.Coordinate;
 import de.futjikato.mrwhiz.rendering.positioning.FloatCalculator;
 import org.newdawn.slick.Image;
@@ -11,7 +12,7 @@ import org.newdawn.slick.SlickException;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class GamePlayer {
+public class GamePlayer implements PhysicalObject {
 
     protected static final float WALKING_SPEED = 0.14f;
 
@@ -26,7 +27,7 @@ public class GamePlayer {
     private boolean running;
 
     public GamePlayer() {
-        physicalState = new ObjectState();
+        physicalState = new ObjectState(this);
 
         try {
             File keymap = new File("resources/data/keymap.json");
@@ -89,5 +90,10 @@ public class GamePlayer {
         float y = position.getY() + yv;
 
         position = new Coordinate<Float>(x, y, FloatCalculator.INSTANCE);
+    }
+
+    @Override
+    public boolean isBlocked() {
+        return true;
     }
 }

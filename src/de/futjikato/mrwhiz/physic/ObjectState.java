@@ -10,7 +10,7 @@ import de.futjikato.mrwhiz.rendering.positioning.FloatCalculator;
  * Time: 18:38
  * To change this template use File | Settings | File Templates.
  */
-public class ObjectState<T implements > {
+public class ObjectState<T extends PhysicalObject> {
 
     protected T baseObject;
 
@@ -63,11 +63,14 @@ public class ObjectState<T implements > {
         // decrease Y speed
         if(yv >= 0) {
             yv += 0.0001f;
-            if(true) { // isBlocked
+            setFalling(true);
+            if(baseObject.isBlocked()) {
                 yv = 0;
+                setFalling(false);
             }
         } else {
             yv += 0.001f;
+            setFalling(true);
         }
     }
 }
