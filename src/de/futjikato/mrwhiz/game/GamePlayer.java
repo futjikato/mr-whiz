@@ -13,13 +13,16 @@ import java.io.FileNotFoundException;
 
 public class GamePlayer {
 
+    protected static final float WALKING_SPEED = 0.14f;
+
+    protected static final float RUNNING_SPEED = 0.24f;
+
     protected Coordinate<Float> position;
 
     protected ObjectState physicalState;
 
     protected InputHandler inputHandler;
 
-    protected float walkingSpeed = 0.025f;
     private boolean running;
 
     public GamePlayer() {
@@ -45,24 +48,24 @@ public class GamePlayer {
         return position;
     }
 
-    public ObjectState getPhysicalState() {
-        return physicalState;
-    }
-
-    public float getWalkingSpeed() {
-        return walkingSpeed;
-    }
-
     public void setRunning(boolean running) {
         this.running = running;
     }
 
     public void moveLeft() {
-        physicalState.setXv(-0.2f);
+        if(running) {
+            physicalState.setXv(-RUNNING_SPEED);
+        } else {
+            physicalState.setXv(-WALKING_SPEED);
+        }
     }
 
     public void moveRight() {
-        physicalState.setXv(0.2f);
+        if(running) {
+            physicalState.setXv(RUNNING_SPEED);
+        } else {
+            physicalState.setXv(WALKING_SPEED);
+        }
     }
 
     public boolean canJump() {
