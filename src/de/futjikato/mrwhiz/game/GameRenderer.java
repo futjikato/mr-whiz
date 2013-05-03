@@ -86,7 +86,7 @@ public final class GameRenderer extends Renderer {
 			this.isStoped = true;
 		}
 
-        player.intersect(input);
+        player.intersect(delta, input);
 
         bound.center(player.getPosition());
 	}

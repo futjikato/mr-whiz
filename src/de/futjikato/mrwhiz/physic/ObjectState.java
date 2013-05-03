@@ -42,18 +42,7 @@ public class ObjectState {
         this.yv = yv;
     }
 
-    public Coordinate<Float> updatePosition(Coordinate<Float> position) {
-        float x = position.getX();
-        float y = position.getY();
-
-        Coordinate<Float> newpos = new Coordinate<Float>(x + xv, y + yv, FloatCalculator.INSTANCE);
-
-        decrease();
-
-        return newpos;
-    }
-
-    private void decrease() {
+    public void decrease() {
         if(xv < 0.01f && xv > -0.01f) {
             xv = 0.0f;
         } else {

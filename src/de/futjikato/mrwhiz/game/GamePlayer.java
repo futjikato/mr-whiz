@@ -58,11 +58,11 @@ public class GamePlayer {
     }
 
     public void moveLeft() {
-        physicalState.setXv(-0.02f);
+        physicalState.setXv(-0.2f);
     }
 
     public void moveRight() {
-        physicalState.setXv(0.02f);
+        physicalState.setXv(0.2f);
     }
 
     public boolean canJump() {
@@ -73,11 +73,18 @@ public class GamePlayer {
         physicalState.setYv(-0.2f);
     }
 
-    public void intersect(Input input) {
+    public void intersect(long delta, Input input) {
         if(inputHandler != null) {
             inputHandler.intersect(input);
         }
 
-        position = physicalState.updatePosition(position);
+        float xv = physicalState.getXv() * delta;
+        float yv = physicalState.getYv() * delta;
+        physicalState.decrease();
+
+        float x = position.getX() + xv;
+        float y = position.getY() + yv;
+
+        position = new Coordinate<Float>(x, y, FloatCalculator.INSTANCE);
     }
 }
